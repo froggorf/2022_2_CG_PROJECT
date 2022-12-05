@@ -2,7 +2,7 @@
 
 namespace Play {
     //카메라 관련 선언
-    Camera camera[2];
+    Camera camera;
     int cType;                              //카메라 타입(2d뷰 / 3d뷰)
 
     //객체(큐브) 관련 임시 선언
@@ -50,7 +50,20 @@ namespace Play {
     GLvoid update() {
         mario.update();
         
+        if (GetKeyDown()[press5]) {
+            glm::mat4 rot = glm::mat4(1.0f);
+            rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+            camera.cameraPos = rot * glm::vec4(camera.cameraPos, 1.0f);
+            camera.cameraDirection = rot * glm::vec4(camera.cameraDirection, 1.0f);
+            camera.cameraUp = rot * glm::vec4(camera.cameraUp, 1.0f);
+        }
 
+        if (GetKeyDown()[press6]) {
+            cType = D2_VIEW;
+        }
+        if (GetKeyDown()[press7]) {
+            cType = D3_VIEW;
+        }
         
     }
 
@@ -78,13 +91,10 @@ namespace Play {
 
     GLvoid InitValue() {
         {   //카메라 값 초기화
-            camera[D3_VIEW].cameraPos = glm::vec3(0.0f, 15.0f, 50.0f);
-            camera[D3_VIEW].cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
-            camera[D3_VIEW].cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+            camera.cameraPos = glm::vec3(0.0f, 15.0f, 50.0f);
+            camera.cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+            camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-            camera[D2_VIEW].cameraPos;
-            camera[D2_VIEW].cameraDirection;
-            camera[D2_VIEW].cameraUp;
 
             cType = D3_VIEW;
         }
@@ -134,7 +144,7 @@ namespace Play {
 
         {//카메라 변환
             glm::mat4 view = glm::mat4(1.0f);
-            view = glm::lookAt(camera[cType].cameraPos, camera[cType].cameraPos + camera[cType].cameraDirection, camera[cType].cameraUp);
+            view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraDirection, camera.cameraUp);
             unsigned int viewLocation = glGetUniformLocation(Gets_program(), "view");
             glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
         }
@@ -142,12 +152,11 @@ namespace Play {
         {//투영 변환
             glm::mat4 projection = glm::mat4(1.0f);
             if (cType == D3_VIEW) {      //3D 뷰
-                projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, (GLfloat)CameraViewSize);
+                projection = glm::perspective(glm::radians(45.0f), GLfloat(WIDTH)/HEIGHT, 0.1f, (GLfloat)CameraViewSize);
                 //projection = glm::translate(projection, glm::vec3(0.0, 0.0, -3.0));
             }
             else {                  //2D 뷰
-                GLfloat halfsize = CameraViewSize / 2;
-                projection = glm::ortho(-halfsize, halfsize, -halfsize, halfsize, halfsize, halfsize);
+                projection = glm::ortho(-CameraViewSize/20,CameraViewSize/20, -CameraViewSize/20, CameraViewSize/20, 0.1f, CameraViewSize);
             }
 
 
@@ -156,7 +165,7 @@ namespace Play {
         }
 
         unsigned int viewPosLocation = glGetUniformLocation(Gets_program(), "viewPos");
-        glUniform3f(viewPosLocation, camera[cType].cameraPos.x, camera[cType].cameraPos.y, camera[cType].cameraPos.z);
+        glUniform3f(viewPosLocation, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
     }
 

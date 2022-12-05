@@ -8,9 +8,6 @@
 #include "cube.h"
 #include "mario_character.h"
 #include "check_collision.h"
-#define CameraViewSize 300
-
-enum CameraType { D3_VIEW = 0, D2_VIEW = 1 };
 namespace Play {
     //define - ¼±¾ð
 

@@ -94,6 +94,24 @@ GLvoid KeyBoard(unsigned char key, int x, int y) {
 	case '4':
 		GetKeyDown()[press4] = true;
 		break;
+	case '5':
+		GetKeyDown()[press5] = true;
+		break;
+	case '6':
+		GetKeyDown()[press6] = true;
+		break;
+	case '7':
+		GetKeyDown()[press7] = true;
+		break;
+	case '8':
+		GetKeyDown()[press8] = true;
+		break;
+	case '9':
+		GetKeyDown()[press9] = true;
+		break;
+	case '0':
+		GetKeyDown()[press0] = true;
+		break;
 	case 'w':
 		GetKeyDown()[pressW] = true;
 		break;
@@ -125,6 +143,24 @@ GLvoid KeyBoardUp(unsigned char key, int x, int y) {
 		break;
 	case '4':
 		GetKeyDown()[press4] = false;
+		break;
+	case '5':
+		GetKeyDown()[press5] = false;
+		break;
+	case '6':
+		GetKeyDown()[press6] = false;
+		break;
+	case '7':
+		GetKeyDown()[press7] = false;
+		break;
+	case '8':
+		GetKeyDown()[press8] = false;
+		break;
+	case '9':
+		GetKeyDown()[press9] = false;
+		break;
+	case '0':
+		GetKeyDown()[press0] = false;
 		break;
 	case 'w':
 		GetKeyDown()[pressW] = false;
