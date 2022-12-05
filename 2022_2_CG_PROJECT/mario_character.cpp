@@ -22,8 +22,8 @@ GLvoid Mario::update() {
 		falling_gravity();
 		//중력에 대한 충돌체크 처리
 		for (int i = 0; i < Play::GetGround().size(); ++i) {
-			if (CheckAABB(boundingBox, *Play::GetGround()[i])) {
-				boundingBox.trans.y = Play::GetGround()[i]->trans.y + 0.5 * Play::GetGround()[i]->scale.y + 0.5 * boundingBox.scale.y;
+			if (CheckAABB(boundingBox, Play::GetGround()[i])) {
+				boundingBox.trans.y = Play::GetGround()[i].trans.y + 0.5 * Play::GetGround()[i].scale.y + 0.5 * boundingBox.scale.y;
 				gravity = 0;
 				flag_jump = true;
 			}
@@ -94,25 +94,25 @@ GLvoid Mario::move(int events) {
 
 	
 }
-GLvoid Mario::handle_collision(int events, std::vector<Cube*>& ground) {
+GLvoid Mario::handle_collision(int events, std::vector<Cube>& ground) {
 	for (int i = 0; i < ground.size(); ++i) {
-		if (CheckAABB(boundingBox, *ground[i])) {
+		if (CheckAABB(boundingBox, ground[i])) {
 			switch (events) {
 			case pressW:
 				printf("z다운중\n");
-				boundingBox.trans.z = ground[i]->trans.z + 0.5 * ground[i]->scale.z + 0.5 * boundingBox.scale.z;
+				boundingBox.trans.z = ground[i].trans.z + 0.5 * ground[i].scale.z + 0.5 * boundingBox.scale.z;
 				break;
 			case pressS:
 				printf("z업중\n");
-				boundingBox.trans.z = ground[i]->trans.z - 0.5 * ground[i]->scale.z - 0.5 * boundingBox.scale.z;
+				boundingBox.trans.z = ground[i].trans.z - 0.5 * ground[i].scale.z - 0.5 * boundingBox.scale.z;
 				break;
 			case pressA:
 				printf("x다운중\n");
-				boundingBox.trans.x = ground[i]->trans.x + 0.5 * ground[i]->scale.x + 0.5 * boundingBox.scale.x;
+				boundingBox.trans.x = ground[i].trans.x + 0.5 * ground[i].scale.x + 0.5 * boundingBox.scale.x;
 				break;
 			case pressD:
 				printf("x업중\n");
-				boundingBox.trans.x = ground[i]->trans.x - 0.5 * ground[i]->scale.x - 0.5 * boundingBox.scale.x;
+				boundingBox.trans.x = ground[i].trans.x - 0.5 * ground[i].scale.x - 0.5 * boundingBox.scale.x;
 				
 				break;
 			}

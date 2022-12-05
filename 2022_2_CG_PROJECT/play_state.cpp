@@ -10,7 +10,7 @@ namespace Play {
     Cube test_cube;
 
     //땅
-    std::vector<Cube*> ground;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
+    std::vector<Cube> ground;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
     
     //부숴지는 블럭
     
@@ -59,7 +59,7 @@ namespace Play {
        
 
         for (int i = 0; i < ground.size(); ++i) {
-            ground[i]->draw();
+            ground[i].draw();
         }
         mario.draw();
 
@@ -71,7 +71,7 @@ namespace Play {
         //test_cube.InitBuffer();
         
         for (int i = 0; i < ground.size(); ++i) {
-            ground[i]->InitBuffer();
+            ground[i].InitBuffer();
         }
         mario.InitBuffer();
     }
@@ -106,17 +106,17 @@ namespace Play {
         }
 
         {
-            Cube* temp = new Cube();
-            temp->init(); 
-            temp->scale = glm::vec3(10.0f, 10.0f, 10.0f);
-            temp->color = glm::vec3(0.0f, 0.0f, 1.0f);
+            Cube temp;
+            temp.init(); 
+            temp.scale = glm::vec3(10.0f, 10.0f, 10.0f);
+            temp.color = glm::vec3(0.0f, 0.0f, 1.0f);
            
             ground.push_back(temp);
 
-            Cube* t = new Cube();
-            t->init();
-            t->scale = glm::vec3(20.0f, 5.0f, 20.0f);
-            t->color = glm::vec3(0.0f, 1.0f, 0.0f);
+            Cube t;
+            t.init();
+            t.scale = glm::vec3(20.0f, 5.0f, 20.0f);
+            t.color = glm::vec3(0.0f, 1.0f, 0.0f);
             ground.push_back(t);
         }
 
@@ -160,7 +160,7 @@ namespace Play {
 
     }
 
-    std::vector<Cube*>& GetGround() {
+    std::vector<Cube>& GetGround() {
         return ground;
     }
 }

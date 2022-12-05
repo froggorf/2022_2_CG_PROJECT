@@ -21,7 +21,7 @@ public:
 	GLvoid handle_events(int);
 	GLvoid falling_gravity();
 	GLvoid move(int);
-	GLvoid handle_collision(int, std::vector<Cube*>&);
+	GLvoid handle_collision(int, std::vector<Cube>&);
 };
 
 #endif
