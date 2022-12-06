@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION
 #include "MainGame.h"
 
 //freeglut.lib glew32.lib
@@ -255,7 +256,7 @@ void make_vertexShaders() {
 	{
 		GLchar* vertexsource;
 
-		vertexsource = filetobuf("vertex.glsl");
+		vertexsource = filetobuf("vertex_texture.glsl");
 		vs_texture = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vs_texture, 1, &vertexsource, NULL);
 		glCompileShader(vs_texture);
@@ -311,7 +312,7 @@ void make_fragmentShaders() {
 GLvoid InitShader() {
 	make_vertexShaders();
 	make_fragmentShaders();
-	{
+	{//¿œπ› s_program
 		s_program = glCreateProgram();
 
 		glAttachShader(s_program, vertexShader);
@@ -325,7 +326,7 @@ GLvoid InitShader() {
 
 	}
 	
-	{
+	{//texture s_program
 		s_program_texture = glCreateProgram();
 		glAttachShader(s_program_texture, vs_texture);
 		glAttachShader(s_program_texture, fs_texture);
@@ -336,7 +337,6 @@ GLvoid InitShader() {
 	}
 
 	glUseProgram(s_program);
-	glUseProgram(s_program_texture);
 }
 void checkCompileErrors(unsigned int shader, std::string type)
 {
