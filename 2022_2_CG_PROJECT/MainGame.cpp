@@ -5,7 +5,10 @@
 int TimerSpeed = 16;
 GLuint vertexShader;
 GLuint fragmentShader;
+GLuint vs_texture;
+GLuint fs_texture;
 GLuint s_program;
+GLuint s_program_texture;
 
 int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정 
 { //--- 윈도우 생성하기
@@ -230,55 +233,110 @@ GLvoid Reshape(int w, int h) //--- 콜백 함수: 다시 그리기 콜백 함수
 	glViewport(0, 0, w, h);
 }
 void make_vertexShaders() {
-	GLchar* vertexsource;
+	{//일반 쉐이더
+		GLchar* vertexsource;
 
-	vertexsource = filetobuf("vertex.glsl");
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexsource, NULL);
-	glCompileShader(vertexShader);
+		vertexsource = filetobuf("vertex.glsl");
+		vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vertexShader, 1, &vertexsource, NULL);
+		glCompileShader(vertexShader);
 
-	GLint result;
-	GLchar errorlog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &result);
-	if (!result) {
-		glGetShaderInfoLog(vertexShader, 512, NULL, errorlog);
-		std::cerr << "ERROR: vertex shader 컴파일 실패\n" << errorlog << std::endl;
-		return;
+		GLint result;
+		GLchar errorlog[512];
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &result);
+		if (!result) {
+			glGetShaderInfoLog(vertexShader, 512, NULL, errorlog);
+			std::cerr << "ERROR: vertex shader 컴파일 실패\n" << errorlog << std::endl;
+			return;
+		}
+	}
+	
+
+	{
+		GLchar* vertexsource;
+
+		vertexsource = filetobuf("vertex.glsl");
+		vs_texture = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vs_texture, 1, &vertexsource, NULL);
+		glCompileShader(vs_texture);
+
+		GLint result;
+		GLchar errorlog[512];
+		glGetShaderiv(vs_texture, GL_COMPILE_STATUS, &result);
+		if (!result) {
+			glGetShaderInfoLog(vs_texture, 512, NULL, errorlog);
+			std::cerr << "ERROR: vertex shader 컴파일 실패\n" << errorlog << std::endl;
+			return;
+		}
 	}
 }
 void make_fragmentShaders() {
-	GLchar* fragmentsource;
+	{
+		GLchar* fragmentsource;
 
-	fragmentsource = filetobuf("fragment.glsl");
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentsource, NULL);
-	glCompileShader(fragmentShader);
+		fragmentsource = filetobuf("fragment.glsl");
+		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fragmentShader, 1, &fragmentsource, NULL);
+		glCompileShader(fragmentShader);
 
-	GLint result;
-	GLchar errorlog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &result);
-	if (!result) {
-		glGetShaderInfoLog(fragmentShader, 512, NULL, errorlog);
-		std::cerr << "ERROR: fragment shader 컴파일 실패\n" << errorlog << std::endl;
-		return;
+		GLint result;
+		GLchar errorlog[512];
+		glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &result);
+		if (!result) {
+			glGetShaderInfoLog(fragmentShader, 512, NULL, errorlog);
+			std::cerr << "ERROR: fragment shader 컴파일 실패\n" << errorlog << std::endl;
+			return;
+		}
 	}
+	
+	{
+		GLchar* fragmentsource;
+
+		fragmentsource = filetobuf("fragment_texture.glsl");
+		fs_texture = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fs_texture, 1, &fragmentsource, NULL);
+		glCompileShader(fs_texture);
+
+		GLint result;
+		GLchar errorlog[512];
+		glGetShaderiv(fs_texture, GL_COMPILE_STATUS, &result);
+		if (!result) {
+			glGetShaderInfoLog(fs_texture, 512, NULL, errorlog);
+			std::cerr << "ERROR: fragment_texture shader 컴파일 실패\n" << errorlog << std::endl;
+			return;
+		}
+	}
+
 }
 GLvoid InitShader() {
 	make_vertexShaders();
 	make_fragmentShaders();
+	{
+		s_program = glCreateProgram();
 
-	s_program = glCreateProgram();
+		glAttachShader(s_program, vertexShader);
+		glAttachShader(s_program, fragmentShader);
+		glLinkProgram(s_program);
 
-	glAttachShader(s_program, vertexShader);
-	glAttachShader(s_program, fragmentShader);
-	glLinkProgram(s_program);
+		checkCompileErrors(s_program, "PROGRAM");
 
-	checkCompileErrors(s_program, "PROGRAM");
+		glDeleteShader(vertexShader);
+		glDeleteShader(fragmentShader);
 
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
+	}
+	
+	{
+		s_program_texture = glCreateProgram();
+		glAttachShader(s_program_texture, vs_texture);
+		glAttachShader(s_program_texture, fs_texture);
+		glLinkProgram(s_program_texture);
+		checkCompileErrors(s_program_texture, "PROGRAM");
+		glDeleteShader(vs_texture);
+		glDeleteShader(fs_texture);
+	}
 
 	glUseProgram(s_program);
+	glUseProgram(s_program_texture);
 }
 void checkCompileErrors(unsigned int shader, std::string type)
 {
@@ -322,4 +380,8 @@ char* filetobuf(const char* file)
 }
 GLuint Gets_program() {
 	return s_program;
+}
+
+GLuint Gets_program_texture() {
+	return s_program_texture;
 }
