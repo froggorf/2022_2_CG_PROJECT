@@ -141,7 +141,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="fragment.glsl" />
+    <None Include="fragment_texture.glsl" />
     <None Include="vertex.glsl" />
+    <None Include="vertex_texture.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
