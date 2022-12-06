@@ -8,6 +8,7 @@
 #include "cube.h"
 #include "mario_character.h"
 #include "check_collision.h"
+
 namespace Play {
     //define - 선언
 
@@ -27,7 +28,7 @@ namespace Play {
     GLvoid SetTransformationMatrix();            //model 변환, 카메라 변환, 뷰잉변환, 투영변환등의 디폴트값 넣어주는 함수
 
     std::vector<Cube>& GetGround();
-
+    glm::vec3 GetMarioPos();
   
 
 
