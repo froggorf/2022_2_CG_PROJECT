@@ -6,9 +6,21 @@
 #include "key_events.h"
 #include "check_collision.h"
 #include "play_state.h"
+#include "ImageManager.h"
+
 #define GravityAcceleration 0.0098
-#define MarioSpeed 0.1
-class Mario {
+#define MarioSpeed 0.3
+
+enum MarioState {
+	IDLE_RIGHT=0,IDLE_LEFT,
+	WALKING_RIGHT,WALKING_LEFT,
+	WALKING_UP_RIGHT,WARKING_UP_LEFT,
+	JUMP_RIGHT,JUMP_LEFT,
+	JUMP_UP_RIGHT,JUMP_UP_LEFT,
+	MARIOSTATEEND
+};
+
+class Mario{
 public:
 	Cube boundingBox;
 	GLfloat speed;
@@ -22,6 +34,9 @@ public:
 	GLvoid falling_gravity();
 	GLvoid move(int);
 	GLvoid handle_collision(int, std::vector<Cube>&);
+	glm::vec3 GetPos();
+
+	GLuint texture[MARIOSTATEEND];
 };
 
 #endif
