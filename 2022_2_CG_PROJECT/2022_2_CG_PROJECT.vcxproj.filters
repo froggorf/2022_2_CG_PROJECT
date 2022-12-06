@@ -21,6 +21,12 @@
     <None Include="vertex.glsl">
       <Filter>리소스 파일</Filter>
     </None>
+    <None Include="fragment_texture.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="vertex_texture.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp">
