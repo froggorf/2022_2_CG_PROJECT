@@ -38,7 +38,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 		std::cout << "GLEW Initialized\n";
 
 	glEnable(GL_DEPTH_TEST);
-
+	glEnable(GL_BLEND);
 	
 	InitShader();
 
