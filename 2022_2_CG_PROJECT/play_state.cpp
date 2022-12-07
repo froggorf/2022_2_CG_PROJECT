@@ -5,12 +5,9 @@ namespace Play {
     Camera camera;
     int cType;                              //카메라 타입(2d뷰 / 3d뷰)
 
-    //객체(큐브) 관련 임시 선언
-    Cube cube;
-    Cube test_cube;
 
     //땅
-    std::vector<Cube> ground;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
+    std::vector<Ground> ground;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
     
     //부숴지는 블럭
     
@@ -49,7 +46,7 @@ namespace Play {
 
     GLvoid update() {
         mario.update();
-        camera.update(GetMarioPos());
+        //camera.update(GetMarioPos());
         if (GetKeyDown()[press5]) {
             glm::mat4 rot = glm::mat4(1.0f);
             rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -57,12 +54,17 @@ namespace Play {
             camera.cameraDirection = rot * glm::vec4(camera.cameraDirection, 1.0f);
             camera.cameraUp = rot * glm::vec4(camera.cameraUp, 1.0f);
         }
-
-        if (GetKeyDown()[press6]) {
-            cType = D2_VIEW;
+        if (GetKeyDown()[press4]) {
+            camera.cameraPos.x -= 0.1;
         }
-        if (GetKeyDown()[press7]) {
-            cType = D3_VIEW;
+        if (GetKeyDown()[press6]) {
+            camera.cameraPos.x += 0.1;
+        }
+        if (GetKeyDown()[press8]) {
+            camera.cameraPos.y -= 0.1;
+        }
+        if (GetKeyDown()[press5]) {
+            camera.cameraPos.y += 0.1;
         }
         
     }
@@ -70,28 +72,24 @@ namespace Play {
     GLvoid draw() {
         SetTransformationMatrix();
        
-
-        //for (int i = 0; i < ground.size(); ++i) {
-        //    ground[i].draw();
-        //}
+        for (int i = 0; i < ground.size(); ++i) {
+            ground[i].draw();
+        }
         mario.draw();
 
         
     }
 
     GLvoid InitBuffer() {
-        //cube.InitBuffer();
-        //test_cube.InitBuffer();
-        
-        //for (int i = 0; i < ground.size(); ++i) {
-        //    ground[i].InitBuffer();
-        //}
+        for (int i = 0; i < ground.size(); ++i) {
+            ground[i].InitBuffer();
+        }
         mario.InitBuffer();
     }
 
     GLvoid InitValue() {
         {   //카메라 값 초기화
-            camera.cameraPos = glm::vec3(0.0f, 15.0f, 50.0f);
+            camera.cameraPos = glm::vec3(0.0f, 12.0f, 50.0f);
             camera.cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
             camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -99,35 +97,15 @@ namespace Play {
             cType = D3_VIEW;
         }
 
-        {   //큐브 관련
-            {
-                cube.init();
-                cube.scale = glm::vec3(20.0f, 20.0f, 20.0f);
-                cube.color = glm::vec3(0.0f, 1.0f, 0.0f);
-
-                test_cube.init();
-                test_cube.scale = glm::vec3(10.0f, 10.0f, 10.0f);
-                test_cube.color = glm::vec3(0.0f, 0.0f, 1.0f);
-
-                //ground.push_back(cube);
-                //ground.push_back(test_cube);
-
-            }
-        }
+        
 
         {
-            Cube temp;
-            temp.init(); 
-            temp.scale = glm::vec3(10.0f, 10.0f, 10.0f);
-            temp.color = glm::vec3(0.0f, 0.0f, 1.0f);
+            Ground t;
+            t.Init();
+            t.boundingBox.scale = glm::vec3(1.5 * 12, 10.0f, 200.0f);
            
-            ground.push_back(temp);
-
-            Cube t;
-            t.init();
-            t.scale = glm::vec3(20.0f, 5.0f, 20.0f);
-            t.color = glm::vec3(0.0f, 1.0f, 0.0f);
             ground.push_back(t);
+
         }
 
         {//마리오 관련
@@ -167,7 +145,7 @@ namespace Play {
 
     }
 
-    std::vector<Cube>& GetGround() {
+    std::vector<Ground>& GetGround() {
         return ground;
     }
 

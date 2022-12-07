@@ -7,7 +7,7 @@
 #include "check_collision.h"
 #include "play_state.h"
 #include "ImageManager.h"
-
+#include "ground.h"
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.3
 
@@ -33,7 +33,7 @@ public:
 	GLvoid handle_events(int);
 	GLvoid falling_gravity();
 	GLvoid move(int);
-	GLvoid handle_collision(int, std::vector<Cube>&);
+	GLvoid handle_collision(int, std::vector<Ground>&);
 	glm::vec3 GetPos();
 
 	GLuint VAO, VBO[3];
