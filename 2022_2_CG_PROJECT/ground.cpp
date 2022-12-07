@@ -60,10 +60,7 @@ GLvoid Ground::draw() {
 	glm::mat4 S = glm::mat4(1.0f);
 	S = glm::scale(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
 	TR = T * S * TR;
-	std::cout << TR[0][0] << " " << TR[0][1] << " " << TR[0][2] << " " << TR[0][3] << std::endl;
-	std::cout << TR[1][0] << " " << TR[1][1] << " " << TR[1][2] << " " << TR[1][3] << std::endl;
-	std::cout << TR[2][0] << " " << TR[2][1] << " " << TR[2][2] << " " << TR[2][3] << std::endl;
-	std::cout << TR[3][0] << " " << TR[3][1] << " " << TR[3][2] << " " << TR[3][3] << std::endl;
+	
 	unsigned int modelLocation = glGetUniformLocation(Gets_program_texture(), "model");
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &TR[0][0]);
 
