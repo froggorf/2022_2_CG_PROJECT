@@ -7,6 +7,7 @@
 #include <random>
 #include <vector>
 #include <fstream>
+#include <string>
 #include <gl/glew.h> 
 #include<gl/freeglut.h>
 #include <gl/freeglut_ext.h>
