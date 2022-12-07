@@ -10,6 +10,7 @@
 #include "ground.h"
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.3
+#define MARIO_MAX_FRAME 7
 
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,
@@ -36,9 +37,10 @@ public:
 	GLvoid handle_collision(int, std::vector<Ground>&);
 	glm::vec3 GetPos();
 
+	GLfloat frame;
 	GLuint VAO, VBO[3];
 
-	GLuint texture[MARIOSTATEEND];
+	GLuint texture[MARIOSTATEEND][MARIO_MAX_FRAME];
 };
 
 #endif

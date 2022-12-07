@@ -6,9 +6,12 @@ enum HANDLE_COLLISION {
 
 GLvoid Mario::init() {
 	boundingBox.init();
+	boundingBox.scale = glm::vec3(1.5f, 1.5f, 1.0f);
 	speed = MarioSpeed;
 	gravity = 0;
 	flag_jump = true;
+	frame = 0;
+	
 }
 
 GLvoid Mario::update() {
@@ -16,6 +19,11 @@ GLvoid Mario::update() {
 		if (GetKeyDown()[i]) {
 			handle_events(i);
 		}
+	}
+
+	frame += 0.2;
+	if (frame >= 4) {
+		frame = 0;
 	}
 
 	{//중력 처리 -> 함수로 변경 예정
@@ -67,7 +75,7 @@ GLvoid Mario::draw() {
 	glBufferData(GL_ARRAY_BUFFER, sizeof(mario_vertices), mario_vertices, GL_STATIC_DRAW);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(3);
-
+	
 	//glBindBuffer(GL_ARRAY_BUFFER, VBO[NORMAL]);	//노말벡터에 관련된 값이오나 임시로 확인하기 위해 사용
 	//glm::vec3 norm[36];
 	//for (int i = 0; i < 36; ++i) {
@@ -83,18 +91,45 @@ GLvoid Mario::draw() {
 	glEnableVertexAttribArray(5);
 
 	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 유니폼 샘플러의 위치를 가져옴
-	glActiveTexture(texture[IDLE_RIGHT]);
-	glBindTexture(GL_TEXTURE_2D, texture[IDLE_RIGHT]);
+	
+	glActiveTexture(texture[WALKING_RIGHT][(int)frame]);
+	glBindTexture(GL_TEXTURE_2D, texture[WALKING_RIGHT][(int)frame]);
 	glUniform1i(tLocation, 0);
+	
+	
 
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(mario_vertices) / sizeof(mario_vertices[0]));
 }
+
+GLuint mario_max_frame[MARIOSTATEEND];
 
 GLvoid Mario::InitBuffer() {
 	//boundingBox.InitBuffer();
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(3, VBO);
-	LoadTexture(texture[IDLE_RIGHT], "resource/Mario/mario_IDLE_01.png");
+	if (mario_max_frame[IDLE_RIGHT] == 0) {
+		mario_max_frame[IDLE_RIGHT] = 7;
+		mario_max_frame[IDLE_LEFT] = 7;
+		mario_max_frame[WALKING_LEFT] = 4;
+		mario_max_frame[WALKING_RIGHT] = 4;
+	}
+	for (int i = 0; i < mario_max_frame[IDLE_RIGHT]; ++i) {
+		std::string resourcedir = "resource/Mario/IDLE_RIGHT/mario_IDLE_RIGHT_0" + std::to_string(i+1) + ".png";
+		LoadTexture(texture[IDLE_RIGHT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[IDLE_LEFT]; ++i) {
+		std::string resourcedir = "resource/Mario/IDLE_LEFT/mario_IDLE_RIGHT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[IDLE_LEFT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[WALKING_RIGHT]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_RIGHT/mario_WALK_RIGHT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[WALKING_RIGHT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[WALKING_LEFT]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_WALK_LEFT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[WALKING_LEFT][i], resourcedir.c_str());
+	}
+	
 }
 
 GLvoid Mario::handle_events(int e) {
