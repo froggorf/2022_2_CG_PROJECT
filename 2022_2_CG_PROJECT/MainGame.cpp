@@ -11,17 +11,6 @@ GLuint fs_texture;
 GLuint s_program;
 GLuint s_program_texture;
 
-
-
-
-
-
-
-
-
-
-
-
 int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정 
 { //--- 윈도우 생성하기
 	glutInit(&argc, argv); // glut 초기화
@@ -62,9 +51,6 @@ GLvoid MainTimer(int value) {
 	if (GetRunning()) {
 		//state[now].handle_events();
 		GetGameState()[GetNow()].update();
-
-
-
 	}
 	else {
 		exit(0);
@@ -76,12 +62,8 @@ GLvoid MainTimer(int value) {
 
 GLvoid drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-
 	GetGameState()[GetNow()].draw();
-
 	glutSwapBuffers(); // 화면에 출력하기
 }
 
