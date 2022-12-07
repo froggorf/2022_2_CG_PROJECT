@@ -3,7 +3,8 @@
 #include "stdafx.h"
 #include "MainGame.h"
 #include "camera.h"
-enum VBOType { POS = 0, NORMAL = 1 };
+#include "ImageManager.h"
+enum VBOType { POS = 0, NORMAL = 1, TEXTURE };
 
 class Cube {
 public:
@@ -13,15 +14,15 @@ public:
 
     glm::vec3 color;
 
-    GLuint VAO, VBO[2];
     
-    GLvoid InitBuffer();
     GLvoid init();
-    GLvoid DelBuffer();
-    GLvoid draw();
     GLboolean CubeCollide(Cube);
+
+
 };
 
+glm::vec3* GetCubeVertices();
+glm::vec3* GetCubeNormal();
 
 
 #endif

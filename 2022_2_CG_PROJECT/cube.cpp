@@ -30,11 +30,32 @@ glm::vec3 cube_normal[36] = {
      glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f),
 };
 
+glm::vec2 cube_texture[36] = {
+    //012 023 -- 윗면
+    glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+    glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
 
-GLvoid Cube::InitBuffer() {
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(2, VBO);
-}
+
+    glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+    glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+
+
+    glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+    glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+
+
+    glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+    glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+
+
+    glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+    glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+
+
+    glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+    glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+};
+
 
 GLvoid Cube::init() {
     trans = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -43,63 +64,73 @@ GLvoid Cube::init() {
     color = glm::vec3(1.0f, 1.0f, 1.0f);
 }
 
-GLvoid Cube::DelBuffer() {
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(2, VBO);
+glm::vec3* GetCubeVertices() {
+    return cube_vertices;
 }
-GLvoid Cube::draw() {
-    //model 변환
-    glm::mat4 TR = glm::mat4(1.0f);
-
-    glm::mat4 T = glm::mat4(1.0f);
-    T = glm::translate(T, glm::vec3(trans.x, trans.y, trans.z));
-
-    glm::mat4 S = glm::mat4(1.0f);
-    S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
-
-    glm::mat4 Rot = glm::mat4(1.0f);
-    Rot = glm::rotate(Rot, glm::radians(rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
-    Rot = glm::rotate(Rot, glm::radians(rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
-    Rot = glm::rotate(Rot, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
-    TR = T * Rot * S * TR;
-
-    unsigned int modelLocation = glGetUniformLocation(Gets_program(), "model");
-    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &TR[0][0]);
-
-    glBindVertexArray(VAO);
-
-    //조명 o
-    glBindBuffer(GL_ARRAY_BUFFER, VBO[POS]);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO[NORMAL]);   //노말벡터에 관련된 값이오나 임시로 확인하기 위해 사용
-    glm::vec3 norm[36];
-    for (int i = 0; i < 36; ++i) {
-        norm[i] = glm::mat3(glm::transpose(glm::inverse(TR))) * cube_normal[i];
-    }
-
-    glBufferData(GL_ARRAY_BUFFER, sizeof(norm), norm, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(1);
-
-
-
-    int ambientLightLocation = glGetUniformLocation(Gets_program(), "ambientLight");
-    glUniform3f(ambientLightLocation, 0.35f, 0.35f, 0.35f);
-    int lightPosLocation = glGetUniformLocation(Gets_program(), "lightPos");
-    glUniform3f(lightPosLocation, 0.0f, 50.0f, 0.0f);
-    int lightColorLocation = glGetUniformLocation(Gets_program(), "lightColor");
-    glUniform3f(lightColorLocation, 1.0f, 1.0f, 1.0f);
-    int objColorLocation = glGetUniformLocation(Gets_program(), "objectColor");
-    glUniform3f(objColorLocation, color.x, color.y, color.z);
-    
-
-    glDrawArrays(GL_TRIANGLES, 0, sizeof(cube_vertices) / sizeof(cube_vertices[0]));
+glm::vec3* GetCubeNormal() {
+    return cube_normal;
 }
+//
+//GLvoid Cube::draw() {
+//    //model 변환
+//    glm::mat4 TR = glm::mat4(1.0f);
+//
+//    glm::mat4 T = glm::mat4(1.0f);
+//    T = glm::translate(T, glm::vec3(trans.x, trans.y, trans.z));
+//
+//    glm::mat4 S = glm::mat4(1.0f);
+//    S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
+//
+//    glm::mat4 Rot = glm::mat4(1.0f);
+//    Rot = glm::rotate(Rot, glm::radians(rot.x), glm::vec3(1.0f, 0.0f, 0.0f));
+//    Rot = glm::rotate(Rot, glm::radians(rot.y), glm::vec3(0.0f, 1.0f, 0.0f));
+//    Rot = glm::rotate(Rot, glm::radians(rot.z), glm::vec3(0.0f, 0.0f, 1.0f));
+//    TR = T * Rot * S * TR;
+//
+//    unsigned int modelLocation = glGetUniformLocation(Gets_program(), "model");
+//    glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &TR[0][0]);
+//
+//    glBindVertexArray(VAO);
+//
+//    //조명 o
+//    glBindBuffer(GL_ARRAY_BUFFER, VBO[POS]);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+//
+//    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+//    glEnableVertexAttribArray(0);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, VBO[NORMAL]);   //노말벡터에 관련된 값이오나 임시로 확인하기 위해 사용
+//    glm::vec3 norm[36];
+//    for (int i = 0; i < 36; ++i) {
+//        norm[i] = glm::mat3(glm::transpose(glm::inverse(TR))) * cube_normal[i];
+//    }
+//
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(norm), norm, GL_STATIC_DRAW);
+//    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+//    glEnableVertexAttribArray(1);
+//
+//    glBindBuffer(GL_ARRAY_BUFFER, VBO[TEXTURE]);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_texture), cube_texture, GL_STATIC_DRAW);
+//    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+//    glEnableVertexAttribArray(2);
+//
+//    int tLocation = glGetUniformLocation(Gets_program(), "outTexture"); //--- outTexture1 유니폼 샘플러의 위치를 가져옴
+//    glActiveTexture(box_texture);
+//    glBindTexture(GL_TEXTURE_2D, box_texture);
+//    glUniform1i(tLocation, 0);
+//
+//    //int ambientLightLocation = glGetUniformLocation(Gets_program(), "ambientLight");
+//    //glUniform3f(ambientLightLocation, 0.35f, 0.35f, 0.35f);
+//    //int lightPosLocation = glGetUniformLocation(Gets_program(), "lightPos");
+//    //glUniform3f(lightPosLocation, 0.0f, 50.0f, 0.0f);
+//    //int lightColorLocation = glGetUniformLocation(Gets_program(), "lightColor");
+//    //glUniform3f(lightColorLocation, 1.0f, 1.0f, 1.0f);
+//    //int objColorLocation = glGetUniformLocation(Gets_program(), "objectColor");
+//    //glUniform3f(objColorLocation, color.x, color.y, color.z);
+//    
+//
+//    glDrawArrays(GL_TRIANGLES, 0, sizeof(cube_vertices) / sizeof(cube_vertices[0]));
+//}
 
 
 GLboolean Cube::CubeCollide(Cube other) {
