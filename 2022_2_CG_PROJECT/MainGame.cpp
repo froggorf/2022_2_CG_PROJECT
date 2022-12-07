@@ -11,6 +11,17 @@ GLuint fs_texture;
 GLuint s_program;
 GLuint s_program_texture;
 
+
+
+
+
+
+
+
+
+
+
+
 int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정 
 { //--- 윈도우 생성하기
 	glutInit(&argc, argv); // glut 초기화
@@ -28,7 +39,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 
 	glEnable(GL_DEPTH_TEST);
 
-
+	
 	InitShader();
 
 	glutDisplayFunc(drawScene); // 출력 함수의 지정
@@ -67,6 +78,7 @@ GLvoid drawScene() {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
 	GetGameState()[GetNow()].draw();
 
@@ -336,7 +348,7 @@ GLvoid InitShader() {
 		glDeleteShader(fs_texture);
 	}
 
-	glUseProgram(s_program);
+	glUseProgram(s_program_texture);
 }
 void checkCompileErrors(unsigned int shader, std::string type)
 {
@@ -383,5 +395,6 @@ GLuint Gets_program() {
 }
 
 GLuint Gets_program_texture() {
+	
 	return s_program_texture;
 }

@@ -49,7 +49,7 @@ namespace Play {
 
     GLvoid update() {
         mario.update();
-        
+        camera.update(GetMarioPos());
         if (GetKeyDown()[press5]) {
             glm::mat4 rot = glm::mat4(1.0f);
             rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -71,9 +71,9 @@ namespace Play {
         SetTransformationMatrix();
        
 
-        for (int i = 0; i < ground.size(); ++i) {
-            ground[i].draw();
-        }
+        //for (int i = 0; i < ground.size(); ++i) {
+        //    ground[i].draw();
+        //}
         mario.draw();
 
         
@@ -83,9 +83,9 @@ namespace Play {
         //cube.InitBuffer();
         //test_cube.InitBuffer();
         
-        for (int i = 0; i < ground.size(); ++i) {
-            ground[i].InitBuffer();
-        }
+        //for (int i = 0; i < ground.size(); ++i) {
+        //    ground[i].InitBuffer();
+        //}
         mario.InitBuffer();
     }
 
@@ -138,14 +138,14 @@ namespace Play {
     GLvoid SetTransformationMatrix() {
         {//model 변환
             glm::mat4 TR = glm::mat4(1.0f);
-            unsigned int modelLocation = glGetUniformLocation(Gets_program(), "model");
+            unsigned int modelLocation = glGetUniformLocation(Gets_program_texture(), "model");
             glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &TR[0][0]);
         }
 
         {//카메라 변환
             glm::mat4 view = glm::mat4(1.0f);
             view = glm::lookAt(camera.cameraPos, camera.cameraPos + camera.cameraDirection, camera.cameraUp);
-            unsigned int viewLocation = glGetUniformLocation(Gets_program(), "view");
+            unsigned int viewLocation = glGetUniformLocation(Gets_program_texture(), "view");
             glUniformMatrix4fv(viewLocation, 1, GL_FALSE, &view[0][0]);
         }
 
@@ -158,19 +158,21 @@ namespace Play {
             else {                  //2D 뷰
                 projection = glm::ortho(-CameraViewSize/20,CameraViewSize/20, -CameraViewSize/20, CameraViewSize/20, 0.1f, CameraViewSize);
             }
-
-
-            unsigned int projectLoc = glGetUniformLocation(Gets_program(), "projection");
+            unsigned int projectLoc = glGetUniformLocation(Gets_program_texture(), "projection");
             glUniformMatrix4fv(projectLoc, 1, GL_FALSE, &projection[0][0]);
         }
 
-        unsigned int viewPosLocation = glGetUniformLocation(Gets_program(), "viewPos");
-        glUniform3f(viewPosLocation, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
+        //unsigned int viewPosLocation = glGetUniformLocation(Gets_program(), "viewPos");
+        //glUniform3f(viewPosLocation, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
     }
 
     std::vector<Cube>& GetGround() {
         return ground;
+    }
+
+    glm::vec3 GetMarioPos() {
+        return mario.boundingBox.trans;
     }
 }
 
