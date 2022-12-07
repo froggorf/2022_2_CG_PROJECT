@@ -36,6 +36,8 @@ public:
 	GLvoid handle_collision(int, std::vector<Cube>&);
 	glm::vec3 GetPos();
 
+	GLuint VAO, VBO[3];
+
 	GLuint texture[MARIOSTATEEND];
 };
 

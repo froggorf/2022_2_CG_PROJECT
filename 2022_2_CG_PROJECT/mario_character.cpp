@@ -33,12 +33,68 @@ GLvoid Mario::update() {
 
 }
 
+glm::vec3 mario_vertices[6]{
+	glm::vec3(-0.5,0.5,0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(0.5,-0.5,0.5),
+	glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,0.5,0.5),
+};
+glm::vec2 mario_texture[6]{
+	 glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+	glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+};
+
 GLvoid Mario::draw() {
-	boundingBox.draw();
+	//boundingBox.draw();
+
+	glm::mat4 TR = glm::mat4(1.0f);
+	
+	glm::mat4 T = glm::mat4(1.0f);
+	T = glm::translate(T, glm::vec3(boundingBox.trans.x, boundingBox.trans.y, boundingBox.trans.z));
+
+	glm::mat4 S = glm::mat4(1.0f);
+	S = glm::translate(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
+
+
+
+	TR = T * S * TR;
+
+	unsigned int modelLocation = glGetUniformLocation(Gets_program_texture(), "model");
+	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &TR[0][0]);
+
+	glBindVertexArray(VAO);
+
+	//조명 o
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[POS]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(mario_vertices), mario_vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(3);
+
+	//glBindBuffer(GL_ARRAY_BUFFER, VBO[NORMAL]);	//노말벡터에 관련된 값이오나 임시로 확인하기 위해 사용
+	//glm::vec3 norm[36];
+	//for (int i = 0; i < 36; ++i) {
+	//	norm[i] = glm::mat3(glm::transpose(glm::inverse(TR))) * glm::vec3(cube_normal[i][X], cube_normal[i][Y], cube_normal[i][Z]);
+	//}
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(norm), norm, GL_STATIC_DRAW);
+	//glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	//glEnableVertexAttribArray(4);
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO[TEXTURE]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(mario_texture), mario_texture, GL_STATIC_DRAW);
+	glVertexAttribPointer(5, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(5);
+
+	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 유니폼 샘플러의 위치를 가져옴
+	glActiveTexture(texture[IDLE_RIGHT]);
+	glBindTexture(GL_TEXTURE_2D, texture[IDLE_RIGHT]);
+	glUniform1i(tLocation, 0);
+
+	glDrawArrays(GL_TRIANGLES, 0, sizeof(mario_vertices) / sizeof(mario_vertices[0]));
 }
 
 GLvoid Mario::InitBuffer() {
-	boundingBox.InitBuffer();
+	//boundingBox.InitBuffer();
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(3, VBO);
+	LoadTexture(texture[IDLE_RIGHT], "resource/Mario/mario_IDLE_01.png");
 }
 
 GLvoid Mario::handle_events(int e) {
@@ -99,19 +155,15 @@ GLvoid Mario::handle_collision(int events, std::vector<Cube>& ground) {
 		if (CheckAABB(boundingBox, ground[i])) {
 			switch (events) {
 			case pressW:
-				printf("z다운중\n");
 				boundingBox.trans.z = ground[i].trans.z + 0.5 * ground[i].scale.z + 0.5 * boundingBox.scale.z;
 				break;
 			case pressS:
-				printf("z업중\n");
 				boundingBox.trans.z = ground[i].trans.z - 0.5 * ground[i].scale.z - 0.5 * boundingBox.scale.z;
 				break;
 			case pressA:
-				printf("x다운중\n");
 				boundingBox.trans.x = ground[i].trans.x + 0.5 * ground[i].scale.x + 0.5 * boundingBox.scale.x;
 				break;
 			case pressD:
-				printf("x업중\n");
 				boundingBox.trans.x = ground[i].trans.x - 0.5 * ground[i].scale.x - 0.5 * boundingBox.scale.x;
 				
 				break;
