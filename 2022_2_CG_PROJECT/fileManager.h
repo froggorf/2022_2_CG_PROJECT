@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "cube.h"
 #include "ground.h"
-void loadGroundStage1(std::vector<Ground>& vec);
+#include "brick.h"
+
+void loadStage1(std::vector<Cube>& vec);
 void loadCube(std::vector<Cube>& vec);
