@@ -83,6 +83,9 @@
     <ClCompile Include="title_state.cpp">
       <Filter>FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="brick.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -132,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="game_world.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="brick.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
