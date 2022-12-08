@@ -8,8 +8,10 @@ public:
 
 	GLuint VAO, VBO[3];
 
+	GLuint coins;
+
 	MysteryBlock();
-	MysteryBlock(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
+	MysteryBlock(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLuint coin);
 	~MysteryBlock();
 
 	GLvoid Init();
@@ -18,3 +20,8 @@ public:
 };
 
 #endif
+
+// 10번 Hp
+// 12번 코인 1개
+// 14번 코인 1개
+// 37번 코인 1개
