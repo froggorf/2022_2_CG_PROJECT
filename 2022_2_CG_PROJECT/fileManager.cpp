@@ -24,17 +24,39 @@ void loadStage1(std::vector<Cube*> &vec) {
 		while (!ifs.eof()) {
 			glm::vec3 scale, trans, rotate;
 			char c;
+			Cube* temp;
 			ifs >> scale[0] >> c >> scale[1] >> c >> scale[2];
 			ifs >> trans[0] >> c >> trans[1] >> c >> trans[2];
 			ifs >> rotate[0] >> c >> rotate[1] >> c >> rotate[2];
 			if (i < 4) {
-				auto temp = new Ground(scale, trans, rotate);
+				temp = new Ground(scale, trans, rotate);
 				vec.push_back(temp);
 			}
-			else if (i >= 4 and i < 6) {}//TODO: 문
-			else if (i >= 6 and i < 10) {}//TODO: 관
+			else if (i >= 4 and i < 6) {
+				temp = new Door(scale, trans, rotate);
+				vec.push_back(temp);
+			}//TODO: 문
+			else if (i >= 6 and i < 10) {
+				temp = new Pipe(scale, trans, rotate);
+				vec.push_back(temp);
+			}//TODO: 관
+			else if (i >= 19 and i < 37) {
+				temp = new Block(scale, trans, rotate);
+				vec.push_back(temp);
+			}//TODO: 블럭
 			else {
-				auto temp = new MysteryBlock(scale, trans, rotate);
+				switch (i)
+				{
+				case 10:
+					temp = new MysteryBlock(scale, trans, rotate, 100);
+					break;
+				case 12: case 14: case 37:
+					temp = new MysteryBlock(scale, trans, rotate, 1);
+					break;
+				default:
+					temp = new Brick(scale, trans, rotate);
+					break;
+				}
 				vec.push_back(temp);
 			}
 			i++;
