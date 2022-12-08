@@ -1,4 +1,5 @@
 #include "play_state.h"
+#include "fileManager.h"
 
 namespace Play {
     //카메라 관련 선언
@@ -81,9 +82,10 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
-        for (int i = 0; i < ground.size(); ++i) {
-            ground[i].InitBuffer();
-        }
+        //for (int i = 0; i < ground.size(); ++i) {
+        //    ground[i].InitBuffer();
+        //}
+        loadGroundStage1(ground);
         mario.InitBuffer();
     }
 
