@@ -15,11 +15,14 @@
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,
 	WALKING_RIGHT,WALKING_LEFT,
-	WALKING_UP_RIGHT,WARKING_UP_LEFT,
+	WALKING_RIGHT_UP,WALKING_LEFT_UP,
 	JUMP_RIGHT,JUMP_LEFT,
-	JUMP_UP_RIGHT,JUMP_UP_LEFT,
+	JUMP_RIGHT_UP,JUMP_LEFT_UP,
+	HURT_RIGHT,HURT_LEFT,
 	MARIOSTATEEND
 };
+
+
 
 class Mario{
 public:
@@ -27,6 +30,8 @@ public:
 	GLfloat speed;
 	GLfloat gravity;
 	GLboolean flag_jump;
+	GLint cur_state;
+
 	GLvoid InitBuffer();
 	GLvoid init();
 	GLvoid draw();

@@ -11,7 +11,7 @@ GLvoid Mario::init() {
 	gravity = 0;
 	flag_jump = true;
 	frame = 0;
-	
+	cur_state = IDLE_RIGHT;
 }
 
 GLvoid Mario::update() {
@@ -92,8 +92,8 @@ GLvoid Mario::draw() {
 
 	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 À¯´ÏÆû »ùÇÃ·¯ÀÇ À§Ä¡¸¦ °¡Á®¿È
 	
-	glActiveTexture(texture[WALKING_RIGHT][(int)frame]);
-	glBindTexture(GL_TEXTURE_2D, texture[WALKING_RIGHT][(int)frame]);
+	glActiveTexture(texture[cur_state][(int)frame]);
+	glBindTexture(GL_TEXTURE_2D, texture[cur_state][(int)frame]);
 	glUniform1i(tLocation, 0);
 	
 	
@@ -112,6 +112,14 @@ GLvoid Mario::InitBuffer() {
 		mario_max_frame[IDLE_LEFT] = 7;
 		mario_max_frame[WALKING_LEFT] = 4;
 		mario_max_frame[WALKING_RIGHT] = 4;
+		mario_max_frame[WALKING_RIGHT_UP] = 2;
+		mario_max_frame[WALKING_LEFT_UP] = 2;
+		mario_max_frame[JUMP_RIGHT] = 1;
+		mario_max_frame[JUMP_LEFT] = 1;
+		mario_max_frame[JUMP_RIGHT_UP] = 1;
+		mario_max_frame[JUMP_LEFT_UP] = 1;
+		mario_max_frame[HURT_RIGHT] = 1;
+		mario_max_frame[HURT_LEFT] = 1;
 	}
 	for (int i = 0; i < mario_max_frame[IDLE_RIGHT]; ++i) {
 		std::string resourcedir = "resource/Mario/IDLE_RIGHT/mario_IDLE_RIGHT_0" + std::to_string(i+1) + ".png";
@@ -128,6 +136,38 @@ GLvoid Mario::InitBuffer() {
 	for (int i = 0; i < mario_max_frame[WALKING_LEFT]; ++i) {
 		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_WALK_LEFT_0" + std::to_string(i + 1) + ".png";
 		LoadTexture(texture[WALKING_LEFT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[WALKING_RIGHT_UP]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_WALK_RIGHT_UP_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[WALKING_RIGHT_UP][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[WALKING_LEFT_UP]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_WALK_LEFT_UP_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[WALKING_LEFT_UP][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[JUMP_RIGHT]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_JUMP_RIGHT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[JUMP_RIGHT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[JUMP_LEFT]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_JUMP_LEFT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[JUMP_LEFT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[JUMP_RIGHT_UP]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_JUMP_RIGHT_UP_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[JUMP_RIGHT_UP][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[JUMP_LEFT_UP]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_JUMP_LEFT_UP_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[JUMP_LEFT_UP][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[HURT_RIGHT]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_HURT_RIGHT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[HURT_RIGHT][i], resourcedir.c_str());
+	}
+	for (int i = 0; i < mario_max_frame[HURT_LEFT]; ++i) {
+		std::string resourcedir = "resource/Mario/WALK_LEFT/mario_HURT_LEFT_0" + std::to_string(i + 1) + ".png";
+		LoadTexture(texture[HURT_LEFT][i], resourcedir.c_str());
 	}
 	
 }
