@@ -8,7 +8,7 @@ namespace Play {
 
 
     //땅
-    std::vector<Ground> ground;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
+    std::vector<Cube> map;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
     
     //부숴지는 블럭
     
@@ -27,7 +27,7 @@ namespace Play {
 
     GLvoid exit() {
         std::cout << "exit - play" << std::endl;
-        ground.clear();
+        map.clear();
         
         //DelBuffer();
         //DelValue();
@@ -73,8 +73,8 @@ namespace Play {
     GLvoid draw() {
         SetTransformationMatrix();
        
-        for (int i = 0; i < ground.size(); ++i) {
-            ground[i].draw();
+        for (int i = 0; i < map.size(); ++i) {
+            map[i].draw();
         }
         mario.draw();
 
@@ -85,7 +85,7 @@ namespace Play {
         //for (int i = 0; i < ground.size(); ++i) {
         //    ground[i].InitBuffer();
         //}
-        loadGroundStage1(ground);
+        loadStage1(map);
         mario.InitBuffer();
     }
 
@@ -101,14 +101,14 @@ namespace Play {
 
         
 
-        {
-            Ground t;
-            t.Init();
-            t.boundingBox.scale = glm::vec3(1.5 * 12, 10.0f, 200.0f);
-           
-            ground.push_back(t);
-
-        }
+        //{
+        //    Ground t;
+        //    t.Init();
+        //    t.boundingBox.scale = glm::vec3(1.5 * 12, 10.0f, 200.0f);
+        //   
+        //    ground.push_back(t);
+        //
+        //}
 
         {//마리오 관련
             mario.init();
@@ -147,8 +147,8 @@ namespace Play {
 
     }
 
-    std::vector<Ground>& GetGround() {
-        return ground;
+    std::vector<Cube>& GetGround() {
+        return map;
     }
 
     glm::vec3 GetMarioPos() {
