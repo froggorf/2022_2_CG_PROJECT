@@ -1,38 +1,42 @@
 #include "MysteryBlock.h"
 
-glm::vec2 mysteryBlock_text_pos[6] = {
-	glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
-	glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+glm::vec2 mysteryBlock_text_pos[] = {
+	glm::vec2(0.5,0.666666),glm::vec2(0.5,0.333333),glm::vec2(0.75,0.333333),
+	glm::vec2(0.5,0.666666),glm::vec2(0.75,0.333333),glm::vec2(0.75,0.666666),
+	glm::vec2(0.5,0.666666),glm::vec2(0.5,0.333333),glm::vec2(0.75,0.333333),
+	glm::vec2(0.5,0.666666),glm::vec2(0.75,0.333333),glm::vec2(0.75,0.666666),
 
-	//glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
-	//glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
-
-	//glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
-	//glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
-
-	//glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
-	//glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
-
-	//glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
-	//glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
-
-	//glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
-	//glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.333333),glm::vec2(0.5,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.666666),glm::vec2(0.25,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.333333),glm::vec2(0.5,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.666666),glm::vec2(0.25,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.333333),glm::vec2(0.5,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.666666),glm::vec2(0.25,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.333333),glm::vec2(0.5,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.666666),glm::vec2(0.25,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.333333),glm::vec2(0.5,0.666666),
+	glm::vec2(0.25,0.333333),glm::vec2(0.5,0.666666),glm::vec2(0.25,0.666666),
 };
 
-glm::vec3 test_mysteryBlock_vertices[6] = {
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,0.5,0.5),
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,0.5,-0.5),
-	/*glm::vec3(-0.5,0.5,0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(0.5,-0.5,0.5),
-	glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,0.5,0.5),
-	glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,-0.5,-0.5),
-	glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,-0.5), glm::vec3(0.5,0.5,-0.5),
-	glm::vec3(0.5,0.5,-0.5), glm::vec3(0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),
-	glm::vec3(0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,0.5,-0.5),
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,0.5),
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),
-	glm::vec3(-0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,0.5),
-	glm::vec3(-0.5,-0.5,-0.5), glm::vec3(0.5,-0.5,0.5),glm::vec3(-0.5,-0.5,0.5)*/
+glm::vec3 test_mysteryBlock_vertices[] = {
+	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,0.5,0.5),		// 0, 1, 2		윗면
+	glm::vec3(-0.5,0.5,-0.5),glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,0.5,-0.5),		// 0, 2, 3
+
+	glm::vec3(-0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,0.5),		// 7, 6, 5		아랫면
+	glm::vec3(-0.5,-0.5,-0.5), glm::vec3(0.5,-0.5,0.5),glm::vec3(-0.5,-0.5,0.5),	// 7, 5, 4
+
+	glm::vec3(-0.5,0.5,0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(0.5,-0.5,0.5),		// 1, 4, 5		그 외
+	glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,0.5,0.5),			// 1, 5, 2
+
+	glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,-0.5,-0.5),		// 2, 5, 6
+	glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,-0.5), glm::vec3(0.5,0.5,-0.5),		// 2, 6, 3
+
+	glm::vec3(0.5,0.5,-0.5), glm::vec3(0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),	// 3, 6, 7
+	glm::vec3(0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,0.5,-0.5),		// 3, 7, 0
+
+	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,0.5),	// 0, 7, 4
+	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
+
 };
 
 GLuint mysteryBlock_texture = -1;
@@ -63,7 +67,7 @@ GLvoid MysteryBlock::InitBuffer() {
 	glGenBuffers(3, VBO);
 	if (mysteryBlock_texture == -1) {
 		//임시 코드임 나중에 이미지 수정해야함
-		LoadTexture(mysteryBlock_texture, "brick_uv_map.png");
+		LoadTexture(mysteryBlock_texture, "resource/Map/mystery_box.png");
 	}
 }
 
@@ -71,9 +75,10 @@ GLvoid MysteryBlock::draw() {
 	glUseProgram(Gets_program_texture());
 	glm::mat4 TR = glm::mat4(1.0f);
 	glm::mat4 T = glm::mat4(1.0f);
-	T = glm::translate(T, glm::vec3(boundingBox.trans.x, boundingBox.trans.y, boundingBox.trans.z));
 	glm::mat4 S = glm::mat4(1.0f);
-	S = glm::scale(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
+
+	T = glm::translate(T, glm::vec3(trans.x, trans.y, trans .z));
+	S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
 	TR = T * S * TR;
 
 	unsigned int modelLocation = glGetUniformLocation(Gets_program_texture(), "model");

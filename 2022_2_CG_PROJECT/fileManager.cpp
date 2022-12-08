@@ -34,7 +34,7 @@ void loadStage1(std::vector<Cube*> &vec) {
 			else if (i >= 4 and i < 6) {}//TODO: ¹®
 			else if (i >= 6 and i < 10) {}//TODO: °ü
 			else {
-				auto temp = new Brick(scale, trans, rotate);
+				auto temp = new MysteryBlock(scale, trans, rotate);
 				vec.push_back(temp);
 			}
 			i++;
