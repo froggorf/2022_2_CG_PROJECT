@@ -77,6 +77,8 @@ glm::vec3* GetCubeVertices() {
 glm::vec3* GetCubeNormal() {
     return cube_normal;
 }
+
+void Cube::draw() {};
 //
 //GLvoid Cube::draw() {
 //    //model º¯È¯
