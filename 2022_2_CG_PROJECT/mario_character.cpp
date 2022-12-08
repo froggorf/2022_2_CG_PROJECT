@@ -60,11 +60,12 @@ GLvoid Mario::draw() {
 	T = glm::translate(T, glm::vec3(boundingBox.trans.x, boundingBox.trans.y, boundingBox.trans.z));
 
 	glm::mat4 S = glm::mat4(1.0f);
-	S = glm::translate(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
+	S = glm::scale(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
 
+	glm::mat4 rot = glm::mat4(1.0f);
+	rot = glm::rotate(rot, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-
-	TR = T * S * TR;
+	TR = T * rot * S * TR;
 
 	unsigned int modelLocation = glGetUniformLocation(Gets_program_texture(), "model");
 	glUniformMatrix4fv(modelLocation, 1, GL_FALSE, &TR[0][0]);
@@ -238,6 +239,8 @@ GLvoid Mario::handle_events(int type, unsigned char key) {
 	case GLUT_KEY_UP:
 		break;
 	}
+	std::cout << "MARIO: " << boundingBox.trans.x << " , " << boundingBox.trans.y << " , " << boundingBox.trans.z << std::endl;
+
 }
 
 GLvoid Mario::falling_gravity() {

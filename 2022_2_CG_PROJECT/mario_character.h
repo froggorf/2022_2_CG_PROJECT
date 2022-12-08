@@ -9,7 +9,7 @@
 #include "ImageManager.h"
 #include "ground.h"
 #define GravityAcceleration 0.0098
-#define MarioSpeed 0.3
+#define MarioSpeed 0.1
 #define MARIO_MAX_FRAME 7
 #define RIGHT 0
 #define LEFT 1

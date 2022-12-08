@@ -3,9 +3,9 @@
 GLvoid Camera::update(glm::vec3 marioPos) {
 	switch (cType) {
 	case D3_VIEW:
-		cameraPos = marioPos;
-		cameraPos.y += 10.0f;
-		cameraPos.z += 30.0f;
+		cameraPos.x = marioPos.x-5.0f;
+		cameraPos.y = marioPos.y+ 1.5f;
+		cameraPos.z = marioPos.z;
 		break;
 	case D2_VIEW:
 		break;
