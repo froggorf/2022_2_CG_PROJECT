@@ -23,7 +23,8 @@ namespace Play {
     GLvoid handle_events();
     GLvoid update();
     GLvoid draw();
-
+    GLvoid key_down(unsigned char, int, int);
+    GLvoid key_up(unsigned char, int, int);
     GLvoid InitBuffer();
     GLvoid InitValue();                        //값 초기화 함수
     GLvoid SetTransformationMatrix();            //model 변환, 카메라 변환, 뷰잉변환, 투영변환등의 디폴트값 넣어주는 함수

@@ -20,6 +20,8 @@ public:
 	void(*handle_events)();
 	void(*update)();
 	void(*draw)();
+	void(*key_down)(unsigned char, int, int);
+	void(*key_up)(unsigned char, int, int);
 
 	void init();
 	void setting(int);

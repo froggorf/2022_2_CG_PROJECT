@@ -67,6 +67,9 @@ GLvoid GameState::init() {
 	handle_events = nullptr;
 	update = nullptr;
 	draw = nullptr;
+	key_down = nullptr;
+	key_up = nullptr;
+
 }
 GLvoid GameState::setting(int g_state_type) {
 	state_type = g_state_type;
@@ -79,6 +82,8 @@ GLvoid GameState::setting(int g_state_type) {
 		handle_events = Logo::handle_events;
 		update = Logo::update;
 		draw = Logo::draw;
+		key_down = Logo::key_down;
+		key_up = Logo::key_up;
 		break;
 	case GameStateType::TITLE:
 		enter = Title::enter;
@@ -88,6 +93,8 @@ GLvoid GameState::setting(int g_state_type) {
 		handle_events = Title::handle_events;
 		update = Title::update;
 		draw = Title::draw;
+		key_down = Title::key_down;
+		key_up = Title::key_up;
 		break;
 	case GameStateType::PLAY:
 		enter = Play::enter;
@@ -97,6 +104,8 @@ GLvoid GameState::setting(int g_state_type) {
 		handle_events = Play::handle_events;
 		update = Play::update;
 		draw = Play::draw;
+		key_down = Play::key_down;
+		key_up = Play::key_up;
 		break;
 	//TODO:
 		/*

@@ -68,67 +68,68 @@ GLvoid drawScene() {
 }
 
 GLvoid KeyBoard(unsigned char key, int x, int y) {
-	
 	if (key == GLUT_KEY_UP) return;
-	switch (key) {
-	case 27:
-		quit();
-		exit(0);
-		break;
-	
-	case '1':
-		//GetKeyDown()[press1] = true;
-		change_state(GameStateType::LOGO);
-		break;
-	case '2':
-		//GetKeyDown()[press2] = true;
-		change_state(GameStateType::TITLE);
-		break;
-	case '3':
-		//GetKeyDown()[press3] = true;
-		change_state(GameStateType::PLAY);
-		break;
-	case '4':
-		GetKeyDown()[press4] = true;
-		break;
-	case '5':
-		GetKeyDown()[press5] = true;
-		break;
-	case '6':
-		GetKeyDown()[press6] = true;
-		break;
-	case '7':
-		GetKeyDown()[press7] = true;
-		break;
-	case '8':
-		GetKeyDown()[press8] = true;
-		break;
-	case '9':
-		GetKeyDown()[press9] = true;
-		break;
-	case '0':
-		GetKeyDown()[press0] = true;
-		break;
-	case 'w':
-		GetKeyDown()[pressW] = true;
-		break;
-	case 'a':
-		GetKeyDown()[pressA] = true;
-		break;
-	case 's':
-		GetKeyDown()[pressS] = true;
-		break;
-	case 'd':
-		GetKeyDown()[pressD] = true;
-		break;
-	case ' ':
-		GetKeyDown()[pressSPACE] = true;
-		break;
-	}
+	GetGameState()[GetNow()].key_down(key,x,y);
+	//switch (key) {
+	//case 27:
+	//	quit();
+	//	exit(0);
+	//	break;
+	//
+	//case '1':
+	//	//GetKeyDown()[press1] = true;
+	//	change_state(GameStateType::LOGO);
+	//	break;
+	//case '2':
+	//	//GetKeyDown()[press2] = true;
+	//	change_state(GameStateType::TITLE);
+	//	break;
+	//case '3':
+	//	//GetKeyDown()[press3] = true;
+	//	change_state(GameStateType::PLAY);
+	//	break;
+	//case '4':
+	//	GetKeyDown()[press4] = true;
+	//	break;
+	//case '5':
+	//	GetKeyDown()[press5] = true;
+	//	break;
+	//case '6':
+	//	GetKeyDown()[press6] = true;
+	//	break;
+	//case '7':
+	//	GetKeyDown()[press7] = true;
+	//	break;
+	//case '8':
+	//	GetKeyDown()[press8] = true;
+	//	break;
+	//case '9':
+	//	GetKeyDown()[press9] = true;
+	//	break;
+	//case '0':
+	//	GetKeyDown()[press0] = true;
+	//	break;
+	//case 'w':
+	//	GetKeyDown()[pressW] = true;
+	//	break;
+	//case 'a':
+	//	GetKeyDown()[pressA] = true;
+	//	break;
+	//case 's':
+	//	GetKeyDown()[pressS] = true;
+	//	break;
+	//case 'd':
+	//	GetKeyDown()[pressD] = true;
+	//	break;
+	//case ' ':
+	//	GetKeyDown()[pressSPACE] = true;
+	//	break;
+	//}
 	glutPostRedisplay();
 }
 GLvoid KeyBoardUp(unsigned char key, int x, int y) {
-	switch (key) {
+	GetGameState()[GetNow()].key_up(key, x, y);
+	/*switch (key) {
 	case '1':
 		GetKeyDown()[press1] = false;
 		break;
@@ -174,7 +175,9 @@ GLvoid KeyBoardUp(unsigned char key, int x, int y) {
 	case ' ':
 		GetKeyDown()[pressSPACE] = false;
 		break;
-	}
+	}*/
+
+	glutPostRedisplay();
 }
 
 GLvoid SpecialKeyboard(int key, int x, int y) {

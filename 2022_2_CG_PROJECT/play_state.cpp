@@ -81,6 +81,14 @@ namespace Play {
         
     }
 
+    GLvoid key_down(unsigned char key, int x, int y) {
+
+    }
+
+    GLvoid key_up(unsigned char key, int x, int y) {
+
+    }
+
     GLvoid InitBuffer() {
         //for (int i = 0; i < ground.size(); ++i) {
         //    ground[i].InitBuffer();
