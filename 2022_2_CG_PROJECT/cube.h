@@ -16,10 +16,12 @@ public:
 
     Cube();
     Cube(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
-    GLvoid init();
+    //GLvoid Init();
     GLboolean CubeCollide(Cube);
 
-    virtual void draw();
+    virtual GLvoid Init();
+    virtual GLvoid InitBuffer();
+    virtual GLvoid draw();
 };
 
 glm::vec3* GetCubeVertices();

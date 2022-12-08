@@ -56,15 +56,18 @@ glm::vec2 cube_texture[36] = {
     glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
 };
 
-Cube::Cube() {}
+Cube::Cube() {
+    Init();
+}
 
 Cube::Cube(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
+    Init();
     this->trans = trans;
     this->rot = rotate;
     this->scale = scale;
 };
 
-GLvoid Cube::init() {
+GLvoid Cube::Init() {
     trans = glm::vec3(0.0f, 0.0f, 0.0f);
     rot = glm::vec3(0.0f, 0.0f, 0.0f);
     scale = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -78,7 +81,10 @@ glm::vec3* GetCubeNormal() {
     return cube_normal;
 }
 
-void Cube::draw() {};
+//virtual
+GLvoid Cube::draw() {}
+GLvoid Cube::InitBuffer() {}
+
 //
 //GLvoid Cube::draw() {
 //    //model º¯È¯
