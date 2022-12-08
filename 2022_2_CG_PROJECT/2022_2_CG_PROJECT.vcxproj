@@ -150,6 +150,7 @@
     <ClCompile Include="block.cpp" />
     <ClCompile Include="brick.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="changeDimension_state.cpp" />
     <ClCompile Include="check_collision.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="door.cpp" />
@@ -163,10 +164,8 @@
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="mario_character.cpp" />
     <ClCompile Include="MysteryBlock.cpp" />
-    <ClCompile Include="mysteryBlock.h" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="pipe.cpp" />
-    <ClCompile Include="pipe.h" />
     <ClCompile Include="play_state.cpp" />
     <ClCompile Include="title_state.cpp" />
   </ItemGroup>
@@ -174,6 +173,7 @@
     <ClInclude Include="block.h" />
     <ClInclude Include="brick.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="changeDimension_state.h" />
     <ClInclude Include="check_collision.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="door.h" />
@@ -186,7 +186,9 @@
     <ClInclude Include="logo_state.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="mario_character.h" />
+    <ClInclude Include="mysteryBlock.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="pipe.h" />
     <ClInclude Include="play_state.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stdafx.h" />

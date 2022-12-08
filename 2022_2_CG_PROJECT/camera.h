@@ -10,8 +10,7 @@ public:
     glm::vec3 cameraPos;
     glm::vec3 cameraDirection;
     glm::vec3 cameraUp;
-    GLuint cType;
 
-    GLvoid update(glm::vec3);
+    GLvoid update(glm::vec3, GLuint cType);
 };
 #endif 

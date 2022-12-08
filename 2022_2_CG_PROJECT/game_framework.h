@@ -7,6 +7,8 @@ enum GameStateType {
 	LOGO = 0,
 	TITLE,
 	PLAY,
+	CHANGEDIMENSION,
+	END,
 	//TODO: ITEM,
 };
 

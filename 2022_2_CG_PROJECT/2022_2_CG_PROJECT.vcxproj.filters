@@ -86,12 +86,6 @@
     <ClCompile Include="fileManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="mysteryBlock.h">
-      <Filter>헤더 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MysteryBlock.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="block.cpp">
       <Filter>MapObject\source</Filter>
     </ClCompile>
@@ -107,8 +101,11 @@
     <ClCompile Include="ground.cpp">
       <Filter>MapObject\source</Filter>
     </ClCompile>
-    <ClCompile Include="pipe.h">
-      <Filter>MapObject\header</Filter>
+    <ClCompile Include="MysteryBlock.cpp">
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
+    <ClCompile Include="changeDimension_state.cpp">
+      <Filter>FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +168,15 @@
     </ClInclude>
     <ClInclude Include="ground.h">
       <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="pipe.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="mysteryBlock.h">
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="changeDimension_state.h">
+      <Filter>FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -107,6 +107,17 @@ GLvoid GameState::setting(int g_state_type) {
 		key_down = Play::key_down;
 		key_up = Play::key_up;
 		break;
+	case GameStateType::CHANGEDIMENSION:
+		enter = ChangeDimension::enter;
+		exit = ChangeDimension::exit;
+		pause = ChangeDimension::pause;
+		resume = ChangeDimension::resume;
+		handle_events = ChangeDimension::handle_events;
+		update = ChangeDimension::update;
+		draw = ChangeDimension::draw;
+		key_down = ChangeDimension::key_down;
+		key_up = ChangeDimension::key_up;
+		break;
 	//TODO:
 		/*
 		case GameStateType::PLAY:

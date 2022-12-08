@@ -9,12 +9,6 @@ namespace Play {
 
     //땅
     std::vector<Cube*> map;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
-    
-    //부숴지는 블럭
-    
-    //칸막이 블럭
-    
-    //단단한 블럭
 
     //마리오
     Mario mario;
@@ -39,6 +33,17 @@ namespace Play {
 
     GLvoid resume() {
         std::cout << "resume - play" << std::endl;
+        cType = 1 - cType;
+        if (cType == D3_VIEW) {
+            camera.cameraPos = GetMarioPos();
+            camera.cameraDirection = glm::vec3(1.0f, 0.0f, 0.0f);
+            camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        }
+        else {
+            camera.cameraPos = GetMarioPos();
+            camera.cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+            camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+        }
     }
 
     GLvoid handle_events() {
@@ -47,7 +52,7 @@ namespace Play {
 
     GLvoid update() {
         mario.update();
-        camera.update(GetMarioPos());
+        camera.update(GetMarioPos(), cType);
         if (GetKeyDown()[press5]) {
             glm::mat4 rot = glm::mat4(1.0f);
             rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -70,19 +75,24 @@ namespace Play {
         
     }
 
-    GLvoid draw() {
-        SetTransformationMatrix();
-       
+    GLvoid drawObject() {
+
         for (int i = 0; i < map.size(); ++i) {
             map[i]->draw();
         }
         mario.draw();
+    }
 
-        
+    GLvoid draw() {
+        SetTransformationMatrix();
+        drawObject();        
     }
 
     GLvoid key_down(unsigned char key, int x, int y) {
-        mario.handle_events(GLUT_KEY_DOWN, key);
+        if (key == 'e' || key == 'E')
+            push_state(CHANGEDIMENSION);
+        else
+            mario.handle_events(GLUT_KEY_DOWN, key);
     }
 
     GLvoid key_up(unsigned char key, int x, int y) {
@@ -160,6 +170,9 @@ namespace Play {
         //glUniform3f(viewPosLocation, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
     }
+
+    Camera getCamera() { return camera; }
+    GLuint getcType()  { return cType; }
 
     std::vector<Cube*> GetGround() {
         return map;
