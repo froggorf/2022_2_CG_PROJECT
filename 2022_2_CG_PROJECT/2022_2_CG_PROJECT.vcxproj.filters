@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{fbf8590f-7617-4ddf-bd53-e559828b45f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{33c096d9-8f26-41f8-8edc-cf500d0c396a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl">
@@ -35,15 +41,6 @@
     <ClCompile Include="cube.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="game_framework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="game_world.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageManager.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="key_events.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -59,17 +56,32 @@
     <ClCompile Include="object.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="play_state.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="title_state.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="check_collision.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ground.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="fileManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="fileManager.h">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="game_framework.cpp">
+      <Filter>FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="game_world.cpp">
+      <Filter>FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="play_state.cpp">
+      <Filter>FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="title_state.cpp">
+      <Filter>FrameWork</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,15 +89,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="cube.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="game_framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="game_world.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="key_events.h">
@@ -103,16 +106,10 @@
     <ClInclude Include="object.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="play_state.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="title_state.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="check_collision.h">
@@ -120,6 +117,21 @@
     </ClInclude>
     <ClInclude Include="ground.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="game_framework.h">
+      <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="play_state.h">
+      <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="title_state.h">
+      <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="game_world.h">
+      <Filter>FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
