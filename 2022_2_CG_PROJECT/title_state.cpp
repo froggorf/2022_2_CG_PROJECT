@@ -28,4 +28,11 @@ namespace Title {
 	GLvoid draw() {
 
 	}
+	GLvoid key_down(unsigned char key, int x, int y) {
+
+	}
+
+	GLvoid key_up(unsigned char key, int x, int y) {
+
+	}
 }
