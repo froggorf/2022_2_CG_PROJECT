@@ -35,7 +35,24 @@ glm::vec3 test_cube_vertices[6] = {
 	glm::vec3(-0.5,-0.5,-0.5), glm::vec3(0.5,-0.5,0.5),glm::vec3(-0.5,-0.5,0.5)*/
 };
 
-GLuint ground_texture=-1;
+GLuint ground_texture = -1;
+
+Ground::Ground() {
+	InitBuffer();
+	this->trans = glm::vec3(0.0, 0.0, 0.0);
+	this->rot = glm::vec3(0.0, 0.0, 0.0);
+	this->scale = glm::vec3(1.0, 1.0, 1.0);
+};
+Ground::Ground(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
+	InitBuffer();
+	this->trans = trans;
+	this->scale = scale;
+	this->rot = rotate;
+};
+Ground::~Ground() {
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(3, VBO);
+}
 
 GLvoid Ground::Init() {
 	boundingBox.init();

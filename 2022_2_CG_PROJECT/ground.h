@@ -3,12 +3,15 @@
 #include "stdafx.h"
 #include "cube.h"
 
-class Ground {
+class Ground : public Cube {
 public:
 	Cube boundingBox;
 
 	GLuint VAO, VBO[3];
 
+	Ground();
+	Ground(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
+	~Ground();
 	GLvoid Init();
 	GLvoid InitBuffer();
 	GLvoid draw();
