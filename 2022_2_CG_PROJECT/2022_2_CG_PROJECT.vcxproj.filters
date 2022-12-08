@@ -62,13 +62,7 @@
     <ClCompile Include="ground.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="fileManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="fileManager.h">
       <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="game_framework.cpp">
@@ -82,6 +76,9 @@
     </ClCompile>
     <ClCompile Include="title_state.cpp">
       <Filter>FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="fileManager.cpp">
+      <Filter>Manager</Filter>
     </ClCompile>
     <ClCompile Include="brick.cpp">
       <Filter>소스 파일</Filter>
@@ -135,6 +132,9 @@
     </ClInclude>
     <ClInclude Include="game_world.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="fileManager.h">
+      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="brick.h">
       <Filter>헤더 파일</Filter>

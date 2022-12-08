@@ -63,7 +63,7 @@ GLvoid Ground::InitBuffer() {
 	glGenBuffers(3, VBO);
 	if (ground_texture == -1) {
 		//임시 코드임 나중에 이미지 수정해야함
-		LoadTexture(ground_texture, "box_uv_map.png");
+		LoadTexture(ground_texture, "resource/Map/box_uv_map.png");
 	}
 }
 

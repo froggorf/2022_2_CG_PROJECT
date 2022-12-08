@@ -152,7 +152,6 @@
     <ClCompile Include="check_collision.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="fileManager.cpp" />
-    <ClCompile Include="fileManager.h" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="game_world.cpp" />
     <ClCompile Include="ground.cpp" />
@@ -170,6 +169,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="check_collision.h" />
     <ClInclude Include="cube.h" />
+    <ClInclude Include="fileManager.h" />
     <ClInclude Include="game_framework.h" />
     <ClInclude Include="game_world.h" />
     <ClInclude Include="ground.h" />
