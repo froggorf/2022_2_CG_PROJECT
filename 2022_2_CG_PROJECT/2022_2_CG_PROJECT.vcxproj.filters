@@ -19,6 +19,15 @@
     <Filter Include="FrameWork">
       <UniqueIdentifier>{33c096d9-8f26-41f8-8edc-cf500d0c396a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MapObject">
+      <UniqueIdentifier>{d1c61cb5-98a9-438c-b14c-304e796277cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MapObject\source">
+      <UniqueIdentifier>{24b3d89c-1163-4a09-a0ae-74345df823c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MapObject\header">
+      <UniqueIdentifier>{817e59b6-448e-4e22-a49b-a5665d2316b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl">
@@ -59,9 +68,6 @@
     <ClCompile Include="check_collision.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="ground.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
@@ -80,9 +86,6 @@
     <ClCompile Include="fileManager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
-    <ClCompile Include="brick.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="mysteryBlock.h">
       <Filter>헤더 파일</Filter>
     </ClCompile>
@@ -90,16 +93,22 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="block.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MapObject\source</Filter>
     </ClCompile>
-    <ClCompile Include="pipe.h">
-      <Filter>헤더 파일</Filter>
+    <ClCompile Include="brick.cpp">
+      <Filter>MapObject\source</Filter>
     </ClCompile>
     <ClCompile Include="pipe.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MapObject\source</Filter>
     </ClCompile>
     <ClCompile Include="door.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
+    <ClCompile Include="ground.cpp">
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
+    <ClCompile Include="pipe.h">
+      <Filter>MapObject\header</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,9 +142,6 @@
     <ClInclude Include="check_collision.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ground.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
@@ -154,14 +160,17 @@
     <ClInclude Include="fileManager.h">
       <Filter>Manager</Filter>
     </ClInclude>
-    <ClInclude Include="brick.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="block.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="brick.h">
+      <Filter>MapObject\header</Filter>
     </ClInclude>
     <ClInclude Include="door.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="ground.h">
+      <Filter>MapObject\header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
