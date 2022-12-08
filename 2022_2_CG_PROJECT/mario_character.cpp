@@ -11,13 +11,14 @@ GLvoid Mario::init() {
 	gravity = 0;
 	flag_jump = true;
 	frame = 0;
+	face = RIGHT;
 	cur_state = IDLE_RIGHT;
 }
 
 GLvoid Mario::update() {
 	for (int i = 0; i < KeyBoard::KEYEND; ++i) {
 		if (GetKeyDown()[i]) {
-			handle_events(i);
+			handle_events(GLUT_KEY_DOWN,i);
 		}
 	}
 
@@ -92,8 +93,9 @@ GLvoid Mario::draw() {
 
 	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 유니폼 샘플러의 위치를 가져옴
 	
-	glActiveTexture(texture[cur_state][(int)frame]);
-	glBindTexture(GL_TEXTURE_2D, texture[cur_state][(int)frame]);
+	
+	glActiveTexture(texture[cur_state+face][(int)frame]);
+	glBindTexture(GL_TEXTURE_2D, texture[cur_state+face][(int)frame]);
 	glUniform1i(tLocation, 0);
 	
 	
@@ -172,31 +174,68 @@ GLvoid Mario::InitBuffer() {
 	
 }
 
-GLvoid Mario::handle_events(int e) {
-	switch (e) {
-	case pressW:
-		if (GetKeyDown()[pressS]) break;
-		move(pressW);
-		break;
-	case pressS:
-		if (GetKeyDown()[pressW]) break;
-		move(pressS);
-		break;
-	case pressA:
-		if (GetKeyDown()[pressD]) break;
-		move(pressA);
-		break;
-	case pressD:
-		if (GetKeyDown()[pressA]) break;
-		move(pressD);
-		break;
-	case pressSPACE:
-		if (flag_jump) {
-			//TODO: 점프 높이에대한 값 조정하기
-			gravity = GravityAcceleration * 30;
-			flag_jump = false;
+GLvoid Mario::handle_events(int type, unsigned char key) {
+	//switch (cur_state) {
+	//case IDLE_RIGHT:
+	//case IDLE_LEFT:
+	//	IDLE_handle_events(type, key);
+	//	break;
+	//case WALKING_RIGHT:
+	//case WALKING_LEFT:
+	//	WALK_handle_events(type, key);
+	//	break;
+	//case WALKING_RIGHT_UP:
+	//case WALKING_LEFT_UP:
+	//	WALK_UP_handle_events(type, key);
+	//	break;
+	//case JUMP_RIGHT:
+	//case JUMP_LEFT:
+	//	JUMP_handle_events(type, key);
+	//	break;
+	//case JUMP_RIGHT_UP:
+	//case JUMP_LEFT_UP:
+	//	JUMP_UP_handle_events(type,key);
+	//	break;
+	//case HURT_RIGHT:
+	//case HURT_LEFT:
+	//	HURT_handle_events(type, key);
+	//	break;
+	//}
+	//
+	
+	
+	
+	switch (type) {
+	case GLUT_KEY_DOWN:
+		switch (key) {
+		case pressW:
+			
+			if (GetKeyDown()[pressS]) break;
+			move(pressW);
+			break;
+		case pressS:
+			if (GetKeyDown()[pressW]) break;
+			move(pressS);
+			break;
+		case pressA:
+			if (GetKeyDown()[pressD]) break;
+			move(pressA);
+			break;
+		case pressD:
+			if (GetKeyDown()[pressA]) break;
+			move(pressD);
+			break;
+		case pressSPACE:
+			if (flag_jump) {
+				//TODO: 점프 높이에대한 값 조정하기
+				gravity = GravityAcceleration * 30;
+				flag_jump = false;
+			}
+	
+			break;
 		}
-		
+		break;
+	case GLUT_KEY_UP:
 		break;
 	}
 }
@@ -245,4 +284,29 @@ GLvoid Mario::handle_collision(int events, std::vector<Cube>& map) {
 			}
 		}
 	}
+}
+
+GLvoid Mario::Change_State(int next_state) {
+	if (cur_state == next_state) return;
+	cur_state = next_state;
+	frame = 0;
+}
+
+GLvoid Mario::IDLE_handle_events(int, unsigned char){
+
+}
+GLvoid Mario::WALK_handle_events(int, unsigned char){
+
+}
+GLvoid Mario::WALK_UP_handle_events(int, unsigned char){
+
+}
+GLvoid Mario::HURT_handle_events(int, unsigned char){
+
+}
+GLvoid Mario::JUMP_handle_events(int, unsigned char) {
+
+}
+GLvoid Mario::JUMP_UP_handle_events(int, unsigned char) {
+
 }

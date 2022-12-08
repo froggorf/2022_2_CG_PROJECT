@@ -11,6 +11,8 @@
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.3
 #define MARIO_MAX_FRAME 7
+#define RIGHT 0
+#define LEFT 1
 
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,
@@ -31,12 +33,13 @@ public:
 	GLfloat gravity;
 	GLboolean flag_jump;
 	GLint cur_state;
+	GLboolean face;
 
 	GLvoid InitBuffer();
 	GLvoid init();
 	GLvoid draw();
 	GLvoid update();
-	GLvoid handle_events(int);
+	GLvoid handle_events(int, unsigned char);
 	GLvoid falling_gravity();
 	GLvoid move(int);
 	GLvoid handle_collision(int, std::vector<Cube>&);
@@ -46,6 +49,16 @@ public:
 	GLuint VAO, VBO[3];
 
 	GLuint texture[MARIOSTATEEND][MARIO_MAX_FRAME];
+	
+	GLvoid Change_State(int);
+
+	GLvoid IDLE_handle_events(int, unsigned char);
+	GLvoid WALK_handle_events(int, unsigned char);
+	GLvoid WALK_UP_handle_events(int, unsigned char);
+	GLvoid HURT_handle_events(int, unsigned char);
+	GLvoid JUMP_handle_events(int, unsigned char);
+	GLvoid JUMP_UP_handle_events(int, unsigned char);
+
 };
 
 #endif

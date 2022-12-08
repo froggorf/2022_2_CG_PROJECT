@@ -47,7 +47,7 @@ namespace Play {
 
     GLvoid update() {
         mario.update();
-        //camera.update(GetMarioPos());
+        camera.update(GetMarioPos());
         if (GetKeyDown()[press5]) {
             glm::mat4 rot = glm::mat4(1.0f);
             rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -82,11 +82,11 @@ namespace Play {
     }
 
     GLvoid key_down(unsigned char key, int x, int y) {
-
+        mario.handle_events(GLUT_KEY_DOWN, key);
     }
 
     GLvoid key_up(unsigned char key, int x, int y) {
-
+        mario.handle_events(GLUT_KEY_UP, key);
     }
 
     GLvoid InitBuffer() {
