@@ -46,6 +46,10 @@ void loadStage1(std::vector<Cube*>& vec) {
                 temp = new Block(scale, trans, rotate);
                 vec.push_back(temp);
             }
+            else if (i >= 40 and i < 43) {
+                temp = new Cube(scale, trans, rotate);
+                vec.push_back(temp);
+            }
             else {
                 switch (i)
                 {
