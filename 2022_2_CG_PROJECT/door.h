@@ -6,14 +6,12 @@ class Door : public Cube {
 public:
 	Cube boundingBox;
 	GLuint VAO, VBO[3];
-	GLuint frame;
 
 	Door();
 	Door(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
 	~Door();
 
 	GLvoid Init();
-	GLvoid update();
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw();
 };

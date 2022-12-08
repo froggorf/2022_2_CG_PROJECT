@@ -33,10 +33,8 @@ void loadStage1(std::vector<Cube*>& vec) {
                 vec.push_back(temp);
             }
             else if (i >= 4 and i < 6) {
-                if (i == 4) {
-                    temp = new Door(scale, trans, rotate);
-                    vec.push_back(temp);
-                }
+                temp = new Door(scale, trans, rotate);
+                vec.push_back(temp);
             }
             else if (i >= 6 and i < 10) {
                 temp = new Pipe(scale, trans, rotate);
@@ -50,10 +48,10 @@ void loadStage1(std::vector<Cube*>& vec) {
                 switch (i)
                 {
                 case 10:
-                    temp = new MysteryBlock(scale, trans, rotate, GLuint(100));
+                    temp = new MysteryBlock(scale, trans, rotate, 100);
                     break;
                 case 12: case 14: case 37:
-                    temp = new MysteryBlock(scale, trans, rotate, GLuint(1));
+                    temp = new MysteryBlock(scale, trans, rotate, 1);
                     break;
                 default:
                     temp = new Brick(scale, trans, rotate);
