@@ -71,8 +71,7 @@ GLvoid KeyBoard(unsigned char key, int x, int y) {
 	
 	if (key == GLUT_KEY_UP) return;
 	switch (key) {
-	case 'Q':
-	case 'q':
+	case 27:
 		quit();
 		exit(0);
 		break;

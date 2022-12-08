@@ -55,7 +55,7 @@ Ground::~Ground() {
 }
 
 GLvoid Ground::Init() {
-	boundingBox.init();
+	boundingBox.Init();
 }
 
 GLvoid Ground::InitBuffer() {
