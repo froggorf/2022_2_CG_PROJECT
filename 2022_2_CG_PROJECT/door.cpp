@@ -1,4 +1,5 @@
 #include "door.h"
+#include <string>
 
 glm::vec2 door_text_pos[] = {
 	glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
@@ -40,19 +41,21 @@ glm::vec3 test_door_vertices[] = {
 	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
 };
 
-GLuint door_texture = -1;
+GLuint door_texture[11] = { -1, };
 
 Door::Door() {
 	InitBuffer();
 	this->trans = glm::vec3(0.0, 0.0, 0.0);
 	this->rot = glm::vec3(0.0, 0.0, 0.0);
 	this->scale = glm::vec3(1.0, 1.0, 1.0);
+	frame = 0;
 };
 Door::Door(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
 	InitBuffer();
 	this->trans = trans;
 	this->scale = scale;
 	this->rot = rotate;
+	frame = 0;
 };
 Door::~Door() {
 	glDeleteVertexArrays(1, &VAO);
@@ -66,10 +69,20 @@ GLvoid Door::Init() {
 GLvoid Door::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(3, VBO);
-	if (door_texture == -1) {
+	if (door_texture[0] == -1) {
 		//임시 코드임 나중에 이미지 수정해야함
-		LoadTexture(door_texture, "resource/Map/door.png");
+		for (int i = 0; i < 11; i++)
+		{
+			std::string str = "resource/Map/doorAnimation/door";
+			str = str + std::to_string(i) + ".png";
+			LoadTexture(door_texture[i], str.c_str());
+		}
 	}
+}
+
+GLvoid Door::update() {
+ 	frame++;
+	if (frame > 110) frame = 0;
 }
 
 GLvoid Door::draw() {
@@ -98,8 +111,8 @@ GLvoid Door::draw() {
 	glEnableVertexAttribArray(5);
 
 	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 유니폼 샘플러의 위치를 가져옴
-	glActiveTexture(door_texture);
-	glBindTexture(GL_TEXTURE_2D, door_texture);
+	glActiveTexture(door_texture[frame/10]);
+	glBindTexture(GL_TEXTURE_2D, door_texture[frame / 10]);
 	glUniform1i(tLocation, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(test_door_vertices) / sizeof(test_door_vertices[0]));

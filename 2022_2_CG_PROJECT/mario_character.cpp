@@ -251,16 +251,16 @@ GLvoid Mario::falling_gravity() {
 GLvoid Mario::move(int events) {
 	switch (events) {
 	case pressW:
-		boundingBox.trans.z -= speed;
+		boundingBox.trans.x += speed;
 		break;
 	case pressS:
-		boundingBox.trans.z += speed;
-		break;
-	case pressA:
 		boundingBox.trans.x -= speed;
 		break;
+	case pressA:
+		boundingBox.trans.z -= speed;
+		break;
 	case pressD:
-		boundingBox.trans.x += speed;
+		boundingBox.trans.z += speed;
 		break;
 	}
 	handle_collision(events, Play::GetGround());
