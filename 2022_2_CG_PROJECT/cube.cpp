@@ -56,6 +56,13 @@ glm::vec2 cube_texture[36] = {
     glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
 };
 
+Cube::Cube() {}
+
+Cube::Cube(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
+    this->trans = trans;
+    this->rot = rotate;
+    this->scale = scale;
+};
 
 GLvoid Cube::init() {
     trans = glm::vec3(0.0f, 0.0f, 0.0f);

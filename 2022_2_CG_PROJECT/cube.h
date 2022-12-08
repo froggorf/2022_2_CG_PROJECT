@@ -14,7 +14,8 @@ public:
 
     glm::vec3 color;
 
-    
+    Cube();
+    Cube(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
     GLvoid init();
     GLboolean CubeCollide(Cube);
 
