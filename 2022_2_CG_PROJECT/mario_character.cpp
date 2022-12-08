@@ -5,7 +5,7 @@ enum HANDLE_COLLISION {
 };
 
 GLvoid Mario::init() {
-	boundingBox.init();
+	boundingBox.Init();
 	boundingBox.scale = glm::vec3(1.5f, 1.5f, 1.0f);
 	speed = MarioSpeed;
 	gravity = 0;
@@ -30,8 +30,8 @@ GLvoid Mario::update() {
 		falling_gravity();
 		//중력에 대한 충돌체크 처리
 		for (int i = 0; i < Play::GetGround().size(); ++i) {
-			if (CheckAABB(boundingBox, Play::GetGround()[i].boundingBox)) {
-				boundingBox.trans.y = Play::GetGround()[i].boundingBox.trans.y + 0.5 * Play::GetGround()[i].boundingBox.scale.y + 0.5 * boundingBox.scale.y;
+			if (CheckAABB(boundingBox, Play::GetGround()[i])) {
+				boundingBox.trans.y = Play::GetGround()[i].trans.y + 0.5 * Play::GetGround()[i].scale.y + 0.5 * boundingBox.scale.y;
 				gravity = 0;
 				flag_jump = true;
 			}
@@ -225,21 +225,21 @@ GLvoid Mario::move(int events) {
 
 	
 }
-GLvoid Mario::handle_collision(int events, std::vector<Ground>& ground) {
-	for (int i = 0; i < ground.size(); ++i) {
-		if (CheckAABB(boundingBox, ground[i].boundingBox)) {
+GLvoid Mario::handle_collision(int events, std::vector<Cube>& map) {
+	for (int i = 0; i < map.size(); ++i) {
+		if (CheckAABB(boundingBox, map[i])) {
 			switch (events) {
 			case pressW:
-				boundingBox.trans.z = ground[i].boundingBox.trans.z + 0.5 * ground[i].boundingBox.scale.z + 0.5 * boundingBox.scale.z;
+				boundingBox.trans.z = map[i].trans.z + 0.5 * map[i].scale.z + 0.5 * boundingBox.scale.z;
 				break;
 			case pressS:
-				boundingBox.trans.z = ground[i].boundingBox.trans.z - 0.5 * ground[i].boundingBox.scale.z - 0.5 * boundingBox.scale.z;
+				boundingBox.trans.z = map[i].trans.z - 0.5 * map[i].scale.z - 0.5 * boundingBox.scale.z;
 				break;
 			case pressA:
-				boundingBox.trans.x = ground[i].boundingBox.trans.x + 0.5 * ground[i].boundingBox.scale.x + 0.5 * boundingBox.scale.x;
+				boundingBox.trans.x = map[i].trans.x + 0.5 * map[i].scale.x + 0.5 * boundingBox.scale.x;
 				break;
 			case pressD:
-				boundingBox.trans.x = ground[i].boundingBox.trans.x - 0.5 * ground[i].boundingBox.scale.x - 0.5 * boundingBox.scale.x;
+				boundingBox.trans.x = map[i].trans.x - 0.5 * map[i].scale.x - 0.5 * boundingBox.scale.x;
 				
 				break;
 			}
