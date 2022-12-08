@@ -239,7 +239,7 @@ GLvoid Mario::handle_events(int type, unsigned char key) {
 	case GLUT_KEY_UP:
 		break;
 	}
-	std::cout << "MARIO: " << boundingBox.trans.x << " , " << boundingBox.trans.y << " , " << boundingBox.trans.z << std::endl;
+	//std::cout << "MARIO: " << boundingBox.trans.x << " , " << boundingBox.trans.y << " , " << boundingBox.trans.z << std::endl;
 
 }
 

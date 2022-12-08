@@ -74,7 +74,6 @@ GLvoid Ground::draw() {
 	glm::mat4 TR = glm::mat4(1.0f);
 	glm::mat4 T = glm::mat4(1.0f);
 	T = glm::translate(T, glm::vec3(trans.x, trans.y, trans.z));
-	std::cout << "À§Ä¡: " << trans.x << ", " << trans.y << ", " << trans.z << std::endl;
 	glm::mat4 S = glm::mat4(1.0f);
 	S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
 	TR = T * S * TR;
