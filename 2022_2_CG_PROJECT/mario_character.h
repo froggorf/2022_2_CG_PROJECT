@@ -42,7 +42,7 @@ public:
 	GLvoid handle_events(int, unsigned char);
 	GLvoid falling_gravity();
 	GLvoid move(int);
-	GLvoid handle_collision(int, std::vector<Cube>&);
+	GLvoid handle_collision(int, std::vector<Cube*>);
 	glm::vec3 GetPos();
 
 	GLfloat frame;

@@ -13,8 +13,8 @@ public:
 	Ground(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
 	~Ground();
 	GLvoid Init();
-	GLvoid InitBuffer();
-	GLvoid draw();
+	virtual GLvoid InitBuffer();
+	virtual GLvoid draw();
 };
 
 

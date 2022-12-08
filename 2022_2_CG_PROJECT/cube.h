@@ -20,8 +20,8 @@ public:
     GLboolean CubeCollide(Cube);
 
     virtual GLvoid Init();
-    virtual GLvoid InitBuffer();
-    virtual GLvoid draw();
+    virtual GLvoid InitBuffer() {}
+    virtual GLvoid draw() {}
 };
 
 glm::vec3* GetCubeVertices();

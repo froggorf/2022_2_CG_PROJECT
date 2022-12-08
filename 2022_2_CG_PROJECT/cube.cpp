@@ -81,9 +81,9 @@ glm::vec3* GetCubeNormal() {
     return cube_normal;
 }
 
-//virtual
-GLvoid Cube::draw() {}
-GLvoid Cube::InitBuffer() {}
+////virtual
+//GLvoid Cube::draw() {}
+//GLvoid Cube::InitBuffer() {}
 
 //
 //GLvoid Cube::draw() {

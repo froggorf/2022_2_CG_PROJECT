@@ -8,7 +8,7 @@ namespace Play {
 
 
     //땅
-    std::vector<Cube> map;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
+    std::vector<Cube*> map;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
     
     //부숴지는 블럭
     
@@ -74,7 +74,7 @@ namespace Play {
         SetTransformationMatrix();
        
         for (int i = 0; i < map.size(); ++i) {
-            map[i].draw();
+            map[i]->draw();
         }
         mario.draw();
 
@@ -99,8 +99,12 @@ namespace Play {
 
     GLvoid InitValue() {
         {   //카메라 값 초기화
-            camera.cameraPos = glm::vec3(0.0f, 12.0f, 50.0f);
-            camera.cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+            //camera.cameraPos = glm::vec3(0.0f, 12.0f, 50.0f);
+            //camera.cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+            //camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+            camera.cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
+            camera.cameraDirection = glm::vec3(1.0f, 0.0f, 0.0f);
             camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 
@@ -140,7 +144,9 @@ namespace Play {
         {//투영 변환
             glm::mat4 projection = glm::mat4(1.0f);
             if (cType == D3_VIEW) {      //3D 뷰
-                projection = glm::perspective(glm::radians(45.0f), GLfloat(WIDTH)/HEIGHT, 0.1f, (GLfloat)CameraViewSize);
+                projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 500.0f);
+                projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0));
+                //projection = glm::perspective(glm::radians(45.0f), GLfloat(WIDTH)/HEIGHT, 0.1f, (GLfloat)CameraViewSize);
                 //projection = glm::translate(projection, glm::vec3(0.0, 0.0, -3.0));
             }
             else {                  //2D 뷰
@@ -155,7 +161,7 @@ namespace Play {
 
     }
 
-    std::vector<Cube>& GetGround() {
+    std::vector<Cube*> GetGround() {
         return map;
     }
 

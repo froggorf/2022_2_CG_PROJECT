@@ -160,6 +160,8 @@
     <ClCompile Include="logo_state.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="mario_character.cpp" />
+    <ClCompile Include="MysteryBlock.cpp" />
+    <ClCompile Include="mysteryBlock.h" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="play_state.cpp" />
     <ClCompile Include="title_state.cpp" />
