@@ -9,6 +9,7 @@
 #include "ImageManager.h"
 #include "camera.h"
 #include "wall.h"
+#include "door.h"
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.1
 #define MARIO_MAX_FRAME 7
