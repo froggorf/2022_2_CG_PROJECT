@@ -1,6 +1,7 @@
 #ifndef __BRICK_H__
 #define __BRICK_H__
 #include "cube.h"
+#include "mario_character.h"
 
 class Brick : public Cube{
 public:

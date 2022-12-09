@@ -55,7 +55,12 @@ Brick::~Brick() {
 };
 
 GLvoid Brick::collision_handling(Cube* other) {
-
+	Cube* marioCast = dynamic_cast<Mario*>(other);
+	if (marioCast != nullptr) {
+		std::cout << "Brick collision handling" << std::endl;
+		// TODO: 블럭 부숴지는 애니메이션
+		isCanDelete = true;
+	}
 }
 
 GLvoid Brick::Init() {
