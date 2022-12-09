@@ -58,10 +58,9 @@ public:
 	GLvoid StateEnter_3D(int type = -1, unsigned char key = -1);
 	GLvoid StateExit_3D(int type=-1,unsigned char key = -1);
 
-
-	GLvoid CheckNextState(int type, unsigned char key);
-	GLvoid StateEnter(int type = -1, unsigned char key = -1);
-	GLvoid StateExit(int type = -1, unsigned char key = -1);
+	GLvoid CheckNextState_2D(int type, unsigned char key);
+	GLvoid StateEnter_2D(int type = -1, unsigned char key = -1);
+	GLvoid StateExit_2D(int type = -1, unsigned char key = -1);
 	
 
 	//TODO: Áö¿ï°Å
