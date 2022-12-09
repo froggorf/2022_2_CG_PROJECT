@@ -3,18 +3,28 @@
 namespace ChangeDimension {
 	// ¸Å°³º¯¼ö
 	GLfloat u = 0;
-	GLboolean start = false;
+	GLboolean start = false;		// start ? 2D -> 3D : 3D -> 2D
+
+	GLuint wait = 0;
 
 	Camera changeCamera;
 	glm::vec3 newCameraPos;
+	glm::vec3 marioPos;
 	int changeCType;
 
 	GLvoid enter() {
 		std::cout << "enter - changeDimension" << std::endl;
-		changeCamera = Play::getCamera();
-		changeCamera.cameraDirection = Play::GetMarioPos();
 		changeCType = 1 - Play::getcType();
-		std::cout << (start?"True":"False") << std::endl;
+		changeCamera = Play::getCamera();
+		marioPos = Play::GetMarioPos();
+		u = 0.0;
+		if (start) {
+			changeCamera.cameraPos = glm::vec3(0.0, 1.5, 15.0);
+		}
+		else {
+			changeCamera.cameraPos = glm::vec3(-15.0, 1.5, 0.0);
+		}
+		changeCamera.cameraDirection = Play::GetMarioPos();
 	}
 
 	GLvoid exit() {
@@ -35,20 +45,25 @@ namespace ChangeDimension {
 	}
 
 	GLvoid update() {
+		//wait++;
+		//if (wait % 10 == 0) {
 		if (start) {
 			u -= 3;
-			if (u <= 0) pop_state();
+			if (u <= -90) {pop_state(); }
 		}
 		else {
 			u += 3;
-			if (u >= 90) pop_state();
+			if (u >= 90) {pop_state(); }
 		}
+		//}
 
 		glm::mat4 R = glm::mat4(1.0f);
+		glm::mat4 T = glm::mat4(1.0f);
 		newCameraPos = changeCamera.cameraPos;
 
 		R = glm::rotate(R, glm::radians(u), glm::vec3(0.0, 1.0, 0.0));
-		newCameraPos = R * glm::vec4(newCameraPos, 1.0f);
+		T = glm::translate(T, glm::vec3(marioPos.x, marioPos.y + 0.5, marioPos.z));
+		newCameraPos = T * R * glm::vec4(newCameraPos, 1.0f);
 
 		std::cout << u << std::endl;
 	}
@@ -87,15 +102,8 @@ namespace ChangeDimension {
 
 		{//Åõ¿µ º¯È¯
 			glm::mat4 projection = glm::mat4(1.0f);
-			if (changeCType == D3_VIEW) {      //3D ºä
-				projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 500.0f);
-				projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0));
-				//projection = glm::perspective(glm::radians(45.0f), GLfloat(WIDTH)/HEIGHT, 0.1f, (GLfloat)CameraViewSize);
-				//projection = glm::translate(projection, glm::vec3(0.0, 0.0, -3.0));
-			}
-			else {                  //2D ºä
-				projection = glm::ortho(-CameraViewSize / 20, CameraViewSize / 20, -CameraViewSize / 20, CameraViewSize / 20, 0.1f, CameraViewSize);
-			}
+			projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 500.0f);
+			projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0));
 			unsigned int projectLoc = glGetUniformLocation(Gets_program_texture(), "projection");
 			glUniformMatrix4fv(projectLoc, 1, GL_FALSE, &projection[0][0]);
 		}

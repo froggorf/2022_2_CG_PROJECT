@@ -6,8 +6,8 @@
 #include "key_events.h"
 
 //define 목록
-#define WIDTH 1280
-#define HEIGHT 1024
+#define WIDTH 800
+#define HEIGHT 800
 
 //glut 관련 함수
 GLvoid drawScene(GLvoid);

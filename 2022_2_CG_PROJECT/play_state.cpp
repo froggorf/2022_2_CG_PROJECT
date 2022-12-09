@@ -160,7 +160,8 @@ namespace Play {
                 //projection = glm::translate(projection, glm::vec3(0.0, 0.0, -3.0));
             }
             else {                  //2D ºä
-                projection = glm::ortho(-CameraViewSize/20,CameraViewSize/20, -CameraViewSize/20, CameraViewSize/20, 0.1f, CameraViewSize);
+                projection = glm::ortho(-CameraViewSize/40,CameraViewSize/40, -CameraViewSize/40, CameraViewSize/40, 0.1f, CameraViewSize);
+                //projection = glm::ortho(-CameraViewSize/20,CameraViewSize/20, -CameraViewSize/20, CameraViewSize/20, 0.1f, CameraViewSize);
             }
             unsigned int projectLoc = glGetUniformLocation(Gets_program_texture(), "projection");
             glUniformMatrix4fv(projectLoc, 1, GL_FALSE, &projection[0][0]);
