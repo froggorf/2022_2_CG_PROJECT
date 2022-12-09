@@ -13,6 +13,9 @@ namespace Play {
 	//TODO: 적 생성 코드 다른곳으로옮기는게 이쁠지도
 	std::vector<Enemy*> enemyVec;
 
+	// TODO:: 얘도
+	std::vector<Item*> item;
+
 
 	//마리오
 	Mario mario;
@@ -64,6 +67,8 @@ namespace Play {
 				}
 			}
 		}
+		for (auto i : item)
+			i->update();
 		camera.update(GetMarioPos(), cType);
 		if (GetKeyDown()[press5]) {
 			glm::mat4 rot = glm::mat4(1.0f);
@@ -94,6 +99,8 @@ namespace Play {
 		for (auto v : enemyVec) {
 			v->draw();
 		}
+		for (auto i : item)
+			i->draw(cType);
 		mario.draw(cType);
 	}
 
@@ -122,12 +129,22 @@ namespace Play {
 		loadStage1(map);
 		mario.InitBuffer();
 
-		Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
-		Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
-		Enemy* temp2 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(98.0, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
-		enemyVec.push_back(temp0);
-		enemyVec.push_back(temp1);
-		enemyVec.push_back(temp2);
+		{
+			Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
+			Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
+			Enemy* temp2 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(98.0, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
+			enemyVec.push_back(temp0);
+			enemyVec.push_back(temp1);
+			enemyVec.push_back(temp2);
+		}
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				Item* temp = new Coin(glm::vec3(0.8, 0.8, 0.8), glm::vec3(104.5 + i*2, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
+				item.push_back(temp);
+			}
+		}
+
 	}
 
 	GLvoid InitValue() {
@@ -186,10 +203,10 @@ namespace Play {
 
 	Camera getCamera() { return camera; }
 	GLuint getcType() { return cType; }
+	std::vector<Cube*> GetGround() { return map; }
+	std::vector<Enemy*> GetEnemy() { return enemyVec; }
+	std::vector<Item*> GetItem() { return item; }
 
-	std::vector<Cube*> GetGround() {
-		return map;
-	}
 
 	glm::vec3 GetMarioPos() {
 		return mario.boundingBox.trans;
