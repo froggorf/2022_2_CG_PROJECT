@@ -19,6 +19,8 @@ GLvoid Mario::Init() {
 	frame = 0;
 	face = RIGHT;
 	cur_state = IDLE_RIGHT;
+	hp = MarioMaxHp;
+	coin_num = 0;
 }
 
 GLvoid Mario::update() {
@@ -36,8 +38,11 @@ GLvoid Mario::update() {
 		move(X);
 	if (dir[Z] != 0)
 		move(Z);
-	if(dir[X]==0&&dir[Z]==0)
+	if (dir[X] == 0 && dir[Z] == 0) {
 		CheckHittingByEnemy();
+		CheckGetItem();
+	}
+		
 
 	{
 		falling_gravity();
@@ -205,6 +210,55 @@ GLvoid Mario::move(int XYZ) {
 	}
 	handle_collision(XYZ, Play::GetGround());
 	CheckHittingByEnemy();
+	CheckGetItem();
+
+}
+
+GLvoid Mario::CheckGetItem() {
+	std::vector<Item*> items = Play::GetItem();
+	switch (Play::getcType()) {
+	case D2_VIEW:
+		for (int i = 0; i < items.size(); ++i) {
+			if (CheckAABB_2D(*this, *items[i])) {
+				Item* check_mushroom = dynamic_cast<Mushroom*>(items[i]);
+				if (check_mushroom != nullptr) {
+					items[i]->collision_handling(this);
+					hp += 10;
+					if (hp >= MarioMaxHp) {
+						hp = MarioMaxHp;
+					}
+				}
+
+				Item* check_coin = dynamic_cast<Coin*>(items[i]);
+				if (check_coin != nullptr) {
+					items[i]->collision_handling(this);
+					coin_num += 1;
+				}
+			}
+		}
+		break;
+	case D3_VIEW:
+		for (int i = 0; i < items.size(); ++i) {
+			if (CheckAABB(*this, *items[i])) {
+				Item* check_mushroom = dynamic_cast<Mushroom*>(items[i]);
+				if (check_mushroom != nullptr) {
+					items[i]->collision_handling(this);
+					hp += 10;
+					if (hp >= MarioMaxHp) {
+						hp = MarioMaxHp;
+					}
+				}
+
+				Item* check_coin = dynamic_cast<Coin*>(items[i]);
+				if (check_coin != nullptr) {
+					items[i]->collision_handling(this);
+					coin_num += 1;
+				}
+			}
+		}
+		break;
+	}
+	
 
 }
 
@@ -370,6 +424,7 @@ GLvoid Mario::CheckHittingByEnemy() {
 	if (Play::getcType() == D2_VIEW) {
 		for (int i = 0; i < enemies.size(); ++i) {
 			if (CheckAABB_2D(*this, *enemies[i])) {
+				hp -= 1;
 				StateExit_2D();
 				MarioChangeState(HURT_RIGHT);
 				StateEnter_2D();

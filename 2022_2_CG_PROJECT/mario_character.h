@@ -13,6 +13,9 @@
 #include "enemy.h"
 #include "brick.h"
 #include "mysteryBlock.h"
+#include "item.h"
+#include "mushroom.h"
+#include "coin.h"
 
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.1
@@ -22,6 +25,7 @@
 #define FLOAT_ERROR_FIGURE 0.0001
 #define HURT_TIME 500
 #define JumpPower 30
+#define MarioMaxHp 10
 
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,
@@ -46,6 +50,8 @@ public:
 	GLboolean face;
 	GLint dir[3];
 	GLint hurt_time;
+	GLint coin_num;
+	GLint hp;
 
 	GLvoid InitBuffer();
 	GLvoid Init();
@@ -61,6 +67,7 @@ public:
 	
 	GLvoid handle_collision(int, std::vector<Cube*>);
 	GLvoid CheckHittingByEnemy();
+	GLvoid CheckGetItem();
 	glm::vec3 GetPos();
 
 	GLfloat frame;
