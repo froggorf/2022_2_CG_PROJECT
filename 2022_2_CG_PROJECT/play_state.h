@@ -13,6 +13,7 @@
 
 // TODO: 일단 playstate에서 적 생성
 #include "goomba.h"
+#include "item.h"
 
 namespace Play {
     //define - 선언
@@ -38,6 +39,8 @@ namespace Play {
     GLuint getcType();
 
     std::vector<Cube*> GetGround();
+    std::vector<Enemy*> GetEnemy();
+    std::vector<Item*> GetItem();
     glm::vec3 GetMarioPos();
 
 }
