@@ -15,6 +15,7 @@ public:
 	GLvoid update();
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw();
+	virtual GLvoid collision_handling(Cube* other);
 };
 
 #endif

@@ -40,24 +40,22 @@ glm::vec3 test_goomba_vertices[] = {
 	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
 };
 
-GLuint goomba_texture[5] = { -1, };
+GLuint goomba_texture[2][5] = { -1, };
 GLuint goomba_dead_texture =  -1;
 
 Goomba::Goomba() {
 	InitBuffer();
+	Init();
 	this->trans = glm::vec3(0.0, 0.0, 0.0);
 	this->rot = glm::vec3(0.0, 0.0, 0.0);
 	this->scale = glm::vec3(1.0, 1.0, 1.0);
-	frame = 13;
-	back = false;
 };
 Goomba::Goomba(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
 	InitBuffer();
+	Init();
 	this->trans = trans;
 	this->scale = scale;
 	this->rot = rotate;
-	frame = 13;
-	back = false;
 };
 Goomba::~Goomba() {
 	glDeleteVertexArrays(1, &VAO);
@@ -66,17 +64,25 @@ Goomba::~Goomba() {
 
 
 GLvoid Goomba::Init() {
-
+	frame = 13;
+	back = false;
+	dead = false;
+	dir = 0;
 }
 GLvoid Goomba::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(3, VBO);
-	if (goomba_texture[0] == -1) {
-		LoadTexture(goomba_texture[0], "resource/Enemy/Goomba/goomba_walk2.png");
-		LoadTexture(goomba_texture[1], "resource/Enemy/Goomba/goomba_walk1.png");
-		LoadTexture(goomba_texture[2], "resource/Enemy/Goomba/goomba_walk0.png");
-		LoadTexture(goomba_texture[3], "resource/Enemy/Goomba/goomba_walk3.png");
-		LoadTexture(goomba_texture[4], "resource/Enemy/Goomba/goomba_walk4.png");
+	if (goomba_texture[0][0] == -1) {
+		LoadTexture(goomba_texture[0][0], "resource/Enemy/Goomba/goomba_walk2.png");
+		LoadTexture(goomba_texture[0][1], "resource/Enemy/Goomba/goomba_walk1.png");
+		LoadTexture(goomba_texture[0][2], "resource/Enemy/Goomba/goomba_walk0.png");
+		LoadTexture(goomba_texture[0][3], "resource/Enemy/Goomba/goomba_walk3.png");
+		LoadTexture(goomba_texture[0][4], "resource/Enemy/Goomba/goomba_walk4.png");
+		LoadTexture(goomba_texture[1][0], "resource/Enemy/Goomba/goomba_walk2_right.png");
+		LoadTexture(goomba_texture[1][1], "resource/Enemy/Goomba/goomba_walk1_right.png");
+		LoadTexture(goomba_texture[1][2], "resource/Enemy/Goomba/goomba_walk0_right.png");
+		LoadTexture(goomba_texture[1][3], "resource/Enemy/Goomba/goomba_walk3_right.png");
+		LoadTexture(goomba_texture[1][4], "resource/Enemy/Goomba/goomba_walk4_right.png");
 		LoadTexture(goomba_dead_texture, "resource/Enemy/Goomba/goomba_dead.png");
 	}
 }
@@ -86,7 +92,27 @@ GLvoid Goomba::update() {
 		if (--frame <= 0) back = false;
 	}
 	else {
-		if (++frame > 50) back = true;
+		if (++frame >= 24) back = true;
+	}
+
+	if (dir > 0) {		// 2D RIght
+		trans.x += 0.02;
+	}
+	else {				// 2D Left
+		trans.x -= 0.02;
+	}
+
+}
+
+GLvoid Goomba::collision_handling(Cube* other) {
+	std::cout << "Goomba collision handling" << std::endl;
+	if (dir > 0) {
+		trans.x -= 0.02;
+		dir = 0;
+	}
+	else {
+		trans.x += 0.02;
+		dir = 1;
 	}
 }
 
@@ -118,8 +144,8 @@ GLvoid Goomba::draw() {
 	glEnableVertexAttribArray(5);
 
 	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 À¯´ÏÆû »ùÇÃ·¯ÀÇ À§Ä¡¸¦ °¡Á®¿È
-	glActiveTexture(goomba_texture[frame / 5]);
-	glBindTexture(GL_TEXTURE_2D, goomba_texture[frame / 5]);
+	glActiveTexture(goomba_texture[dir][frame / 5]);
+	glBindTexture(GL_TEXTURE_2D, goomba_texture[dir][frame / 5]);
 	glUniform1i(tLocation, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(test_goomba_vertices) / sizeof(test_goomba_vertices[0]));

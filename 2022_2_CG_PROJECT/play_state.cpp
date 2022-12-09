@@ -56,6 +56,14 @@ namespace Play {
 
 	GLvoid update() {
 		mario.update();
+		for (auto e : enemyVec) {
+			e->update();
+			for (auto m : map) {
+				if (m->trans.y > 0 and m->trans.y < 1.5 and CheckAABB_2D(*e, *m)) {
+					e->collision_handling(m);
+				}
+			}
+		}
 		camera.update(GetMarioPos(), cType);
 		if (GetKeyDown()[press5]) {
 			glm::mat4 rot = glm::mat4(1.0f);
@@ -83,13 +91,9 @@ namespace Play {
 		for (int i = 0; i < map.size(); ++i) {
 			map[i]->draw();
 		}
-		for (int i = 0; i < enemyVec.size(); ++i) {
-			enemyVec[i]->draw();
+		for (auto v : enemyVec) {
+			v->draw();
 		}
-		//for (auto v : enemyVec)
-		//{
-		//	v->draw();
-		//}
 		mario.draw(cType);
 	}
 

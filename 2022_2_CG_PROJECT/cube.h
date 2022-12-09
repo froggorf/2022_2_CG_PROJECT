@@ -22,6 +22,7 @@ public:
     virtual GLvoid Init();
     virtual GLvoid InitBuffer() {}
     virtual GLvoid draw() {}
+    virtual GLvoid collision_handling(Cube* other) {}
 };
 
 glm::vec3* GetCubeVertices();

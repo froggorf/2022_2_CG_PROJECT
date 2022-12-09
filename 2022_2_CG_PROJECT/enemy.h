@@ -1,6 +1,7 @@
 #ifndef __ENEMY_H__
 #define __ENEMY_H__
 #include "cube.h"
+#include "check_collision.h"
 
 class Enemy : public Cube {
 public:
@@ -8,12 +9,15 @@ public:
 	GLuint VAO, VBO[3];
 	GLuint frame;
 
+	GLboolean dead;
+	GLuint dir;
+
 	Enemy();
 	Enemy(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
 	~Enemy();
 
 	GLvoid Init();
-	GLvoid update();
+	virtual GLvoid update();
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw();
 };
