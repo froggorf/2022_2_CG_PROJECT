@@ -39,7 +39,7 @@ public:
 
 	GLvoid InitBuffer();
 	GLvoid init();
-	GLvoid draw();
+	GLvoid draw(GLuint);
 	GLvoid update();
 	GLvoid handle_events(int, unsigned char);
 	GLvoid falling_gravity();
