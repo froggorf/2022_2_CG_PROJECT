@@ -59,6 +59,14 @@ namespace Play {
 
     GLvoid update() {
         mario.update();
+
+        for (int i = 0; i < map.size(); i++) {
+            if (map[i]->isCanDelete) {
+                delete map[i];
+                map.erase(map.begin() + i);
+            }
+        }
+
         for (int i = 0; i < enemyVec.size(); i++) {
             enemyVec[i]->update();
             for (auto m : map) {
@@ -221,6 +229,7 @@ namespace Play {
     std::vector<Cube*> GetGround() { return map; }
     std::vector<Enemy*> GetEnemy() { return enemyVec; }
     std::vector<Item*> GetItem() { return item; }
+    std::vector<Item*> &GetItemToAdd() { return item; }
 
 
     glm::vec3 GetMarioPos() {

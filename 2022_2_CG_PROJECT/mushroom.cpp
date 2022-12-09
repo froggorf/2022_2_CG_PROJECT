@@ -100,6 +100,7 @@ GLvoid Mushroom::collision_handling(Cube* other) {
 
 	if (groundCast != nullptr) {
 		trans.y += 0.3;
+		//여기해야함
 	}
 	else if (marioCast != nullptr) {
 		isCanDelete = true;

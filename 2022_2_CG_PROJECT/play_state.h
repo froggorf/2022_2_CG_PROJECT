@@ -42,6 +42,8 @@ namespace Play {
     std::vector<Cube*> GetGround();
     std::vector<Enemy*> GetEnemy();
     std::vector<Item*> GetItem();
+    std::vector<Item*>& GetItemToAdd();
+
     glm::vec3 GetMarioPos();
 
 }

@@ -99,9 +99,9 @@ GLvoid MysteryBlock::collision_handling(Cube* other) {
 	if (marioCast != nullptr) {
 		std::cout << "MysteryBlock collision handling" << std::endl;
 		if (coins == 100) {
-			std::vector<Item*> item = Play::GetItem();
+			std::vector<Item*> item = Play::GetItemToAdd();
 			Item* newMush = new Mushroom(scale, trans, rot);
-			item.push_back(newMush);
+			Play::GetItemToAdd().push_back(newMush);
 			coins = 0;
 		}
 	}
