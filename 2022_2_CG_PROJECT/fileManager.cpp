@@ -33,8 +33,10 @@ void loadStage1(std::vector<Cube*>& vec) {
                 vec.push_back(temp);
             }
             else if (i >= 4 and i < 6) {
-                temp = new Door(scale, trans, rotate);
-                vec.push_back(temp);
+                if (i == 4) {
+                    temp = new Door(scale, trans, rotate);
+                    vec.push_back(temp);
+                }
             }
             else if (i >= 6 and i < 10) {
                 temp = new Pipe(scale, trans, rotate);
