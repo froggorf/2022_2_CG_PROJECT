@@ -4,40 +4,40 @@ glm::vec2 coin_text_pos[] = {
 	glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
 	glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
 
-	glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
-	glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
 
-	glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
-	glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
 
-	glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
-	glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
 
-	glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
-	glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
 
-	glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
-	glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(0.9f,0.9f),glm::vec2(1.0f,0.9f),
+	//glm::vec2(0.9f,1.0f),glm::vec2(1.0f,0.9f),glm::vec2(1.0f,1.0f),
 };
 
 glm::vec3 test_coin_vertices[] = {
 	glm::vec3(-0.5,0.5,0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(0.5,-0.5,0.5),		// 1, 4, 5		¾Õ¸é
 	glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,0.5,0.5),			// 1, 5, 2
 
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,0.5,0.5),		// 0, 1, 2		À­¸é
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,0.5,-0.5),		// 0, 2, 3
+	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,0.5,0.5),		// 0, 1, 2		À­¸é
+	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,0.5,-0.5),		// 0, 2, 3
 
-	glm::vec3(-0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,0.5),	// 7, 6, 5		¾Æ·§¸é
-	glm::vec3(-0.5,-0.5,-0.5), glm::vec3(0.5,-0.5,0.5),glm::vec3(-0.5,-0.5,0.5),	// 7, 5, 4
+	//glm::vec3(-0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,-0.5),glm::vec3(0.5,-0.5,0.5),	// 7, 6, 5		¾Æ·§¸é
+	//glm::vec3(-0.5,-0.5,-0.5), glm::vec3(0.5,-0.5,0.5),glm::vec3(-0.5,-0.5,0.5),	// 7, 5, 4
 
-	glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,-0.5,-0.5),		// 2, 5, 6
-	glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,-0.5), glm::vec3(0.5,0.5,-0.5),		// 2, 6, 3
+	//glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,-0.5,-0.5),		// 2, 5, 6
+	//glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,-0.5,-0.5), glm::vec3(0.5,0.5,-0.5),		// 2, 6, 3
 
-	glm::vec3(0.5,0.5,-0.5), glm::vec3(0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),	// 3, 6, 7
-	glm::vec3(0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,0.5,-0.5),		// 3, 7, 0
+	//glm::vec3(0.5,0.5,-0.5), glm::vec3(0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),	// 3, 6, 7
+	//glm::vec3(0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,0.5,-0.5),		// 3, 7, 0
 
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,0.5),	// 0, 7, 4
-	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
+	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,0.5),	// 0, 7, 4
+	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
 };
 
 GLuint coin_texture[8] = { -1, };
@@ -78,6 +78,14 @@ GLvoid Coin::InitBuffer() {
 
 GLvoid Coin::update() {
 	if (++frame >= 39) frame = 0;
+}
+
+GLvoid Coin::collision_handling(Cube* other) {
+	Cube* marioCast = dynamic_cast<Mario*>(other);
+	if (marioCast != nullptr) {
+		std::cout << "Coin collision handling" << std::endl;
+		isCanDelete = true;
+	}
 }
 
 GLvoid Coin::draw(GLuint cType) {

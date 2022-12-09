@@ -1,6 +1,7 @@
 #ifndef __COIN_H__
 #define __COIN_H__
 #include "item.h"
+#include "mario_character.h"
 #include "check_collision.h"
 
 class Coin : public Item {
@@ -15,6 +16,8 @@ public:
 	virtual GLvoid update();
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw(GLuint cType);
+	GLvoid collision_handling(Cube* other);
+
 };
 
 #endif
