@@ -9,10 +9,12 @@ public:
 	Coin(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
 	~Coin();
 
+	GLuint frame;
+
 	GLvoid Init();
 	virtual GLvoid update();
 	virtual GLvoid InitBuffer();
-	virtual GLvoid draw();
+	virtual GLvoid draw(GLuint cType);
 };
 
 #endif
