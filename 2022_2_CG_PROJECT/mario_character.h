@@ -15,6 +15,7 @@
 #define MARIO_MAX_FRAME 7
 #define RIGHT 0
 #define LEFT 1
+#define FLOAT_ERROR_FIGURE 0.0001
 
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,

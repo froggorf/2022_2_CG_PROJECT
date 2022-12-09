@@ -211,11 +211,11 @@ GLvoid Mario::falling_gravity() {
 		for (int i = 0; i < g_ground.size(); ++i) {
 			if (CheckAABB(boundingBox, *g_ground[i])) {
 				if (gravity > 0) {	//위로 점프중일때
-					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y - FLOAT_ERROR_FIGURE;
 					gravity = 0;
 				}
 				else {	//밑으로 중력 적용중일떄
-					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y + FLOAT_ERROR_FIGURE;
 					gravity = 0;
 					flag_jump = true;
 					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {	
@@ -239,11 +239,11 @@ GLvoid Mario::falling_gravity() {
 				}
 					
 				if (gravity > 0) {	//위로 점프중일때
-					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y - FLOAT_ERROR_FIGURE;
 					gravity = 0;
 				}
 				else {	//밑으로 중력 적용중일떄
-					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y + FLOAT_ERROR_FIGURE;
 					gravity = 0;
 					flag_jump = true;
 					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {
@@ -277,18 +277,18 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 				switch (XYZ) {
 				case X:
 					if (dir[X] >= 1) {
-						boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x;
+						boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - FLOAT_ERROR_FIGURE;
 					}
 					else if (dir[X] <= -1) {
-						boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x;
+						boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + FLOAT_ERROR_FIGURE;
 					}
 					break;
 				case Z:
 					if (dir[Z] >= 1) {
-						boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z;
+						boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z - FLOAT_ERROR_FIGURE;
 					}
 					else if (dir[Z] <= -1) {
-						boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z;
+						boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z + FLOAT_ERROR_FIGURE;
 					}
 					break;
 				}
@@ -311,10 +311,10 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 				}
 
 				if (dir[X] >= 1) {
-					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x;
+					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - FLOAT_ERROR_FIGURE;
 				}
 				else if (dir[X] <= -1) {
-					boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x;
+					boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + FLOAT_ERROR_FIGURE;
 				}
 			}
 		}
