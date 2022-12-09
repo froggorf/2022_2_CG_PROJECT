@@ -94,6 +94,19 @@ GLvoid MysteryBlock::InitBuffer() {
 	}
 }
 
+GLvoid MysteryBlock::collision_handling(Cube* other) {
+	Cube* marioCast = dynamic_cast<Mario*>(other);
+	if (marioCast != nullptr) {
+		std::cout << "MysteryBlock collision handling" << std::endl;
+		if (coins == 100) {
+			std::vector<Item*> item = Play::GetItem();
+			Item* newMush = new Mushroom(scale, trans, rot);
+			item.push_back(newMush);
+			coins = 0;
+		}
+	}
+}
+
 GLvoid MysteryBlock::draw() {
 	glUseProgram(Gets_program_texture());
 	glm::mat4 TR = glm::mat4(1.0f);

@@ -1,6 +1,12 @@
 #ifndef __MYSTERYBLOCK_H__
 #define __MYSTERYBLOCK_H__
 #include "cube.h"
+#include "mario_character.h"
+#include "play_state.h"
+
+#include "item.h"
+#include "coin.h"
+#include "mushroom.h"
 
 class MysteryBlock : public Cube {
 public:
@@ -17,6 +23,7 @@ public:
 	GLvoid Init();
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw();
+	GLvoid collision_handling(Cube* other);
 };
 
 #endif
