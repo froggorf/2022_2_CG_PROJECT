@@ -68,7 +68,7 @@ Cube::Cube(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
 };
 
 GLvoid Cube::Init() {
-    trans = glm::vec3(0.0f, 0.0f, 0.0f);
+    trans = glm::vec3(5.0f, 0.0f, 0.0f);
     rot = glm::vec3(0.0f, 0.0f, 0.0f);
     scale = glm::vec3(1.0f, 1.0f, 1.0f);
     color = glm::vec3(1.0f, 1.0f, 1.0f);

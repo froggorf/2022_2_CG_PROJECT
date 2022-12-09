@@ -8,16 +8,17 @@ enum VBOType { POS = 0, NORMAL = 1, TEXTURE };
 
 class Cube {
 public:
-    glm::vec3 trans;
-    glm::vec3 rot;
-    glm::vec3 scale;
-
-    glm::vec3 color;
-
     Cube();
     Cube(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
     //GLvoid Init();
     GLboolean CubeCollide(Cube);
+
+    glm::vec3 trans;
+    glm::vec3 rot;
+    glm::vec3 scale;
+    GLboolean isCanDelete;
+
+    glm::vec3 color;
 
     virtual GLvoid Init();
     virtual GLvoid InitBuffer() {}
