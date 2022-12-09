@@ -19,7 +19,7 @@ public:
 	GLvoid Init();
 	virtual GLvoid update();
 	virtual GLvoid InitBuffer();
-	virtual GLvoid draw();
+	virtual GLvoid draw(GLuint cType);
 };
 
 #endif

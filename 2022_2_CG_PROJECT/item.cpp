@@ -13,5 +13,5 @@ GLvoid Item::InitBuffer() {
 GLvoid Item::update() {
 }
 
-GLvoid Item::draw() {
+GLvoid Item::draw(GLuint cType) {
 }
