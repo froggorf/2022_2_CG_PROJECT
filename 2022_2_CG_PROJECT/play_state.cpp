@@ -103,8 +103,12 @@ namespace Play {
 	}
 
 	GLvoid key_down(unsigned char key, int x, int y) {
-		if (key == 'e' || key == 'E')
+		if (key == '-') printf("줄 확인을 위한 테스트\n"); //TODO: 나중에 지우기
+		if (key == 'e' || key == 'E') {
+			mario.Mario_Change_State(0);
+			mario.StateEnter_3D();
 			push_state(CHANGEDIMENSION);
+		}
 		else
 			mario.handle_events(GLUT_KEY_DOWN, key);
 	}

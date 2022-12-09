@@ -7,7 +7,7 @@
 #include "check_collision.h"
 #include "play_state.h"
 #include "ImageManager.h"
-#include "ground.h"
+#include "camera.h"
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.1
 #define MARIO_MAX_FRAME 7
@@ -53,10 +53,15 @@ public:
 
 	GLuint texture[MARIOSTATEEND][MARIO_MAX_FRAME];
 	
-	GLvoid CheckNextState(int type, unsigned char key);
+	GLvoid CheckNextState_3D(int type, unsigned char key);
 	GLvoid Mario_Change_State(int);
+	GLvoid StateEnter_3D(int type = -1, unsigned char key = -1);
+	GLvoid StateExit_3D(int type=-1,unsigned char key = -1);
+
+
+	GLvoid CheckNextState(int type, unsigned char key);
 	GLvoid StateEnter(int type = -1, unsigned char key = -1);
-	GLvoid StateExit(int type=-1,unsigned char key = -1);
+	GLvoid StateExit(int type = -1, unsigned char key = -1);
 	
 
 	//TODO: Áö¿ï°Å
