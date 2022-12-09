@@ -206,32 +206,48 @@ GLvoid Mario::falling_gravity() {
 	boundingBox.trans.y += gravity;
 	gravity -= GravityAcceleration;
 	//중력에 대한 충돌체크 처리
-	for (int i = 0; i < Play::GetGround().size(); ++i) {
-		if (CheckAABB(boundingBox, *Play::GetGround()[i])) {
-			if (gravity > 0) {	//위로 점프중일때
-				boundingBox.trans.y = Play::GetGround()[i]->trans.y - 0.5 * Play::GetGround()[i]->scale.y - 0.5 * boundingBox.scale.y;
-				gravity = 0;
-			}
-			else {	//밑으로 중력 적용중일떄
-				boundingBox.trans.y = Play::GetGround()[i]->trans.y + 0.5 * Play::GetGround()[i]->scale.y + 0.5 * boundingBox.scale.y;
-				gravity = 0;
-				flag_jump = true;
-				if (cur_state == JUMP_RIGHT|| cur_state == JUMP_RIGHT_UP) {
-					if (Play::getcType() == D3_VIEW) {
+	if (Play::getcType() == D3_VIEW) {
+		for (int i = 0; i < Play::GetGround().size(); ++i) {
+			if (CheckAABB(boundingBox, *Play::GetGround()[i])) {
+				if (gravity > 0) {	//위로 점프중일때
+					boundingBox.trans.y = Play::GetGround()[i]->trans.y - 0.5 * Play::GetGround()[i]->scale.y - 0.5 * boundingBox.scale.y;
+					gravity = 0;
+				}
+				else {	//밑으로 중력 적용중일떄
+					boundingBox.trans.y = Play::GetGround()[i]->trans.y + 0.5 * Play::GetGround()[i]->scale.y + 0.5 * boundingBox.scale.y;
+					gravity = 0;
+					flag_jump = true;
+					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {	
 						StateExit_3D();
 						StateEnter_3D();
 					}
-					else {
-						StateExit_2D();
-						StateEnter_2D();
-					}
-					
 				}
 			}
-
-
 		}
 	}
+	else {
+		for (int i = 0; i < Play::GetGround().size(); ++i) {
+			if (CheckAABB_2D(boundingBox, *Play::GetGround()[i])) {
+				
+				if (gravity > 0) {	//위로 점프중일때
+					boundingBox.trans.y = Play::GetGround()[i]->trans.y - 0.5 * Play::GetGround()[i]->scale.y - 0.5 * boundingBox.scale.y;
+					gravity = 0;
+				}
+				else {	//밑으로 중력 적용중일떄
+					boundingBox.trans.y = Play::GetGround()[i]->trans.y + 0.5 * Play::GetGround()[i]->scale.y + 0.5 * boundingBox.scale.y;
+					gravity = 0;
+					flag_jump = true;
+					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {
+						
+						StateExit_2D();
+						StateEnter_2D();
+					
+					}
+				}
+			}
+		}
+	}
+	
 
 
 
@@ -246,26 +262,42 @@ GLvoid Mario::DoJump() {
 }
 
 GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
-	for (int i = 0; i < map.size(); ++i) {
-		if (CheckAABB(boundingBox, *map[i])) {
+	if (Play::getcType() == D3_VIEW) {
+		for (int i = 0; i < map.size(); ++i) {
+			if (CheckAABB(boundingBox, *map[i])) {
+				switch (XYZ) {
+				case X:
+					if (dir[X] >= 1) {
+						boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - 0.01;
+					}
+					else if (dir[X] <= -1) {
+						boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + 0.01;
+					}
+					break;
+				case Z:
+					if (dir[Z] >= 1) {
+						boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z - 0.01;
+					}
+					else if (dir[Z] <= -1) {
+						boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z + 0.01;
+					}
+					break;
+				}
+
+			}
 			
-			switch (XYZ) {
-			case X:
+
+		}
+	}
+	else {
+		for (int i = 0; i < map.size(); ++i) {
+			if (CheckAABB_2D(boundingBox, *map[i])) {
 				if (dir[X] >= 1) {
-					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x-0.01;
+					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - 0.01;
 				}
 				else if (dir[X] <= -1) {
 					boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + 0.01;
 				}
-				break;
-			case Z:
-				if (dir[Z] >= 1) {
-					boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z - 0.01;
-				}
-				else if (dir[Z] <= -1) {
-					boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z + 0.01;
-				}
-				break;
 			}
 		}
 	}
