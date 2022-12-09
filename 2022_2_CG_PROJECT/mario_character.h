@@ -10,12 +10,15 @@
 #include "camera.h"
 #include "wall.h"
 #include "door.h"
+#include "enemy.h"
 #define GravityAcceleration 0.0098
 #define MarioSpeed 0.1
 #define MARIO_MAX_FRAME 7
 #define RIGHT 0
 #define LEFT 1
 #define FLOAT_ERROR_FIGURE 0.0001
+#define HURT_TIME 500
+#define JumpPower 30
 
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,
@@ -30,25 +33,31 @@ enum MarioState {
 
 
 
-class Mario{
+class Mario: public Cube{
 public:
-	Cube boundingBox;
+	//Cube boundingBox;
 	GLfloat speed;
 	GLfloat gravity;
 	GLboolean flag_jump;
 	GLint cur_state;
 	GLboolean face;
 	GLint dir[3];
+	GLint hurt_time;
 
 	GLvoid InitBuffer();
-	GLvoid init();
+	GLvoid Init();
 	GLvoid draw(GLuint);
 	GLvoid update();
 	GLvoid handle_events(int, unsigned char);
+
 	GLvoid falling_gravity();
+	GLvoid CheckKillingEnemy();
+
 	GLvoid move(int);
 	GLvoid DoJump();
+	
 	GLvoid handle_collision(int, std::vector<Cube*>);
+	GLvoid CheckHittingByEnemy();
 	glm::vec3 GetPos();
 
 	GLfloat frame;
@@ -57,14 +66,15 @@ public:
 	GLuint texture[MARIOSTATEEND][MARIO_MAX_FRAME];
 	
 	GLvoid CheckNextState_3D(int type, unsigned char key);
-	GLvoid Mario_Change_State(int);
+	GLvoid MarioChangeState(int);
 	GLvoid StateEnter_3D(int type = -1, unsigned char key = -1);
 	GLvoid StateExit_3D(int type=-1,unsigned char key = -1);
+	
 
 	GLvoid CheckNextState_2D(int type, unsigned char key);
 	GLvoid StateEnter_2D(int type = -1, unsigned char key = -1);
 	GLvoid StateExit_2D(int type = -1, unsigned char key = -1);
-	
+	GLvoid StateDo_2D();
 
 	//TODO: Áö¿ï°Å
 	GLvoid PLEASEDELETELATER_PRINTCURSTATEFUNCTION();

@@ -113,7 +113,7 @@ namespace Play {
 		if (key == '-') printf("줄 확인을 위한 테스트\n"); //TODO: 나중에 지우기
 		std::cout << key << std::endl;
 		if (key == 'r' || key == 'R') {
-			mario.Mario_Change_State(0);
+			mario.MarioChangeState(0);
 			mario.StateEnter_3D();
 			push_state(CHANGEDIMENSION);
 		}
@@ -162,7 +162,7 @@ namespace Play {
 		}
 
 		{//마리오 관련
-			mario.init();
+			mario.Init();
 		}
 	}
 
@@ -209,7 +209,7 @@ namespace Play {
 
 
 	glm::vec3 GetMarioPos() {
-		return mario.boundingBox.trans;
+		return mario.trans;
 	}
 }
 

@@ -7,9 +7,12 @@ enum HANDLE_COLLISION {
 	X_DOWN, X_UP, Y_DOWN, Y_UP, Z_DOWN, Z_UP
 };
 
-GLvoid Mario::init() {
-	boundingBox.Init();
-	boundingBox.scale = glm::vec3(1.2f, 1.5f, 0.3f);
+GLvoid Mario::Init() {
+	trans = glm::vec3(5.0f, 0.0f, 0.0f);
+	rot = glm::vec3(0.0f, 0.0f, 0.0f);
+	scale = glm::vec3(1.0f, 1.0f, 1.0f);
+	color = glm::vec3(1.0f, 1.0f, 1.0f);
+	scale = glm::vec3(1.2f, 1.5f, 0.3f);
 	speed = MarioSpeed;
 	gravity = 0;
 	flag_jump = true;
@@ -28,18 +31,21 @@ GLvoid Mario::update() {
 		frame = 0;
 	}
 
+
 	if (dir[X] != 0)
 		move(X);
 	if (dir[Z] != 0)
 		move(Z);
+	if(dir[X]==0&&dir[Z]==0)
+		CheckHittingByEnemy();
 
-
-	{//중력 처리 -> 함수로 변경 예정
+	{
 		falling_gravity();
 
 	}
 
-
+	if(Play::getcType()==D2_VIEW)
+		StateDo_2D();
 }
 
 glm::vec3 mario_vertices[6]{
@@ -57,10 +63,10 @@ GLvoid Mario::draw(GLuint cType) {
 	glm::mat4 TR = glm::mat4(1.0f);
 
 	glm::mat4 T = glm::mat4(1.0f);
-	T = glm::translate(T, glm::vec3(boundingBox.trans.x, boundingBox.trans.y, boundingBox.trans.z));
+	T = glm::translate(T, glm::vec3(trans.x, trans.y, trans.z));
 
 	glm::mat4 S = glm::mat4(1.0f);
-	S = glm::scale(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
+	S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
 
 	glm::mat4 rot = glm::mat4(1.0f);
 	if(cType == D3_VIEW)
@@ -190,32 +196,32 @@ GLvoid Mario::InitBuffer() {
 GLvoid Mario::move(int XYZ) {
 	switch (XYZ) {
 	case X:
-		boundingBox.trans.x += dir[X] * speed;
+		trans.x += dir[X] * speed;
 		break;
 	case Z:
-		boundingBox.trans.z += dir[Z] * speed;
+		trans.z += dir[Z] * speed;
 		break;
 
 	}
 	handle_collision(XYZ, Play::GetGround());
-
+	CheckHittingByEnemy();
 
 }
 
 GLvoid Mario::falling_gravity() {
-	boundingBox.trans.y += gravity;
 	gravity -= GravityAcceleration;
+	trans.y += gravity;
 	std::vector<Cube*> g_ground = Play::GetGround();
 	//중력에 대한 충돌체크 처리
 	if (Play::getcType() == D3_VIEW) {
 		for (int i = 0; i < g_ground.size(); ++i) {
-			if (CheckAABB(boundingBox, *g_ground[i])) {
+			if (CheckAABB(*this, *g_ground[i])) {
 				if (gravity > 0) {	//위로 점프중일때
-					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y - FLOAT_ERROR_FIGURE;
+					trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * scale.y - FLOAT_ERROR_FIGURE;
 					gravity = 0;
 				}
 				else {	//밑으로 중력 적용중일떄
-					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y + FLOAT_ERROR_FIGURE;
+					trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * scale.y + FLOAT_ERROR_FIGURE;
 					gravity = 0;
 					flag_jump = true;
 					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {	
@@ -228,7 +234,7 @@ GLvoid Mario::falling_gravity() {
 	}
 	else {
 		for (int i = 0; i < g_ground.size(); ++i) {
-			if (CheckAABB_2D(boundingBox, *g_ground[i])) {
+			if (CheckAABB_2D(*this, *g_ground[i])) {
 				Cube* check_wall = dynamic_cast<Wall*>(g_ground[i]);
 				if ( check_wall != nullptr) {
 					continue;
@@ -239,11 +245,11 @@ GLvoid Mario::falling_gravity() {
 				}
 					
 				if (gravity > 0) {	//위로 점프중일때
-					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y - FLOAT_ERROR_FIGURE;
+					trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * scale.y - FLOAT_ERROR_FIGURE;
 					gravity = 0;
 				}
 				else {	//밑으로 중력 적용중일떄
-					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y + FLOAT_ERROR_FIGURE;
+					trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * scale.y + FLOAT_ERROR_FIGURE;
 					gravity = 0;
 					flag_jump = true;
 					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {
@@ -256,16 +262,26 @@ GLvoid Mario::falling_gravity() {
 			}
 		}
 	}
-	
+	if (Play::getcType() == D2_VIEW) {
+		CheckKillingEnemy();
+	}
+}
 
-
-
+GLvoid Mario::CheckKillingEnemy() {
+	std::vector<Enemy*> enemies = Play::GetEnemy();
+	for (int i = 0; i < enemies.size(); ++i) {
+		if (CheckAABB_2D(*this, *enemies[i])) {
+			enemies[i]->collision_handling(this);
+			gravity = GravityAcceleration * JumpPower;
+			trans.y = enemies[i]->trans.y + 0.5 * enemies[i]->scale.y + 0.5 * scale.y + FLOAT_ERROR_FIGURE;
+		}
+	}
 }
 
 GLvoid Mario::DoJump() {
 	if (flag_jump&& gravity >=-GravityAcceleration*2) {
 		//TODO: 점프 높이에대한 값 조정하기
-		gravity = GravityAcceleration * 30;
+		gravity = GravityAcceleration * JumpPower;
 		flag_jump = false;
 	}
 }
@@ -273,22 +289,22 @@ GLvoid Mario::DoJump() {
 GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 	if (Play::getcType() == D3_VIEW) {
 		for (int i = 0; i < map.size(); ++i) {
-			if (CheckAABB(boundingBox, *map[i])) {
+			if (CheckAABB(*this, *map[i])) {
 				switch (XYZ) {
 				case X:
 					if (dir[X] >= 1) {
-						boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - FLOAT_ERROR_FIGURE;
+						trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * scale.x - FLOAT_ERROR_FIGURE;
 					}
 					else if (dir[X] <= -1) {
-						boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + FLOAT_ERROR_FIGURE;
+						trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * scale.x + FLOAT_ERROR_FIGURE;
 					}
 					break;
 				case Z:
 					if (dir[Z] >= 1) {
-						boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z - FLOAT_ERROR_FIGURE;
+						trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * scale.z - FLOAT_ERROR_FIGURE;
 					}
 					else if (dir[Z] <= -1) {
-						boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z + FLOAT_ERROR_FIGURE;
+						trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * scale.z + FLOAT_ERROR_FIGURE;
 					}
 					break;
 				}
@@ -300,7 +316,7 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 	}
 	else {
 		for (int i = 0; i < map.size(); ++i) {
-			if (CheckAABB_2D(boundingBox, *map[i])) {
+			if (CheckAABB_2D(*this, *map[i])) {
 				Cube* check_wall = dynamic_cast<Wall*>(map[i]);
 				if (check_wall != nullptr) {
 					continue;
@@ -311,17 +327,31 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 				}
 
 				if (dir[X] >= 1) {
-					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - FLOAT_ERROR_FIGURE;
+					trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * scale.x - FLOAT_ERROR_FIGURE;
 				}
 				else if (dir[X] <= -1) {
-					boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + FLOAT_ERROR_FIGURE;
+					trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * scale.x + FLOAT_ERROR_FIGURE;
 				}
 			}
 		}
 	}
 }
 
-GLvoid Mario::Mario_Change_State(int next_state) {
+GLvoid Mario::CheckHittingByEnemy() {
+	if (cur_state == HURT_RIGHT) return;
+	std::vector<Enemy*> enemies = Play::GetEnemy();
+	if (Play::getcType() == D2_VIEW) {
+		for (int i = 0; i < enemies.size(); ++i) {
+			if (CheckAABB_2D(*this, *enemies[i])) {
+				StateExit_2D();
+				MarioChangeState(HURT_RIGHT);
+				StateEnter_2D();
+			}
+		}
+	}
+}
+
+GLvoid Mario::MarioChangeState(int next_state) {
 	if (cur_state == next_state) return;
 	cur_state = next_state;
 	frame = 0;
@@ -670,6 +700,15 @@ GLvoid Mario::StateEnter_2D(int type, unsigned char key) {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
+		if (face == RIGHT) {
+			dir[X] = -1;
+		}
+		else {
+			dir[X] = 1;
+		}
+		dir[Z] = 0;
+		hurt_time = HURT_TIME;
+		gravity = GravityAcceleration * 15;
 		break;
 	}
 }
@@ -694,37 +733,37 @@ GLvoid Mario::StateExit_3D(int type, unsigned char key) {
 	case JUMP_RIGHT:
 	case JUMP_LEFT:
 		if ((GetKeyDown()[pressD] && !GetKeyDown()[pressA])) {
-			Mario_Change_State(WALKING_RIGHT);
+			MarioChangeState(WALKING_RIGHT);
 			StateEnter_3D(GLUT_KEY_DOWN, 'd');
 		}
 		else if ((GetKeyDown()[pressA] && !GetKeyDown()[pressD])) {
-			Mario_Change_State(WALKING_RIGHT);
+			MarioChangeState(WALKING_RIGHT);
 			StateEnter_3D(GLUT_KEY_DOWN, 'a');
 		}
 		else if (GetKeyDown()[pressS]) {
-			Mario_Change_State(WALKING_RIGHT);
+			MarioChangeState(WALKING_RIGHT);
 			StateEnter_3D(GLUT_KEY_DOWN, 's');
 		}
 		else {
-			Mario_Change_State(IDLE_RIGHT_UP);
+			MarioChangeState(IDLE_RIGHT_UP);
 		}
 		break;
 	case JUMP_RIGHT_UP:
 	case JUMP_LEFT_UP:
 		if ((GetKeyDown()[pressD] && !GetKeyDown()[pressA])) {
-			Mario_Change_State(WALKING_RIGHT_UP);
+			MarioChangeState(WALKING_RIGHT_UP);
 			StateEnter_3D(GLUT_KEY_DOWN, 'd');
 		}
 		else if ((GetKeyDown()[pressA] && !GetKeyDown()[pressD])) {
-			Mario_Change_State(WALKING_RIGHT_UP);
+			MarioChangeState(WALKING_RIGHT_UP);
 			StateEnter_3D(GLUT_KEY_DOWN, 'a');
 		}
 		else if (GetKeyDown()[pressW]) {
-			Mario_Change_State(WALKING_RIGHT_UP);
+			MarioChangeState(WALKING_RIGHT_UP);
 			StateEnter_3D(GLUT_KEY_DOWN, 'w');
 		}
 		else {
-			Mario_Change_State(IDLE_RIGHT_UP);
+			MarioChangeState(IDLE_RIGHT_UP);
 		}
 		break;
 	case HURT_RIGHT:
@@ -752,17 +791,17 @@ GLvoid Mario::StateExit_2D(int type, unsigned char key) {
 	case JUMP_LEFT:
 		//점프 끝나고서 누르고 있는 키에대한 처리 진행하기
 		if ((!GetKeyDown()[pressA] && GetKeyDown()[pressD])){
-			Mario_Change_State(WALKING_RIGHT);
+			MarioChangeState(WALKING_RIGHT);
 			StateEnter_2D(GLUT_KEY_DOWN,'d');
 			break;
 		}
 		else if (GetKeyDown()[pressA] && !GetKeyDown()[pressD]) {
-			Mario_Change_State(WALKING_RIGHT);
+			MarioChangeState(WALKING_RIGHT);
 			StateEnter_2D(GLUT_KEY_DOWN,'a');
 			break;
 		}
 		else {
-			Mario_Change_State(IDLE_RIGHT);
+			MarioChangeState(IDLE_RIGHT);
 			StateEnter_2D();
 		}
 		
@@ -777,18 +816,8 @@ GLvoid Mario::StateExit_2D(int type, unsigned char key) {
 }
 
 //파이썬때 class 상태 do 코드 //TODO: 필요에 따라 2d에선 다르게 do 하도록 넣기
-GLvoid Mario::handle_events(int type, unsigned char key) {
-	switch (Play::getcType()) {
-	case D3_VIEW:
-		CheckNextState_3D(type, key);
-		break;
-	case D2_VIEW:
-		CheckNextState_2D(type, key);
-		break;
-	}
-
-	//CheckNextState_3D(type, key);
-	/*switch (cur_state) {
+GLvoid Mario::StateDo_2D() {
+	switch (cur_state) {
 	case IDLE_RIGHT:
 	case IDLE_LEFT:
 		break;
@@ -809,8 +838,31 @@ GLvoid Mario::handle_events(int type, unsigned char key) {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
+		std::cout << hurt_time;
+		hurt_time -= 16;
+		
+		if (hurt_time <= 0) {
+			hurt_time = 0;
+			StateExit_2D();
+			MarioChangeState(IDLE_RIGHT);
+			StateEnter_2D();
+		}
 		break;
-	}*/
+	}
+}
+
+GLvoid Mario::handle_events(int type, unsigned char key) {
+	switch (Play::getcType()) {
+	case D3_VIEW:
+		CheckNextState_3D(type, key);
+		break;
+	case D2_VIEW:
+		CheckNextState_2D(type, key);
+		break;
+	}
+
+	//CheckNextState_3D(type, key);
+	
 }
 
 //파이썬 next_state 변수와 비슷한 역할 하는 함수
@@ -824,30 +876,30 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);
+				MarioChangeState(WALKING_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case ' ':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -857,28 +909,28 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressS]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 's':
 				if (GetKeyDown()[pressW]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 'a':
 				if (GetKeyDown()[pressD]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
@@ -896,30 +948,30 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);
+				MarioChangeState(WALKING_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);
+				MarioChangeState(WALKING_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);
+				MarioChangeState(WALKING_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case ' ':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -929,28 +981,28 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressS]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 's':
 				if (GetKeyDown()[pressW]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);
+					MarioChangeState(WALKING_RIGHT_UP);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 'a':
 				if (GetKeyDown()[pressD]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);
+					MarioChangeState(WALKING_RIGHT_UP);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);
+					MarioChangeState(WALKING_RIGHT_UP);
 					StateEnter_3D(type, key);
 				}
 				break;
@@ -969,32 +1021,32 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				if (!GetKeyDown()[pressA] && !GetKeyDown()[pressD]) {	//A와 D를 누르지 않고 S로만 눌러서 밑으로 가는 상황일 때는 w 누르면 아이들 되게
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				else {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);
+					MarioChangeState(WALKING_RIGHT_UP);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 's':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				if (GetKeyDown()[pressS]) {	//s가 눌려서 밑으로 가는 상황
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 					break;
 				}
 				if (GetKeyDown()[pressD]) {	//s가 안눌린 채로 오른쪽만 가는 상태
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
@@ -1002,19 +1054,19 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				if (GetKeyDown()[pressS]) {	//s가 눌려서 밑으로 가는 상황
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 					break;
 				}
 				if (GetKeyDown()[pressA]) {	//s가 안눌린 채로 왼쪽만 가는 상태
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case ' ':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -1024,19 +1076,19 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressS]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
 			case 's':
 				if ((!GetKeyDown()[pressA] and GetKeyDown()[pressD]) or (GetKeyDown()[pressD] and !GetKeyDown()[pressD])) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				else {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
@@ -1044,12 +1096,12 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 
 				if (GetKeyDown()[pressS]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				else {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				
@@ -1057,12 +1109,12 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'd':
 				if (GetKeyDown()[pressS]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT);
+					MarioChangeState(WALKING_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				else {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 				}
 				break;
@@ -1078,60 +1130,60 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);
+				MarioChangeState(WALKING_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				if (!GetKeyDown()[pressA]&&!GetKeyDown()[pressD]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_3D(type, key);
 					break;
 				}
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				if (GetKeyDown()[pressW]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
+					MarioChangeState(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
 					StateEnter_3D(type, key);
 					break;
 				}
 				if (GetKeyDown()[pressD]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
+					MarioChangeState(IDLE_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
 					StateEnter_3D(type, key);
 					break;
 				}
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
+				MarioChangeState(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				if (GetKeyDown()[pressW]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
+					MarioChangeState(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
 					StateEnter_3D(type, key);
 					break;
 				}
 				if (GetKeyDown()[pressA]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
+					MarioChangeState(IDLE_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
 					StateEnter_3D(type, key);
 					break;
 				}
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
+				MarioChangeState(WALKING_RIGHT_UP);	//그대로 가게 하고 z축 이동 금지
 				StateEnter_3D(type, key);
 				break;
 			case ' ':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -1141,24 +1193,24 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (!GetKeyDown()[pressA] && !GetKeyDown()[pressD]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT_UP);
+					MarioChangeState(IDLE_RIGHT_UP);
 					StateEnter_3D(type, key);
 					break;
 				}
 				StateExit_3D(type, key);
-				Mario_Change_State(WALKING_RIGHT_UP);
+				MarioChangeState(WALKING_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressW]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);
+					MarioChangeState(WALKING_RIGHT_UP);
 					StateEnter_3D(type, key);
 					break;
 				}
 				else {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT_UP);
+					MarioChangeState(IDLE_RIGHT_UP);
 					StateEnter_3D(type, key);
 					break;
 				}
@@ -1167,13 +1219,13 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'd':
 				if (GetKeyDown()[pressW]) {
 					StateExit_3D(type, key);
-					Mario_Change_State(WALKING_RIGHT_UP);
+					MarioChangeState(WALKING_RIGHT_UP);
 					StateEnter_3D(type, key);
 					break;
 				}
 				else {
 					StateExit_3D(type, key);
-					Mario_Change_State(IDLE_RIGHT_UP);
+					MarioChangeState(IDLE_RIGHT_UP);
 					StateEnter_3D(type, key);
 					break;
 				}
@@ -1190,25 +1242,25 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 					
@@ -1218,22 +1270,22 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			switch (key) {
 			case 'w':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -1248,25 +1300,25 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			case 'w':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				if (GetKeyDown()[pressW] && GetKeyDown()[pressS]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -1275,22 +1327,22 @@ GLvoid Mario::CheckNextState_3D(int type, unsigned char key) {
 			switch (key) {
 			case 'w':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 's':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_3D(type, key);
 				break;
 			case 'a':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			case 'd':
 				StateExit_3D(type, key);
-				Mario_Change_State(JUMP_RIGHT_UP);
+				MarioChangeState(JUMP_RIGHT_UP);
 				StateEnter_3D(type, key);
 				break;
 			}
@@ -1312,18 +1364,18 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_2D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_2D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			case ' ':
 				StateExit_2D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			}
@@ -1332,12 +1384,12 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 			switch (key) {
 			case 'a':
 				StateExit_2D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			case 'd':
 				StateExit_2D(type, key);
-				Mario_Change_State(WALKING_RIGHT);
+				MarioChangeState(WALKING_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			}
@@ -1358,7 +1410,7 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				if (GetKeyDown()[pressD]) {
 					StateExit_2D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_2D(type, key);
 				}
 				break;
@@ -1366,13 +1418,13 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				if (GetKeyDown()[pressA]) {
 					StateExit_2D(type, key);
-					Mario_Change_State(IDLE_RIGHT);
+					MarioChangeState(IDLE_RIGHT);
 					StateEnter_2D(type, key);
 				}
 				break;
 			case ' ':
 				StateExit_2D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			}
@@ -1381,12 +1433,12 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 			switch (key) {
 			case 'a':
 				StateExit_2D(type, key);
-				Mario_Change_State(IDLE_RIGHT);
+				MarioChangeState(IDLE_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			case 'd':
 				StateExit_2D(type, key);
-				Mario_Change_State(IDLE_RIGHT);
+				MarioChangeState(IDLE_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			}
@@ -1404,13 +1456,13 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 			case 'a':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_2D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			case 'd':
 				if (GetKeyDown()[pressA] && GetKeyDown()[pressD]) break;
 				StateExit_2D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 
@@ -1420,12 +1472,12 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 			switch (key) {
 			case 'a':
 				StateExit_2D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			case 'd':
 				StateExit_2D(type, key);
-				Mario_Change_State(JUMP_RIGHT);
+				MarioChangeState(JUMP_RIGHT);
 				StateEnter_2D(type, key);
 				break;
 			}
