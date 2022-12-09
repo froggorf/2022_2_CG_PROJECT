@@ -122,6 +122,18 @@
     <ClCompile Include="enemy.cpp">
       <Filter>Enemy\Source</Filter>
     </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
+    <ClCompile Include="coin.cpp">
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
+    <ClCompile Include="mushroom.cpp">
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
+    <ClCompile Include="wall.cpp">
+      <Filter>MapObject\source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -184,9 +196,6 @@
     <ClInclude Include="ground.h">
       <Filter>MapObject\header</Filter>
     </ClInclude>
-    <ClInclude Include="pipe.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="mysteryBlock.h">
       <Filter>MapObject\header</Filter>
     </ClInclude>
@@ -198,6 +207,21 @@
     </ClInclude>
     <ClInclude Include="enemy.h">
       <Filter>Enemy\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="coin.h">
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="mushroom.h">
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="pipe.h">
+      <Filter>MapObject\header</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.h">
+      <Filter>MapObject\header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

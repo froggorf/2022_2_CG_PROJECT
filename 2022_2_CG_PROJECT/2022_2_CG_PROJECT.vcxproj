@@ -152,6 +152,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="changeDimension_state.cpp" />
     <ClCompile Include="check_collision.cpp" />
+    <ClCompile Include="coin.cpp" />
     <ClCompile Include="cube.cpp" />
     <ClCompile Include="door.cpp" />
     <ClCompile Include="enemy.cpp" />
@@ -161,15 +162,18 @@
     <ClCompile Include="goomba.cpp" />
     <ClCompile Include="ground.cpp" />
     <ClCompile Include="ImageManager.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="key_events.cpp" />
     <ClCompile Include="logo_state.cpp" />
     <ClCompile Include="MainGame.cpp" />
     <ClCompile Include="mario_character.cpp" />
+    <ClCompile Include="mushroom.cpp" />
     <ClCompile Include="MysteryBlock.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="pipe.cpp" />
     <ClCompile Include="play_state.cpp" />
     <ClCompile Include="title_state.cpp" />
+    <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="block.h" />
@@ -177,6 +181,7 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="changeDimension_state.h" />
     <ClInclude Include="check_collision.h" />
+    <ClInclude Include="coin.h" />
     <ClInclude Include="cube.h" />
     <ClInclude Include="door.h" />
     <ClInclude Include="enemy.h" />
@@ -186,10 +191,12 @@
     <ClInclude Include="goomba.h" />
     <ClInclude Include="ground.h" />
     <ClInclude Include="ImageManager.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="key_events.h" />
     <ClInclude Include="logo_state.h" />
     <ClInclude Include="MainGame.h" />
     <ClInclude Include="mario_character.h" />
+    <ClInclude Include="mushroom.h" />
     <ClInclude Include="mysteryBlock.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="pipe.h" />
@@ -197,6 +204,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="title_state.h" />
+    <ClInclude Include="wall.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

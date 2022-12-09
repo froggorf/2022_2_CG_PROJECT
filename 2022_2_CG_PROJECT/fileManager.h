@@ -6,6 +6,7 @@
 #include "pipe.h"
 #include "block.h"
 #include "door.h"
+#include "wall.h"
 
 void loadStage1(std::vector<Cube*> &vec);
 void loadCube(std::vector<Cube>& vec);
