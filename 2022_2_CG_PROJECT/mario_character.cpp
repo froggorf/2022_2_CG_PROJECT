@@ -51,7 +51,7 @@ glm::vec2 mario_texture[6]{
 	glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
 };
 
-GLvoid Mario::draw() {
+GLvoid Mario::draw(GLuint cType) {
 	//boundingBox.draw();
 
 	glm::mat4 TR = glm::mat4(1.0f);
@@ -63,7 +63,9 @@ GLvoid Mario::draw() {
 	S = glm::scale(S, glm::vec3(boundingBox.scale.x, boundingBox.scale.y, boundingBox.scale.z));
 
 	glm::mat4 rot = glm::mat4(1.0f);
-	rot = glm::rotate(rot, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	if(cType == D3_VIEW)
+		rot = glm::rotate(rot, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
 
 	TR = T * rot * S * TR;
 
