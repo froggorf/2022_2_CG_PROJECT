@@ -72,6 +72,7 @@ GLvoid Cube::Init() {
     rot = glm::vec3(0.0f, 0.0f, 0.0f);
     scale = glm::vec3(1.0f, 1.0f, 1.0f);
     color = glm::vec3(1.0f, 1.0f, 1.0f);
+    isCanDelete = false;
 }
 
 glm::vec3* GetCubeVertices() {

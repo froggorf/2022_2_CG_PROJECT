@@ -54,6 +54,9 @@ Brick::~Brick() {
 	glDeleteBuffers(3, VBO);
 };
 
+GLvoid Brick::collision_handling(Cube* other) {
+
+}
 
 GLvoid Brick::Init() {
 

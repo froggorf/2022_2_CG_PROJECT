@@ -14,6 +14,7 @@ public:
 	GLvoid InitBuffer();
 	GLvoid Init();
 	GLvoid draw();
+	GLvoid collision_handling(Cube* other);
 };
 
 #endif
