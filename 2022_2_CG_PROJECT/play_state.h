@@ -11,6 +11,9 @@
 #include "ground.h"
 #include "changeDimension_state.h"
 
+// TODO: 일단 playstate에서 적 생성
+#include "goomba.h"
+
 namespace Play {
     //define - 선언
 

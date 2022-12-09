@@ -28,6 +28,15 @@
     <Filter Include="MapObject\header">
       <UniqueIdentifier>{817e59b6-448e-4e22-a49b-a5665d2316b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{d03718b1-8e4b-4102-acc3-788d32d6474c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Source">
+      <UniqueIdentifier>{0b80e88f-db0d-42b9-a82b-7ca883549365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy\Header">
+      <UniqueIdentifier>{765c65be-83ec-40e2-9d02-fcb5461248b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="fragment.glsl">
@@ -107,6 +116,12 @@
     <ClCompile Include="changeDimension_state.cpp">
       <Filter>FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="goomba.cpp">
+      <Filter>Enemy\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy.cpp">
+      <Filter>Enemy\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -177,6 +192,12 @@
     </ClInclude>
     <ClInclude Include="changeDimension_state.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="goomba.h">
+      <Filter>Enemy\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy.h">
+      <Filter>Enemy\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
