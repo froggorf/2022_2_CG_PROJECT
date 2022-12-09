@@ -205,16 +205,17 @@ GLvoid Mario::move(int XYZ) {
 GLvoid Mario::falling_gravity() {
 	boundingBox.trans.y += gravity;
 	gravity -= GravityAcceleration;
+	std::vector<Cube*> g_ground = Play::GetGround();
 	//중력에 대한 충돌체크 처리
 	if (Play::getcType() == D3_VIEW) {
-		for (int i = 0; i < Play::GetGround().size(); ++i) {
-			if (CheckAABB(boundingBox, *Play::GetGround()[i])) {
+		for (int i = 0; i < g_ground.size(); ++i) {
+			if (CheckAABB(boundingBox, *g_ground[i])) {
 				if (gravity > 0) {	//위로 점프중일때
-					boundingBox.trans.y = Play::GetGround()[i]->trans.y - 0.5 * Play::GetGround()[i]->scale.y - 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y;
 					gravity = 0;
 				}
 				else {	//밑으로 중력 적용중일떄
-					boundingBox.trans.y = Play::GetGround()[i]->trans.y + 0.5 * Play::GetGround()[i]->scale.y + 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y;
 					gravity = 0;
 					flag_jump = true;
 					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {	
@@ -226,15 +227,16 @@ GLvoid Mario::falling_gravity() {
 		}
 	}
 	else {
-		for (int i = 0; i < Play::GetGround().size(); ++i) {
-			if (CheckAABB_2D(boundingBox, *Play::GetGround()[i])) {
-				
+		for (int i = 0; i < g_ground.size(); ++i) {
+			if (CheckAABB_2D(boundingBox, *g_ground[i])) {
+				if(nullptr == (dynamic_cast<Wall*>(g_ground[i])))
+					continue;
 				if (gravity > 0) {	//위로 점프중일때
-					boundingBox.trans.y = Play::GetGround()[i]->trans.y - 0.5 * Play::GetGround()[i]->scale.y - 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y;
 					gravity = 0;
 				}
 				else {	//밑으로 중력 적용중일떄
-					boundingBox.trans.y = Play::GetGround()[i]->trans.y + 0.5 * Play::GetGround()[i]->scale.y + 0.5 * boundingBox.scale.y;
+					boundingBox.trans.y = g_ground[i]->trans.y + 0.5 * g_ground[i]->scale.y + 0.5 * boundingBox.scale.y;
 					gravity = 0;
 					flag_jump = true;
 					if (cur_state == JUMP_RIGHT || cur_state == JUMP_RIGHT_UP) {
