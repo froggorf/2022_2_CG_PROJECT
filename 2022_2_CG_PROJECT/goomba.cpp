@@ -97,9 +97,11 @@ GLvoid Goomba::update() {
 
 	if (dir > 0) {		// 2D RIght
 		trans.x += 0.02;
+		if (trans.x >= 127) dir = 0;
 	}
 	else {				// 2D Left
 		trans.x -= 0.02;
+		if (trans.x <= 0) dir = 1;
 	}
 
 }
