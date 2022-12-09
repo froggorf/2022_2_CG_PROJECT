@@ -229,8 +229,15 @@ GLvoid Mario::falling_gravity() {
 	else {
 		for (int i = 0; i < g_ground.size(); ++i) {
 			if (CheckAABB_2D(boundingBox, *g_ground[i])) {
-				if(nullptr == (dynamic_cast<Wall*>(g_ground[i])))
+				Cube* check_wall = dynamic_cast<Wall*>(g_ground[i]);
+				if ( check_wall != nullptr) {
 					continue;
+				}
+				check_wall = dynamic_cast<Door*>(g_ground[i]);
+				if (check_wall != nullptr) {
+					continue;
+				}
+					
 				if (gravity > 0) {	//위로 점프중일때
 					boundingBox.trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * boundingBox.scale.y;
 					gravity = 0;
@@ -270,18 +277,18 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 				switch (XYZ) {
 				case X:
 					if (dir[X] >= 1) {
-						boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - 0.01;
+						boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x;
 					}
 					else if (dir[X] <= -1) {
-						boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + 0.01;
+						boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x;
 					}
 					break;
 				case Z:
 					if (dir[Z] >= 1) {
-						boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z - 0.01;
+						boundingBox.trans.z = map[i]->trans.z - 0.5 * map[i]->scale.z - 0.5 * boundingBox.scale.z;
 					}
 					else if (dir[Z] <= -1) {
-						boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z + 0.01;
+						boundingBox.trans.z = map[i]->trans.z + 0.5 * map[i]->scale.z + 0.5 * boundingBox.scale.z;
 					}
 					break;
 				}
@@ -294,11 +301,20 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 	else {
 		for (int i = 0; i < map.size(); ++i) {
 			if (CheckAABB_2D(boundingBox, *map[i])) {
+				Cube* check_wall = dynamic_cast<Wall*>(map[i]);
+				if (check_wall != nullptr) {
+					continue;
+				}
+				check_wall = dynamic_cast<Door*>(map[i]);
+				if (check_wall != nullptr) {
+					continue;
+				}
+
 				if (dir[X] >= 1) {
-					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x - 0.01;
+					boundingBox.trans.x = map[i]->trans.x - 0.5 * map[i]->scale.x - 0.5 * boundingBox.scale.x;
 				}
 				else if (dir[X] <= -1) {
-					boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x + 0.01;
+					boundingBox.trans.x = map[i]->trans.x + 0.5 * map[i]->scale.x + 0.5 * boundingBox.scale.x;
 				}
 			}
 		}
