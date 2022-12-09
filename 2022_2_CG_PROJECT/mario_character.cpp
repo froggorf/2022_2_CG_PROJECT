@@ -216,7 +216,22 @@ GLvoid Mario::falling_gravity() {
 	if (Play::getcType() == D3_VIEW) {
 		for (int i = 0; i < g_ground.size(); ++i) {
 			if (CheckAABB(*this, *g_ground[i])) {
+				
+					
+
+
 				if (gravity > 0) {	//위로 점프중일때
+					Cube* check_brick = dynamic_cast<Brick*>(g_ground[i]);
+					if (check_brick != nullptr) {
+						std::cout << "벽돌 충돌" << std::endl;
+						g_ground[i]->collision_handling(this);
+					}
+					Cube* check_mysteryBox = dynamic_cast<MysteryBlock*>(g_ground[i]);
+					if (check_mysteryBox != nullptr) {
+						std::cout << "미스테리박스 충돌" << std::endl;
+						g_ground[i]->collision_handling(this);
+					}
+
 					trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * scale.y - FLOAT_ERROR_FIGURE;
 					gravity = 0;
 				}
@@ -245,6 +260,17 @@ GLvoid Mario::falling_gravity() {
 				}
 					
 				if (gravity > 0) {	//위로 점프중일때
+					Cube* check_brick = dynamic_cast<Brick*>(g_ground[i]);
+					if (check_brick != nullptr) {
+						std::cout << "벽돌 충돌" << std::endl;
+						g_ground[i]->collision_handling(this);
+					}
+					Cube* check_mysteryBox = dynamic_cast<MysteryBlock*>(g_ground[i]);
+					if (check_mysteryBox != nullptr) {
+						std::cout << "미스테리박스 충돌" << std::endl;
+						g_ground[i]->collision_handling(this);
+					}
+
 					trans.y = g_ground[i]->trans.y - 0.5 * g_ground[i]->scale.y - 0.5 * scale.y - FLOAT_ERROR_FIGURE;
 					gravity = 0;
 				}
@@ -268,6 +294,7 @@ GLvoid Mario::falling_gravity() {
 }
 
 GLvoid Mario::CheckKillingEnemy() {
+	if (cur_state == HURT_RIGHT) return;
 	std::vector<Enemy*> enemies = Play::GetEnemy();
 	for (int i = 0; i < enemies.size(); ++i) {
 		if (CheckAABB_2D(*this, *enemies[i])) {
