@@ -79,10 +79,22 @@ namespace Play {
 
         for (int i = 0; i < enemyVec.size(); i++) {
             enemyVec[i]->update();
-            for (auto m : map) {
-                if (m->trans.y > 0 and m->trans.y < 1.5 and CheckAABB_2D(*enemyVec[i], *m)) {
-                    enemyVec[i]->collision_handling(m);
+            Enemy* enemyCast = dynamic_cast<Goomba*>(enemyVec[i]);
+            if (enemyCast != nullptr)// GOOMBA
+            {
+                for (auto m : map) {
+                    if (m->trans.y > 0 and m->trans.y < 2.0 and CheckAABB_2D(*enemyVec[i], *m)) {
+                        enemyVec[i]->collision_handling(m);
+                    }
                 }
+            }
+            else {
+                for (auto m : map) {
+                    if (CheckAABB(*enemyVec[i], *m)) {
+                        enemyVec[i]->collision_handling(m);
+                    }
+                }
+
             }
             if (enemyVec[i]->isCanDelete) {
                 delete enemyVec[i];
@@ -197,6 +209,20 @@ namespace Play {
         }
         else {
             loadStage2(map);
+            Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(18.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp1 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.5, 0.5, 4.6), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp2 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(69.3, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp3 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(72.2, 0.5, -1.5), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp4 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(146, 0.5, -1.5), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp5 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(156.5, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp6 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(174.7, 0.5, -3.20), glm::vec3(0.0, 0.0, 0.0));
+            enemyVec.push_back(temp0);
+            enemyVec.push_back(temp1);
+            enemyVec.push_back(temp2);
+            enemyVec.push_back(temp3);
+            enemyVec.push_back(temp4);
+            enemyVec.push_back(temp5);
+            enemyVec.push_back(temp6);
         }
     }
 

@@ -21,8 +21,8 @@ glm::vec2 squiglet_text_pos[] = {
 };
 
 glm::vec3 test_squiglet_vertices[] = {
-	glm::vec3(-0.5,0.5,0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(0.5,-0.5,0.5),		// 1, 4, 5		¾Õ¸é
-	glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,0.5,0.5),			// 1, 5, 2
+	//glm::vec3(-0.5,0.5,0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(0.5,-0.5,0.5),		// 1, 4, 5		¾Õ¸é
+	//glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,-0.5,0.5),glm::vec3(0.5,0.5,0.5),			// 1, 5, 2
 
 	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,0.5,0.5),glm::vec3(0.5,0.5,0.5),		// 0, 1, 2		À­¸é
 	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(0.5,0.5,0.5),glm::vec3(0.5,0.5,-0.5),		// 0, 2, 3
@@ -36,8 +36,8 @@ glm::vec3 test_squiglet_vertices[] = {
 	//glm::vec3(0.5,0.5,-0.5), glm::vec3(0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),	// 3, 6, 7
 	//glm::vec3(0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,0.5,-0.5),		// 3, 7, 0
 
-	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,0.5),	// 0, 7, 4
-	//glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
+	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,-0.5),glm::vec3(-0.5,-0.5,0.5),	// 0, 7, 4
+	glm::vec3(-0.5,0.5,-0.5),glm::vec3(-0.5,-0.5,0.5), glm::vec3(-0.5,0.5,0.5),		// 0, 4, 1
 };
 
 GLuint squiglet_texture[2][5] = { -1, };
@@ -75,17 +75,17 @@ GLvoid Squiglet::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(3, VBO);
 	if (squiglet_texture[0][0] == -1) {
-		LoadTexture(squiglet_texture[0][0], "resource/Enemy/Squiglet/squiglet_walk0.png");
-		LoadTexture(squiglet_texture[0][1], "resource/Enemy/Squiglet/squiglet_walk1.png");
-		LoadTexture(squiglet_texture[0][2], "resource/Enemy/Squiglet/squiglet_walk2png");
-		LoadTexture(squiglet_texture[0][3], "resource/Enemy/Squiglet/squiglet_walk3.png");
-		LoadTexture(squiglet_texture[0][4], "resource/Enemy/Squiglet/squiglet_walk4.png");
-		LoadTexture(squiglet_texture[1][0], "resource/Enemy/Squiglet/squiglet_walk0_right.png");
-		LoadTexture(squiglet_texture[1][1], "resource/Enemy/Squiglet/squiglet_walk1_right.png");
-		LoadTexture(squiglet_texture[1][2], "resource/Enemy/Squiglet/squiglet_walk2_right.png");
-		LoadTexture(squiglet_texture[1][3], "resource/Enemy/Squiglet/squiglet_walk3_right.png");
-		LoadTexture(squiglet_texture[1][4], "resource/Enemy/Squiglet/squiglet_walk4_right.png");
-		LoadTexture(squiglet_dead_texture, "resource/Enemy/Squiglet/squiglet_dead.png");
+		LoadTexture(squiglet_texture[0][0], "resource/Enemy/Squiglet/Squiglet_walk0_left.png");
+		LoadTexture(squiglet_texture[0][1], "resource/Enemy/Squiglet/Squiglet_walk1_left.png");
+		LoadTexture(squiglet_texture[0][2], "resource/Enemy/Squiglet/Squiglet_walk2_left.png");
+		LoadTexture(squiglet_texture[0][3], "resource/Enemy/Squiglet/Squiglet_walk3_left.png");
+		LoadTexture(squiglet_texture[0][4], "resource/Enemy/Squiglet/Squiglet_walk4_left.png");
+		LoadTexture(squiglet_texture[1][0], "resource/Enemy/Squiglet/Squiglet_walk0_right.png");
+		LoadTexture(squiglet_texture[1][1], "resource/Enemy/Squiglet/Squiglet_walk1_right.png");
+		LoadTexture(squiglet_texture[1][2], "resource/Enemy/Squiglet/Squiglet_walk2_right.png");
+		LoadTexture(squiglet_texture[1][3], "resource/Enemy/Squiglet/Squiglet_walk3_right.png");
+		LoadTexture(squiglet_texture[1][4], "resource/Enemy/Squiglet/Squiglet_walk4_right.png");
+		LoadTexture(squiglet_dead_texture, "resource/Enemy/Squiglet/Squiglet_dead.png");
 	}
 }
 
@@ -103,12 +103,12 @@ GLvoid Squiglet::update() {
 		}
 
 		if (dir > 0) {		// 2D RIght
-			trans.x += 0.02;
-			if (trans.x >= 127) dir = 0;
+			trans.z += 0.02;
+			//if (trans.z >= 127) dir = 0;
 		}
 		else {				// 2D Left
-			trans.x -= 0.02;
-			if (trans.x <= 0) dir = 1;
+			trans.z -= 0.02;
+			//if (trans.z <= 0) dir = 1;
 		}
 	}
 }
@@ -121,11 +121,11 @@ GLvoid Squiglet::collision_handling(Cube* other) {
 	}
 	else {
 		if (dir > 0) {
-			trans.x -= 0.02;
+			trans.z -= 0.02;
 			dir = 0;
 		}
 		else {
-			trans.x += 0.02;
+			trans.z += 0.02;
 			dir = 1;
 		}
 	}
