@@ -26,6 +26,9 @@ namespace Play {
     //허드
     Hud hud;
 
+    //백그라운드
+    BackGround background;
+
     //function - 정의
     GLvoid enter() {
         InitValue();
@@ -130,6 +133,7 @@ namespace Play {
     }
 
     GLvoid drawObject() {
+        background.Draw();  //무조건 먼저 백그라운드 출력할 것
         for (auto m : map)
             m->draw();
         for (auto v : enemyVec)
@@ -148,8 +152,6 @@ namespace Play {
     }
 
     GLvoid key_down(unsigned char key, int x, int y) {
-        if (key == '-') printf("줄 확인을 위한 테스트\n"); //TODO: 나중에 지우기
-        std::cout << key << std::endl;
         if (key == 'r' || key == 'R') {
             mario.MarioChangeState(0);
             mario.StateEnter_3D();
@@ -167,6 +169,7 @@ namespace Play {
         loadStage1(map);
         mario.InitBuffer();
         hud.InitBuffer();
+        background.InitBuffer();
         {
             Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
             Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));

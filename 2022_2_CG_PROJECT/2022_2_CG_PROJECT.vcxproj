@@ -147,6 +147,7 @@
     <None Include="vertex_texture.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="background.cpp" />
     <ClCompile Include="block.cpp" />
     <ClCompile Include="brick.cpp" />
     <ClCompile Include="brickParticle.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="background.h" />
     <ClInclude Include="block.h" />
     <ClInclude Include="brick.h" />
     <ClInclude Include="brickParticle.h" />

@@ -1,6 +1,10 @@
 
 #include "fileManager.h"
 
+//TODO: 스테이지 1 맵 끝쪽 벽이 블럭으로 된듯함
+//TODO: 미스터리 박스에서 코인 나오는거면 마리오 코인 값 올려주거나 올려주라는 함수 넣어줘야할듯함
+
+
 void loadCube(std::vector<Cube>& vec) {
     std::ifstream ifs("Vertex.txt");
     if (!ifs.fail()) {
@@ -46,11 +50,11 @@ void loadStage1(std::vector<Cube*>& vec) {
                 temp = new Block(scale, trans, rotate);
                 vec.push_back(temp);
             }
-            else if (i >= 40 and i < 42) {
+            else if (i == 40 or i == 43) {
                 temp = new Wall(scale, trans, rotate);
                 vec.push_back(temp);
             }
-            else if (i >= 42 and i < 44) {
+            else if (i >= 41 and i < 42) {
                 temp = new Wall(scale, trans, rotate, true);
                 vec.push_back(temp);
             }

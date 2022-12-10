@@ -11,6 +11,7 @@
 #include "ground.h"
 #include "changeDimension_state.h"
 #include "hud.h"
+#include "background.h"
 
 #include "particle.h"
 #include "brickParticle.h"

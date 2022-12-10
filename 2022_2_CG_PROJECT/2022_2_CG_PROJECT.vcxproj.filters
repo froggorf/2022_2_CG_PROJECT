@@ -155,6 +155,9 @@
     <ClCompile Include="logo_state.cpp">
       <Filter>FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="background.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -255,6 +258,9 @@
     </ClInclude>
     <ClInclude Include="logo_state.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="background.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

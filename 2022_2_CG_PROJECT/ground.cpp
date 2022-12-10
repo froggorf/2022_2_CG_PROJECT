@@ -63,7 +63,6 @@ GLvoid Ground::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(3, VBO);
 	if (ground_texture == -1) {
-		//TODO: 임시 코드임 나중에 이미지 수정해야함
 		LoadTexture(ground_texture, "resource/Map/ground.png");
 	}
 }

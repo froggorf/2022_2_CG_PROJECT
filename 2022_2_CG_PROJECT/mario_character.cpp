@@ -141,7 +141,6 @@ GLvoid Mario::InitBuffer() {
 		mario_max_frame[HURT_RIGHT] = 1;
 		mario_max_frame[HURT_LEFT] = 1;
 	}
-	//TODO: IDLE_RIGHT_UP, IDLE_LEFT_UP 에 대한 이미지와 프레임 수 넣기
 	for (int i = 0; i < mario_max_frame[IDLE_RIGHT]; ++i) {
 		std::string resourcedir = "resource/Mario/IDLE_RIGHT/mario_IDLE_RIGHT_0" + std::to_string(i + 1) + ".png";
 		LoadTexture(texture[IDLE_RIGHT][i], resourcedir.c_str());
@@ -276,12 +275,10 @@ GLvoid Mario::falling_gravity() {
 				if (gravity > 0) {	//위로 점프중일때
 					Cube* check_brick = dynamic_cast<Brick*>(g_ground[i]);
 					if (check_brick != nullptr) {
-						std::cout << "벽돌 충돌" << std::endl;
 						g_ground[i]->collision_handling(this);
 					}
 					Cube* check_mysteryBox = dynamic_cast<MysteryBlock*>(g_ground[i]);
 					if (check_mysteryBox != nullptr) {
-						std::cout << "미스테리박스 충돌" << std::endl;
 						g_ground[i]->collision_handling(this);
 					}
 
@@ -397,7 +394,9 @@ GLvoid Mario::handle_collision(int XYZ, std::vector<Cube*> map) {
 			if (CheckAABB_2D(*this, *map[i])) {
 				Cube* check_wall = dynamic_cast<Wall*>(map[i]);
 				if (check_wall != nullptr) {
-					continue;
+					Wall* pWall = dynamic_cast<Wall*>(map[i]);
+					if(!pWall->is2DCollide)
+						continue;
 				}
 				check_wall = dynamic_cast<Door*>(map[i]);
 				if (check_wall != nullptr) {
@@ -438,7 +437,6 @@ GLvoid Mario::MarioChangeState(int next_state) {
 
 GLvoid Mario::DoJump() {
 	if (flag_jump && gravity >= -GravityAcceleration * 2) {
-		//TODO: 점프 높이에대한 값 조정하기
 		gravity = GravityAcceleration * JumpPower;
 		flag_jump = false;
 	}
@@ -1700,76 +1698,6 @@ GLvoid Mario::CheckNextState_2D(int type, unsigned char key) {
 	}
 }
 
-//TODO: 나중에 꼭 지워야하는 함수 현재 상태에 대해 출력해주는 함수임
-GLvoid Mario::PLEASEDELETELATER_PRINTCURSTATEFUNCTION() {
-	//TODO: 나중에 지울 코드(마리오 현재 상태 출력 코드)
-	printf("마리오 상태: ");
-	switch (cur_state) {
-	case IDLE_RIGHT:
-	case IDLE_LEFT:
-		if (face == RIGHT) {
-			printf("IDLE_RIGHT\n");
-		}
-		else {
-			printf("IDLE_LEFT\n");
-		}
-		break;
-	case IDLE_RIGHT_UP:
-	case IDLE_LEFT_UP:
-		if (face == RIGHT) {
-			printf("IDLE_RIGHT_UP\n");
-		}
-		else {
-			printf("IDLE_LEFT_UP\n");
-		}
-		break;
-	case WALKING_RIGHT:
-	case WALKING_LEFT:
-		if (face == RIGHT) {
-			printf("WALKING_RIGHT\n");
-		}
-		else {
-			printf("WALKING_LEFT\n");
-		}
-		break;
-	case WALKING_RIGHT_UP:
-	case WALKING_LEFT_UP:
-		if (face == RIGHT) {
-			printf("WALKING_RIGHT_UP\n");
-		}
-		else {
-			printf("WALKING_LEFT_UP\n");
-		}
-		break;
-	case JUMP_RIGHT:
-	case JUMP_LEFT:
-		if (face == RIGHT) {
-			printf("JUMP_RIGHT\n");
-		}
-		else {
-			printf("JUMP_LEFT\n");
-		}
-		break;
-	case JUMP_RIGHT_UP:
-	case JUMP_LEFT_UP:
-		if (face == RIGHT) {
-			printf("JUMP_RIGHT_UP\n");
-		}
-		else {
-			printf("JUMP_LEFT_UP\n");
-		}
-		break;
-	case HURT_RIGHT:
-	case HURT_LEFT:
-		if (face == RIGHT) {
-			printf("HURT_RIGHT\n");
-		}
-		else {
-			printf("HURT_LEFT\n");
-		}
-		break;
-	}
-}
 
 GLint Mario::GetCoinNum(){
 	return coin_num;
