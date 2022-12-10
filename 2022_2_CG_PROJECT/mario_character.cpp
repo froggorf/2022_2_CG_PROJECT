@@ -1645,3 +1645,10 @@ GLvoid Mario::PLEASEDELETELATER_PRINTCURSTATEFUNCTION() {
 		break;
 	}
 }
+
+GLint Mario::GetCoinNum(){
+	return coin_num;
+}
+GLint Mario::GetHp() {
+	return hp;
+}

@@ -25,7 +25,7 @@ void make_vertexShaders();
 void make_fragmentShaders();
 void checkCompileErrors(unsigned int shader, std::string type);
 GLvoid InitShader();
-GLuint Gets_program();
+GLuint Gets_program_screen();
 GLuint Gets_program_texture();
 //메인 타이머 관련 변수 및 함수
 

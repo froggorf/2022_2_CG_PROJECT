@@ -23,6 +23,9 @@ namespace Play {
     //마리오
     Mario mario;
 
+    //허드
+    Hud hud;
+
     //function - 정의
     GLvoid enter() {
         InitValue();
@@ -136,6 +139,7 @@ namespace Play {
         for (auto p : particle)
             p->draw();
         mario.draw(cType);
+        hud.Draw(mario.GetHp(), mario.GetCoinNum());
     }
 
     GLvoid draw() {
@@ -162,7 +166,7 @@ namespace Play {
     GLvoid InitBuffer() {
         loadStage1(map);
         mario.InitBuffer();
-
+        hud.InitBuffer();
         {
             Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
             Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));

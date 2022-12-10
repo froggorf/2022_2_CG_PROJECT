@@ -141,9 +141,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="fragment.glsl" />
+    <None Include="fragment_screen.glsl" />
     <None Include="fragment_texture.glsl" />
-    <None Include="vertex.glsl" />
+    <None Include="vertex_screen.glsl" />
     <None Include="vertex_texture.glsl" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +162,7 @@
     <ClCompile Include="game_world.cpp" />
     <ClCompile Include="goomba.cpp" />
     <ClCompile Include="ground.cpp" />
+    <ClCompile Include="hud.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="key_events.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="game_world.h" />
     <ClInclude Include="goomba.h" />
     <ClInclude Include="ground.h" />
+    <ClInclude Include="hud.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="key_events.h" />

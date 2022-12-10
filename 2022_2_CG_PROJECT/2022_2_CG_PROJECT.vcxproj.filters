@@ -48,16 +48,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="fragment.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
-    <None Include="vertex.glsl">
-      <Filter>리소스 파일</Filter>
-    </None>
     <None Include="fragment_texture.glsl">
       <Filter>리소스 파일</Filter>
     </None>
     <None Include="vertex_texture.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="fragment_screen.glsl">
+      <Filter>리소스 파일</Filter>
+    </None>
+    <None Include="vertex_screen.glsl">
       <Filter>리소스 파일</Filter>
     </None>
   </ItemGroup>
@@ -148,6 +148,9 @@
     </ClCompile>
     <ClCompile Include="brickParticle.cpp">
       <Filter>particle\sourse</Filter>
+    </ClCompile>
+    <ClCompile Include="hud.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -243,6 +246,9 @@
     </ClInclude>
     <ClInclude Include="brickParticle.h">
       <Filter>particle\header</Filter>
+    </ClInclude>
+    <ClInclude Include="hud.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

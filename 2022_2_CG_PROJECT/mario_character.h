@@ -69,6 +69,8 @@ public:
 	GLvoid CheckHittingByEnemy();
 	GLvoid CheckGetItem();
 	glm::vec3 GetPos();
+	GLint GetCoinNum();
+	GLint GetHp();
 
 	GLfloat frame;
 	GLuint VAO, VBO[3];

@@ -8,7 +8,7 @@ GLuint vertexShader;
 GLuint fragmentShader;
 GLuint vs_texture;
 GLuint fs_texture;
-GLuint s_program;
+GLuint s_program_screen;
 GLuint s_program_texture;
 
 int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정 
@@ -233,7 +233,7 @@ void make_vertexShaders() {
 	{//일반 쉐이더
 		GLchar* vertexsource;
 
-		vertexsource = filetobuf("vertex.glsl");
+		vertexsource = filetobuf("vertex_screen.glsl");
 		vertexShader = glCreateShader(GL_VERTEX_SHADER);
 		glShaderSource(vertexShader, 1, &vertexsource, NULL);
 		glCompileShader(vertexShader);
@@ -271,7 +271,7 @@ void make_fragmentShaders() {
 	{
 		GLchar* fragmentsource;
 
-		fragmentsource = filetobuf("fragment.glsl");
+		fragmentsource = filetobuf("fragment_screen.glsl");
 		fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 		glShaderSource(fragmentShader, 1, &fragmentsource, NULL);
 		glCompileShader(fragmentShader);
@@ -309,13 +309,13 @@ GLvoid InitShader() {
 	make_vertexShaders();
 	make_fragmentShaders();
 	{//일반 s_program
-		s_program = glCreateProgram();
+		s_program_screen = glCreateProgram();
 
-		glAttachShader(s_program, vertexShader);
-		glAttachShader(s_program, fragmentShader);
-		glLinkProgram(s_program);
+		glAttachShader(s_program_screen, vertexShader);
+		glAttachShader(s_program_screen, fragmentShader);
+		glLinkProgram(s_program_screen);
 
-		checkCompileErrors(s_program, "PROGRAM");
+		checkCompileErrors(s_program_screen, "PROGRAM");
 
 		glDeleteShader(vertexShader);
 		glDeleteShader(fragmentShader);
@@ -374,8 +374,8 @@ char* filetobuf(const char* file)
 	buf[length] = 0; // Null terminator
 	return buf; // Return the buffer
 }
-GLuint Gets_program() {
-	return s_program;
+GLuint Gets_program_screen() {
+	return s_program_screen;
 }
 
 GLuint Gets_program_texture() {

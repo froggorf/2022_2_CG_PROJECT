@@ -10,6 +10,7 @@
 #include "check_collision.h"
 #include "ground.h"
 #include "changeDimension_state.h"
+#include "hud.h"
 
 #include "particle.h"
 #include "brickParticle.h"
