@@ -61,6 +61,7 @@ namespace Play {
         mario.update();
 
         for (int i = 0; i < map.size(); i++) {
+            map[i]->update();
             if (map[i]->isCanDelete) {
                 delete map[i];
                 map.erase(map.begin() + i);
