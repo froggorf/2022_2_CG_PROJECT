@@ -182,6 +182,14 @@ namespace Play {
                 item.push_back(temp);
             }
         }
+        {
+            GLfloat i = 0;
+            while (4.1667 * i < 127) {
+                Cube* backWall = new PictureWall(glm::vec3(4.1667, 10, 1.0), glm::vec3(i * 4.1667 + (4.1667 / 2), 5, -6.5), glm::vec3(0.0, 0.0, 0.0), i);
+                map.push_back(backWall);
+                i += 1.0;
+            }
+        }
 
     }
 

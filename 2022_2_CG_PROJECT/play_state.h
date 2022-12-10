@@ -15,6 +15,8 @@
 #include "particle.h"
 #include "brickParticle.h"
 
+#include "pictureWall.h"
+
 // TODO: 老窜 playstate俊辑 利 积己
 #include "enemy.h"
 #include "goomba.h"
