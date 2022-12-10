@@ -13,5 +13,8 @@
 #include "item.h"
 #include "coin.h"
 
+enum BLOCKKIND {
+	BLOCK, BRICK, DOOR, GROUND, MYSTERYBLOCK, PIPE, WALL, PICTUREWALL
+};
 void loadStage1(std::vector<Cube*> &vec);
-void loadCube(std::vector<Cube>& vec);
+void loadStage2(std::vector<Cube*> &vec);
