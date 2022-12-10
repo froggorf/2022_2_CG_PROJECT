@@ -1,29 +1,10 @@
 
 #include "fileManager.h"
 
-<<<<<<< Updated upstream
 //TODO: 스테이지 1 맵 끝쪽 벽이 블럭으로 된듯함
 //TODO: 미스터리 박스에서 코인 나오는거면 마리오 코인 값 올려주거나 올려주라는 함수 넣어줘야할듯함
 
 
-void loadCube(std::vector<Cube>& vec) {
-    std::ifstream ifs("Vertex.txt");
-    if (!ifs.fail()) {
-        while (!ifs.eof()) {
-            glm::vec3 scale, trans, rotate;
-            char c;
-            ifs >> scale[0] >> c >> scale[1] >> c >> scale[2];
-            ifs >> trans[0] >> c >> trans[1] >> c >> trans[2];
-            ifs >> rotate[0] >> c >> rotate[1] >> c >> rotate[2];
-            Cube temp = Cube(scale, trans, rotate);
-            vec.push_back(temp);
-        }
-        ifs.close();
-    }
-}
-
-=======
->>>>>>> Stashed changes
 void loadStage1(std::vector<Cube*>& vec) {
     std::ifstream ifs("resource/Map/stage1.txt");
     if (!ifs.fail()) {

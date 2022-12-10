@@ -166,27 +166,18 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
-<<<<<<< Updated upstream
-        loadStage1(map);
-        mario.InitBuffer();
-        hud.InitBuffer();
+        GLboolean isStage1 = true;
         background.InitBuffer();
-        {
-            Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
-            Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
-            Enemy* temp2 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(98.0, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
-            enemyVec.push_back(temp0);
-            enemyVec.push_back(temp1);
-            enemyVec.push_back(temp2);
-        }
-        {
-            for (int i = 0; i < 6; i++)
-=======
-        GLboolean isStage1 = false;
         if (isStage1) {
             loadStage1(map);
->>>>>>> Stashed changes
+            mario.InitBuffer();
+            hud.InitBuffer();
+            
             {
+                for (int i = 0; i < 6; ++i) {
+                    Item* temp = new Coin(glm::vec3(0.8, 0.8, 0.8), glm::vec3(104.5 + i * 2, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
+                    item.push_back(temp);
+                }
                 Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
                 Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
                 Enemy* temp2 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(98.0, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
@@ -194,13 +185,7 @@ namespace Play {
                 enemyVec.push_back(temp1);
                 enemyVec.push_back(temp2);
             }
-            {
-                for (int i = 0; i < 6; i++)
-                {
-                    Item* temp = new Coin(glm::vec3(0.8, 0.8, 0.8), glm::vec3(104.5 + i * 2, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
-                    item.push_back(temp);
-                }
-            }
+          
             {
                 GLfloat i = 0;
                 while (4.1667 * i < 127) {
@@ -209,13 +194,13 @@ namespace Play {
                     i += 1.0;
                 }
             }
+            
         }
         else {
             loadStage2(map);
         }
-        mario.InitBuffer();
-        hud.InitBuffer();
     }
+
 
     GLvoid InitValue() {
         {   //카메라 값 초기화

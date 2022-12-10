@@ -53,7 +53,7 @@ namespace Title {
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(1);
 
-		//EarlyInitValue();
+		EarlyInitValue();
 	}
 
 	GLvoid exit() {
@@ -102,7 +102,7 @@ namespace Title {
 			select_number += 1;
 			if (select_number > 1)select_number = 0;
 		}
-		else if (key == ' '||key==13) {
+		else if (key == ' ' || key == 13) {
 			if (select_number == 0) {
 				change_state(PLAY);
 			}
@@ -152,7 +152,7 @@ namespace Title {
 				update_check[0] = true;
 			}
 		}
-		
+
 	}
 	GLvoid UpdateGameNameImage() {
 		if (game_name_update_check == 0) {
@@ -160,12 +160,12 @@ namespace Title {
 				title_game_name_pos[i].y -= 0.03f;
 			}
 			if (title_game_name_pos[0].y <= 0.6f) {
-				title_game_name_pos[0].y=0.6f;	//0,3,5 °¡ À­ÂÊ ¼±		//1,2,4°¡ ¾Æ·§ÂÊ ¼±
-				title_game_name_pos[3].y=0.6f;
-				title_game_name_pos[5].y=0.6f;
-				title_game_name_pos[1].y=0.0f;
-				title_game_name_pos[2].y=0.0f;
-				title_game_name_pos[4].y=0.0f;
+				title_game_name_pos[0].y = 0.6f;	//0,3,5 °¡ À­ÂÊ ¼±		//1,2,4°¡ ¾Æ·§ÂÊ ¼±
+				title_game_name_pos[3].y = 0.6f;
+				title_game_name_pos[5].y = 0.6f;
+				title_game_name_pos[1].y = 0.0f;
+				title_game_name_pos[2].y = 0.0f;
+				title_game_name_pos[4].y = 0.0f;
 				game_name_update_check = 1;
 			}
 		}
@@ -194,20 +194,20 @@ namespace Title {
 			rotatestartingpoint = glm::rotate(rotatestartingpoint, glm::radians(-1.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 			glm::mat4 backtostartingpoint = glm::mat4(1.0f);
 			backtostartingpoint = glm::translate(backtostartingpoint, glm::vec3(-0.65, -0.7, 0.0));
-			
-			glm::vec3 mario_starting_point = glm::vec3(title_mario_pos[0].x+0.3f, title_mario_pos[0].y-0.3f,0.0f);
-			mario_starting_point = backtostartingpoint *rotatestartingpoint *gotostartingpoint * glm::vec4(mario_starting_point,1.0f);
+
+			glm::vec3 mario_starting_point = glm::vec3(title_mario_pos[0].x + 0.3f, title_mario_pos[0].y - 0.3f, 0.0f);
+			mario_starting_point = backtostartingpoint * rotatestartingpoint * gotostartingpoint * glm::vec4(mario_starting_point, 1.0f);
 			mario_starting_point.x += 0.01;
 			mario_starting_point.y += 0.0025;
 			glm::vec3 end_mario_pos[6] = {
 			glm::vec3(mario_starting_point.x - 0.3f,mario_starting_point.y + 0.3f,0.0f),glm::vec3(mario_starting_point.x - 0.3f,mario_starting_point.y - 0.3f,0.0f),glm::vec3(mario_starting_point.x + 0.3f,mario_starting_point.y - 0.3f,0.0f),
 			glm::vec3(mario_starting_point.x - 0.3f,mario_starting_point.y + 0.3f,0.0f),glm::vec3(mario_starting_point.x + 0.3f,mario_starting_point.y - 0.3f,0.0f),glm::vec3(mario_starting_point.x + 0.3f,mario_starting_point.y + 0.3f,0.0f),
-			
+
 			//0,3,5 °¡ À­ÂÊ ¼±		//1,2,4°¡ ¾Æ·§ÂÊ ¼±
 			};
 			memcpy(title_mario_pos, end_mario_pos, sizeof(title_mario_pos));
-			
-			
+
+
 		}
 		else {
 			update_check[2] = true;
@@ -290,7 +290,6 @@ namespace Title {
 		hand_frame = 0;
 		select_number = 0;
 	}
-<<<<<<< Updated upstream
 
 
 
@@ -309,7 +308,7 @@ namespace Title {
 			glBindTexture(GL_TEXTURE_2D, title_start_image);
 			glUniform1i(tLocation, 0);
 			glDrawArrays(GL_TRIANGLES, 0, sizeof(start_pos) / sizeof(start_pos[0]));
-			
+
 		}
 		{//end ±×¸®±â
 			glm::vec3 exit_pos[6] = {
@@ -347,15 +346,12 @@ namespace Title {
 				glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 				glEnableVertexAttribArray(0);
 			}
-			
+
 			int tLocation = glGetUniformLocation(Gets_program_screen(), "outTexture11"); //--- outTexture1 À¯´ÏÆû »ùÇÃ·¯ÀÇ À§Ä¡¸¦ °¡Á®¿È
 			glActiveTexture(title_hand_image[(int)hand_frame]);
 			glBindTexture(GL_TEXTURE_2D, title_hand_image[(int)hand_frame]);
 			glUniform1i(tLocation, 0);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
-=======
-	GLvoid EarlyInitValue() {
->>>>>>> Stashed changes
 	}
 }
