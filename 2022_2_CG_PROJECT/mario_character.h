@@ -71,6 +71,7 @@ public:
 	GLvoid CheckGetItem();
 	glm::vec3 GetPos();
 	GLint GetCoinNum();
+	GLvoid GetCoin(int);
 	GLint GetHp();
 
 	GLfloat frame;

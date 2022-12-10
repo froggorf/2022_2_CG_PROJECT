@@ -1705,3 +1705,7 @@ GLint Mario::GetCoinNum(){
 GLint Mario::GetHp() {
 	return hp;
 }
+
+GLvoid Mario::GetCoin(int num) {
+	coin_num += num;
+}
