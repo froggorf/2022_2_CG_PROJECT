@@ -2,7 +2,8 @@
 #define __TITLE_STATE_H__
 
 #include "stdafx.h"
-
+#include "MainGame.h"
+#include "ImageManager.h"
 
 namespace Title {
 	GLvoid enter();
@@ -15,6 +16,7 @@ namespace Title {
 	GLvoid key_down(unsigned char, int, int);
 	GLvoid key_up(unsigned char, int, int);
 
+	GLvoid DrawMainImage();
 }
 
 #endif
