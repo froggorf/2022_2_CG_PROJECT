@@ -12,6 +12,7 @@ public:
 	Cube boundingBox;
 	GLuint VAO, VBO[3];
 	GLboolean is2DCollide;
+	GLboolean isLikeGround;
 
 	GLvoid InitBuffer();
 	GLvoid Init();

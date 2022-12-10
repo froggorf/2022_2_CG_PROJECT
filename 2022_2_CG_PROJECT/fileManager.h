@@ -14,7 +14,8 @@
 #include "coin.h"
 
 enum BLOCKKIND {
-	BLOCK, BRICK, DOOR, GROUND, MYSTERYBLOCK, PIPE, WALL, PICTUREWALL
+	BLOCK, BRICK, DOOR, GROUND, MYSTERYBLOCK, PIPE, WALL, COLLIDE2DWALL, PICTUREWALL, HIDDENGROUND, ENDOFBLOCK
 };
+
 void loadStage1(std::vector<Cube*> &vec);
 void loadStage2(std::vector<Cube*> &vec);

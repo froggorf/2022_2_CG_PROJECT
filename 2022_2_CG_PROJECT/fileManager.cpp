@@ -103,6 +103,12 @@ void loadStage2(std::vector<Cube*>& vec) {
             case WALL:
                 temp = new Wall(scale, trans, rotate);
                 break;
+            case HIDDENGROUND:
+                temp = new Wall(scale, trans, rotate, false);
+                break;
+            case COLLIDE2DWALL:
+                temp = new Wall(scale, trans, rotate, true);
+                break;
             case PICTUREWALL:
                 temp = new PictureWall(scale, trans, rotate);
                 break;

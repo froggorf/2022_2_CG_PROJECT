@@ -1,5 +1,5 @@
 #include "changeDimension_state.h"
-
+// TODO: 3번(스테이지 진입키)눌렀을때 이상한경우 있음
 namespace ChangeDimension {
 	// 매개변수
 	GLfloat u = 0;
