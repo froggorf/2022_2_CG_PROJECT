@@ -38,7 +38,7 @@ void loadStage1(std::vector<Cube*>& vec) {
                 temp = new Wall(scale, trans, rotate);
                 vec.push_back(temp);
             }
-            else if (i >= 41 and i < 42) {
+            else if (i >= 41 and i < 43) {
                 temp = new Wall(scale, trans, rotate, true);
                 vec.push_back(temp);
             }
@@ -69,7 +69,7 @@ void loadStage1(std::vector<Cube*>& vec) {
 }
 
 void loadStage2(std::vector<Cube*>& vec) {
-    std::ifstream ifs("resource/Map/Vertex.txt");
+    std::ifstream ifs("resource/Map/stage2.txt");
     if (!ifs.fail()) {
         int i = 0;
         while (!ifs.eof()) {
@@ -113,9 +113,9 @@ void loadStage2(std::vector<Cube*>& vec) {
             }
 
             vec.push_back(temp);
+            i++;
         }
-        i++;
+        vec.pop_back();
     }
     ifs.close();
-    vec.pop_back();
 }

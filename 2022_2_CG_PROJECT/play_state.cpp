@@ -134,8 +134,8 @@ namespace Play {
 
     GLvoid drawObject() {
         background.Draw();  //무조건 먼저 백그라운드 출력할 것
-        for (auto m : map)
-            m->draw();
+        for (int i = 0; i < map.size(); i++)
+            map[i]->draw();
         for (auto v : enemyVec)
             v->draw();
         for (auto i : item)
@@ -166,13 +166,12 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
-        GLboolean isStage1 = true;
+        GLboolean isStage1 = false;
         background.InitBuffer();
+        mario.InitBuffer();
+        hud.InitBuffer();
         if (isStage1) {
-            loadStage1(map);
-            mario.InitBuffer();
-            hud.InitBuffer();
-            
+            loadStage1(map);            
             {
                 for (int i = 0; i < 6; ++i) {
                     Item* temp = new Coin(glm::vec3(0.8, 0.8, 0.8), glm::vec3(104.5 + i * 2, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
