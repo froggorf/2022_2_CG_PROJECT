@@ -46,6 +46,7 @@ public:
 	GLfloat speed;
 	GLfloat gravity;
 	GLboolean flag_jump;
+	GLboolean can_jump;
 	GLint cur_state;
 	GLboolean face;
 	GLint dir[3];
@@ -81,7 +82,7 @@ public:
 	GLvoid MarioChangeState(int);
 	GLvoid StateEnter_3D(int type = -1, unsigned char key = -1);
 	GLvoid StateExit_3D(int type=-1,unsigned char key = -1);
-	
+	GLvoid StateDo_3D();
 
 	GLvoid CheckNextState_2D(int type, unsigned char key);
 	GLvoid StateEnter_2D(int type = -1, unsigned char key = -1);
