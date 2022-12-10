@@ -16,7 +16,19 @@ namespace Title {
 	GLvoid key_down(unsigned char, int, int);
 	GLvoid key_up(unsigned char, int, int);
 
+	GLvoid EarlyInitValue();
 	GLvoid DrawMainImage();
+
+	GLvoid DrawMountainImage();
+	GLvoid UpdateMountainImage();
+
+	GLvoid DrawGameNameImage();
+	GLvoid UpdateGameNameImage();
+
+	GLvoid DrawMarioImage();
+	GLvoid UpdateMarioImage();
+
+	GLvoid DrawSelect();
 }
 
 #endif
