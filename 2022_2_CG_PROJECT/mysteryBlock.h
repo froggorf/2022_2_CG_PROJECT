@@ -15,6 +15,9 @@ public:
 	GLuint VAO, VBO[3];
 
 	GLuint coins;
+	GLboolean moving;
+	GLboolean isMoveUp;
+	GLfloat movingTransFigure;
 
 	MysteryBlock();
 	MysteryBlock(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLuint coin);
@@ -24,6 +27,7 @@ public:
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw();
 	GLvoid collision_handling(Cube* other);
+	GLvoid update();
 };
 
 #endif

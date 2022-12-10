@@ -56,6 +56,14 @@ Coin::Coin(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
 	this->scale = scale;
 	this->rot = rotate;
 };
+Coin::Coin(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLboolean isOnGround) {
+	InitBuffer();
+	Init();
+	this->trans = trans;
+	this->scale = scale;
+	this->rot = rotate;
+	this->isOnGround = false;
+};
 Coin::~Coin() {
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(3, VBO);
@@ -64,6 +72,9 @@ Coin::~Coin() {
 
 GLvoid Coin::Init() {
 	frame = 0;
+	isOnGround = true;
+	appearMoveFigure = 0.0;
+	isMovingUp = true;
 }
 GLvoid Coin::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
@@ -78,6 +89,20 @@ GLvoid Coin::InitBuffer() {
 
 GLvoid Coin::update() {
 	if (++frame >= 39) frame = 0;
+	if (!isOnGround) {
+		if (isMovingUp) {
+			appearMoveFigure += 0.2;
+			if (appearMoveFigure >= 1.6) isMovingUp = false;
+		}
+		else {
+			appearMoveFigure -= 0.2;
+			if (appearMoveFigure >= 0.0) {
+				appearMoveFigure = 0.0;
+				isMovingUp = false;
+				isCanDelete = true;
+			}
+		}
+	}
 }
 
 GLvoid Coin::collision_handling(Cube* other) {
@@ -96,7 +121,7 @@ GLvoid Coin::draw(GLuint cType) {
 	glm::mat4 S = glm::mat4(1.0f);
 
 
-	T = glm::translate(T, glm::vec3(trans.x, trans.y, trans.z));
+	T = glm::translate(T, glm::vec3(trans.x, trans.y + appearMoveFigure, trans.z));
 	S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
 	if(cType == D3_VIEW)
 		R = glm::rotate(R, glm::radians(-90.0f), glm::vec3(0.0, 1.0, 0.0));

@@ -75,6 +75,8 @@ GLvoid Cube::Init() {
     isCanDelete = false;
 }
 
+GLvoid Cube::update() {}
+
 glm::vec3* GetCubeVertices() {
     return cube_vertices;
 }

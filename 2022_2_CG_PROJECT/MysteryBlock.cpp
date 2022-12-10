@@ -63,6 +63,7 @@ GLuint emptyBlock_texture = -1;
 
 MysteryBlock::MysteryBlock() {
 	InitBuffer();
+	Init();
 	this->trans = glm::vec3(0.0, 0.0, 0.0);
 	this->rot = glm::vec3(0.0, 0.0, 0.0);
 	this->scale = glm::vec3(1.0, 1.0, 1.0);
@@ -70,6 +71,7 @@ MysteryBlock::MysteryBlock() {
 };
 MysteryBlock::MysteryBlock(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLuint coin) {
 	InitBuffer();
+	Init();
 	this->trans = trans;
 	this->scale = scale;
 	this->rot = rotate;
@@ -82,7 +84,9 @@ MysteryBlock::~MysteryBlock() {
 
 
 GLvoid MysteryBlock::Init() {
-
+	moving = false;
+	isMoveUp = true;
+	movingTransFigure = 0.0;
 }
 GLvoid MysteryBlock::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
@@ -94,15 +98,37 @@ GLvoid MysteryBlock::InitBuffer() {
 	}
 }
 
+GLvoid MysteryBlock::update() {
+	if (moving) {
+		if (isMoveUp) {
+			movingTransFigure += 0.05;
+			if (movingTransFigure >= 0.5) isMoveUp = false;
+		}
+		else {
+			movingTransFigure -= 0.05;
+			if (movingTransFigure <= 0.0) {
+				movingTransFigure = 0.0;
+				isMoveUp = true;
+				moving = false; 
+			}
+		}
+	}
+}
+
 GLvoid MysteryBlock::collision_handling(Cube* other) {
 	Cube* marioCast = dynamic_cast<Mario*>(other);
 	if (marioCast != nullptr) {
 		std::cout << "MysteryBlock collision handling" << std::endl;
+		moving = true;
 		if (coins == 100) {
-			std::vector<Item*> item = Play::GetItemToAdd();
 			Item* newMush = new Mushroom(scale, trans, rot);
 			Play::GetItemToAdd().push_back(newMush);
 			coins = 0;
+		}
+		else if(coins != 0){
+			--coins;
+			Item* newMush = new Coin(scale, trans, rot, true);
+			Play::GetItemToAdd().push_back(newMush);
 		}
 	}
 }
@@ -113,7 +139,7 @@ GLvoid MysteryBlock::draw() {
 	glm::mat4 T = glm::mat4(1.0f);
 	glm::mat4 S = glm::mat4(1.0f);
 
-	T = glm::translate(T, glm::vec3(trans.x, trans.y, trans .z));
+	T = glm::translate(T, glm::vec3(trans.x, trans.y + movingTransFigure, trans .z));
 	S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
 	TR = T * S * TR;
 

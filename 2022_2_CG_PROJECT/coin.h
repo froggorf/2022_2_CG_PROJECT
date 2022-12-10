@@ -8,9 +8,13 @@ class Coin : public Item {
 public:
 	Coin();
 	Coin(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
+	Coin(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLboolean);
 	~Coin();
 
 	GLuint frame;
+	GLfloat appearMoveFigure;
+	GLboolean isOnGround;
+	GLboolean isMovingUp;
 
 	GLvoid Init();
 	virtual GLvoid update();

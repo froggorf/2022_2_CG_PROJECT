@@ -14,6 +14,8 @@ public:
 	GLuint frame;
 	GLuint dir;
 	GLfloat degree;
+	GLboolean isAppear;
+	GLfloat appearing;
 
 	GLvoid Init();
 	virtual GLvoid update();

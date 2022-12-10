@@ -66,6 +66,8 @@ GLvoid Mushroom::Init() {
 	frame = 0;
 	degree = 0.0;
 	dir = 1;
+	isAppear = true;
+	appearing = 0.0;
 }
 GLvoid Mushroom::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
@@ -77,43 +79,58 @@ GLvoid Mushroom::InitBuffer() {
 }
 
 GLvoid Mushroom::update() {
-	trans.y -= 0.3;
-
-	//if (++frame >= 39) frame = 0;
-
-	degree += 2;
-	if (degree > 360)degree = 0;
-
-	if (dir > 0) {		// 2D RIght
-		trans.x += 0.05;
-		if (trans.x >= 127) dir = 0;
+	if (isAppear) {
+		appearing += 0.05 ;
+		if (appearing >= scale.y) {
+			appearing = 0.0;
+			isAppear = false;
+			trans.y += scale.y;
+		}
 	}
-	else {				// 2D Left
-		trans.x -= 0.05;
-		if (trans.x <= 0) dir = 1;
+	else {
+		trans.y -= 0.3;
+
+		//if (++frame >= 39) frame = 0;
+
+		degree += 2;
+		if (degree > 360)degree = 0;
+
+		if (dir > 0) {		// 2D RIght
+			trans.x += 0.05;
+			if (trans.x >= 127) dir = 0;
+		}
+		else {				// 2D Left
+			trans.x -= 0.05;
+			if (trans.x <= 0) dir = 1;
+		}
 	}
 }
 
 GLvoid Mushroom::collision_handling(Cube* other) {
-	Cube* groundCast = dynamic_cast<Ground*>(other);
-	Cube* marioCast = dynamic_cast<Mario*>(other);
+	if (!isAppear) {
+		Cube* groundCast = dynamic_cast<Ground*>(other);
+		Cube* brickCast = dynamic_cast<Brick*>(other);
+		Cube* mysteryblockCast = dynamic_cast<MysteryBlock*>(other);
+		Cube* marioCast = dynamic_cast<Mario*>(other);
+		Cube* wallCast = dynamic_cast<Wall*>(other);
+		if (groundCast != nullptr || brickCast != nullptr || mysteryblockCast != nullptr) {
+			trans.y += 0.3;
 
-	if (groundCast != nullptr) {
-		trans.y += 0.3;
-		//여기해야함
-	}
-	else if (marioCast != nullptr) {
-		isCanDelete = true;
-	}
-	else {
-		std::cout << "Mushroom collision handling" << std::endl;
-		if (dir > 0) {
-			trans.x -= 0.05;
-			dir = 0;
 		}
+		else if (marioCast != nullptr) {
+			isCanDelete = true;
+		}
+		else if (wallCast != nullptr) { }
 		else {
-			trans.x += 0.05;
-			dir = 1;
+			std::cout << "Mushroom collision handling" << std::endl;
+			if (dir > 0) {
+				trans.x -= 0.05;
+				dir = 0;
+			}
+			else {
+				trans.x += 0.05;
+				dir = 1;
+			}
 		}
 	}
 }
@@ -127,7 +144,7 @@ GLvoid Mushroom::draw(GLuint cType) {
 	glm::mat4 S = glm::mat4(1.0f);
 
 
-	T = glm::translate(T, glm::vec3(trans.x, trans.y, trans.z));
+	T = glm::translate(T, glm::vec3(trans.x, trans.y + appearing, trans.z));
 	S = glm::scale(S, glm::vec3(scale.x, scale.y, scale.z));
 	R = glm::rotate(R, glm::radians(degree), glm::vec3(0.0, 1.0, 0.0));
 
