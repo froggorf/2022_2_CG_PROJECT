@@ -1,6 +1,7 @@
 
 #include "fileManager.h"
 
+<<<<<<< Updated upstream
 //TODO: 스테이지 1 맵 끝쪽 벽이 블럭으로 된듯함
 //TODO: 미스터리 박스에서 코인 나오는거면 마리오 코인 값 올려주거나 올려주라는 함수 넣어줘야할듯함
 
@@ -21,6 +22,8 @@ void loadCube(std::vector<Cube>& vec) {
     }
 }
 
+=======
+>>>>>>> Stashed changes
 void loadStage1(std::vector<Cube*>& vec) {
     std::ifstream ifs("resource/Map/stage1.txt");
     if (!ifs.fail()) {
@@ -84,16 +87,54 @@ void loadStage1(std::vector<Cube*>& vec) {
     }
 }
 
-void loadBlock() {
-    std::ifstream ifs("Vertex.txt");
+void loadStage2(std::vector<Cube*>& vec) {
+    std::ifstream ifs("resource/Map/Vertex.txt");
     if (!ifs.fail()) {
+        int i = 0;
         while (!ifs.eof()) {
+            int k;
             glm::vec3 scale, trans, rotate;
             char c;
+            Cube* temp;
+            ifs >> k;
             ifs >> scale[0] >> c >> scale[1] >> c >> scale[2];
             ifs >> trans[0] >> c >> trans[1] >> c >> trans[2];
             ifs >> rotate[0] >> c >> rotate[1] >> c >> rotate[2];
-            Cube* temp = new Cube(scale, trans, rotate);
+
+            switch (k)
+            {
+            case BLOCK:
+                temp = new Block(scale, trans, rotate);
+                break;
+            case BRICK:
+                temp = new Brick(scale, trans, rotate);
+                break;
+            case DOOR:
+                temp = new Door(scale, trans, rotate);
+                break;
+            case GROUND:
+                temp = new Ground(scale, trans, rotate);
+                break;
+            case MYSTERYBLOCK:
+                temp = new MysteryBlock(scale, trans, rotate, 1);
+                break;
+            case PIPE:
+                temp = new Pipe(scale, trans, rotate);
+                break;
+            case WALL:
+                temp = new Wall(scale, trans, rotate);
+                break;
+            case PICTUREWALL:
+                temp = new PictureWall(scale, trans, rotate);
+                break;
+            default:
+                break;
+            }
+
+            vec.push_back(temp);
         }
+        i++;
     }
+    ifs.close();
+    vec.pop_back();
 }

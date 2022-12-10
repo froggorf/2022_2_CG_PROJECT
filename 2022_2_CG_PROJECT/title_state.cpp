@@ -53,7 +53,7 @@ namespace Title {
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(1);
 
-		EarlyInitValue();
+		//EarlyInitValue();
 	}
 
 	GLvoid exit() {
@@ -290,6 +290,7 @@ namespace Title {
 		hand_frame = 0;
 		select_number = 0;
 	}
+<<<<<<< Updated upstream
 
 
 
@@ -353,5 +354,8 @@ namespace Title {
 			glUniform1i(tLocation, 0);
 			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
+=======
+	GLvoid EarlyInitValue() {
+>>>>>>> Stashed changes
 	}
 }

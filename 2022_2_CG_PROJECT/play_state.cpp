@@ -166,6 +166,7 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
+<<<<<<< Updated upstream
         loadStage1(map);
         mario.InitBuffer();
         hud.InitBuffer();
@@ -180,20 +181,40 @@ namespace Play {
         }
         {
             for (int i = 0; i < 6; i++)
+=======
+        GLboolean isStage1 = false;
+        if (isStage1) {
+            loadStage1(map);
+>>>>>>> Stashed changes
             {
-                Item* temp = new Coin(glm::vec3(0.8, 0.8, 0.8), glm::vec3(104.5 + i * 2, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
-                item.push_back(temp);
+                Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(30.0, 0.5, 3.0), glm::vec3(0.0, 0.0, 0.0));
+                Enemy* temp1 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
+                Enemy* temp2 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(98.0, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
+                enemyVec.push_back(temp0);
+                enemyVec.push_back(temp1);
+                enemyVec.push_back(temp2);
+            }
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    Item* temp = new Coin(glm::vec3(0.8, 0.8, 0.8), glm::vec3(104.5 + i * 2, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
+                    item.push_back(temp);
+                }
+            }
+            {
+                GLfloat i = 0;
+                while (4.1667 * i < 127) {
+                    Cube* backWall = new PictureWall(glm::vec3(4.1667, 10, 1.0), glm::vec3(i * 4.1667 + (4.1667 / 2), 5, -6.5), glm::vec3(0.0, 0.0, 0.0), i);
+                    map.push_back(backWall);
+                    i += 1.0;
+                }
             }
         }
-        {
-            GLfloat i = 0;
-            while (4.1667 * i < 127) {
-                Cube* backWall = new PictureWall(glm::vec3(4.1667, 10, 1.0), glm::vec3(i * 4.1667 + (4.1667 / 2), 5, -6.5), glm::vec3(0.0, 0.0, 0.0), i);
-                map.push_back(backWall);
-                i += 1.0;
-            }
+        else {
+            loadStage2(map);
         }
-
+        mario.InitBuffer();
+        hud.InitBuffer();
     }
 
     GLvoid InitValue() {
@@ -232,7 +253,7 @@ namespace Play {
         {//Åõ¿µ º¯È¯
             glm::mat4 projection = glm::mat4(1.0f);
             if (cType == D3_VIEW) {      //3D ºä
-                projection = glm::perspective(glm::radians(45.0f), 1.0f, 0.1f, 500.0f);
+                projection = glm::perspective(glm::radians(45.0f), 1.0f, 5.5f, 100.0f);
                 projection = glm::translate(projection, glm::vec3(0.0, 0.0, 0.0));
                 //projection = glm::perspective(glm::radians(45.0f), GLfloat(WIDTH)/HEIGHT, 0.1f, (GLfloat)CameraViewSize);
                 //projection = glm::translate(projection, glm::vec3(0.0, 0.0, -3.0));
