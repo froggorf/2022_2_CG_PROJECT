@@ -13,6 +13,7 @@ public:
 	GLuint hp_bar_texture;
 	GLuint coin_bar_texture;
 	GLuint number_texture[10];
+	GLuint slash_texture;
 	GLuint VAO, VBO[2];
 };
 

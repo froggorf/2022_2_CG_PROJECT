@@ -217,6 +217,11 @@ GLvoid SpecialKeyUp(int key, int x, int y) {
 GLvoid Mouse(int button, int state, int x, int y) {
 	//button - GLUT_LEFT_BUTTON / MIDDLE / RIGHT ...
 	//state - GLUT_UP, GLUT_DOWN
+	if (state == GLUT_DOWN) {
+		float winX = ((float)x - glutGet(GLUT_WINDOW_WIDTH) / 2) / (glutGet(GLUT_WINDOW_WIDTH) / 2);
+		float winY = -((float)y - glutGet(GLUT_WINDOW_HEIGHT) / 2) / (glutGet(GLUT_WINDOW_HEIGHT) / 2);
+		std::cout << winX << ", " << winY << std::endl;
+	}
 	glutPostRedisplay();
 }
 
