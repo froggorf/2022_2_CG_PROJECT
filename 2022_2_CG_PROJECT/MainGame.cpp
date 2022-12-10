@@ -40,7 +40,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 	glutSpecialFunc(SpecialKeyboard);
 	glutSpecialUpFunc(SpecialKeyUp);
 
-	game_framework_running(GameStateType::TITLE);
+	game_framework_running(GameStateType::LOGO);
 	glutTimerFunc(TimerSpeed, MainTimer, 0);
 
 	glutMainLoop(); // 이벤트 처리 시작 

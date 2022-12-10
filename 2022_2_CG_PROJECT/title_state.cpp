@@ -104,7 +104,7 @@ namespace Title {
 		}
 		else if (key == ' ' || key == 13) {
 			if (select_number == 0) {
-				change_state(PLAY);
+				change_state(SELECTSTAGE);
 			}
 			else if (select_number == 1) {
 				quit();

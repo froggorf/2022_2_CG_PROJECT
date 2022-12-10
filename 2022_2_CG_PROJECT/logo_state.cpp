@@ -39,7 +39,7 @@ namespace Logo {
 		//std::cout << "update - logo" << std::endl;
 		logo_time += 16;
 		if (logo_time>=1000) {
-			change_state(PLAY);
+			change_state(TITLE);
 		}
 	}
 
