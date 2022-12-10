@@ -15,6 +15,12 @@ namespace SelectStage {
 	GLvoid draw();
 	GLvoid key_down(unsigned char, int, int);
 	GLvoid key_up(unsigned char, int, int);
+
+	GLvoid InitValue();
+	GLvoid InitBuffer();
+	GLvoid DrawMainImage();
+	GLvoid DrawStageImage();
+	GLvoid DrawHand();
 }
 
 #endif // !__SELECT_STAGE_H__
