@@ -11,6 +11,9 @@
 #include "ground.h"
 #include "changeDimension_state.h"
 
+#include "particle.h"
+#include "brickParticle.h"
+
 // TODO: 老窜 playstate俊辑 利 积己
 #include "goomba.h"
 #include "item.h"
@@ -43,6 +46,7 @@ namespace Play {
     std::vector<Enemy*> GetEnemy();
     std::vector<Item*> GetItem();
     std::vector<Item*>& GetItemToAdd();
+    std::vector<Particle*>& GetParticleToAdd();
 
     glm::vec3 GetMarioPos();
 

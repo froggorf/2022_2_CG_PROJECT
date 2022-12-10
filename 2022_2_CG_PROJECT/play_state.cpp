@@ -10,6 +10,9 @@ namespace Play {
     //땅
     std::vector<Cube*> map;      //cube* 에서 cube로 바꿨을때 실행되는지 확인하기
 
+    // 파티클
+    std::vector<Particle*> particle;
+
     //TODO: 적 생성 코드 다른곳으로옮기는게 이쁠지도
     std::vector<Enemy*> enemyVec;
 
@@ -92,6 +95,13 @@ namespace Play {
                 item.erase(item.begin() + i);
             }
         }
+        for (int i = 0; i < particle.size(); i++) {
+            particle[i]->update();
+            if (particle[i]->isCanDelete) {
+                delete particle[i];
+                particle.erase(particle.begin() + i);
+            }
+        }
 
         camera.update(GetMarioPos(), cType);
         if (GetKeyDown()[press5]) {
@@ -117,14 +127,14 @@ namespace Play {
     }
 
     GLvoid drawObject() {
-        for (int i = 0; i < map.size(); ++i) {
-            map[i]->draw();
-        }
-        for (auto v : enemyVec) {
+        for (auto m : map)
+            m->draw();
+        for (auto v : enemyVec)
             v->draw();
-        }
         for (auto i : item)
             i->draw(cType);
+        for (auto p : particle)
+            p->draw();
         mario.draw(cType);
     }
 
@@ -231,7 +241,7 @@ namespace Play {
     std::vector<Enemy*> GetEnemy() { return enemyVec; }
     std::vector<Item*> GetItem() { return item; }
     std::vector<Item*> &GetItemToAdd() { return item; }
-
+    std::vector<Particle*>& GetParticleToAdd() { return particle; }
 
     glm::vec3 GetMarioPos() {
         return mario.trans;
