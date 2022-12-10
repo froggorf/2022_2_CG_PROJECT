@@ -99,6 +99,7 @@ GLvoid Coin::update() {
 			if (appearMoveFigure >= 0.0) {
 				appearMoveFigure = 0.0;
 				isMovingUp = false;
+				Play::SetMarioCoin(1);
 				isCanDelete = true;
 			}
 		}
@@ -109,6 +110,7 @@ GLvoid Coin::collision_handling(Cube* other) {
 	Cube* marioCast = dynamic_cast<Mario*>(other);
 	if (marioCast != nullptr) {
 		std::cout << "Coin collision handling" << std::endl;
+		Play::SetMarioCoin(1);
 		isCanDelete = true;
 	}
 }

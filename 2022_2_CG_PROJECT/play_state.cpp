@@ -134,8 +134,8 @@ namespace Play {
 
     GLvoid drawObject() {
         background.Draw();  //무조건 먼저 백그라운드 출력할 것
-        for (int i = 0; i < map.size(); i++)
-            map[i]->draw();
+        for (auto m : map)
+            m->draw();
         for (auto v : enemyVec)
             v->draw();
         for (auto i : item)
@@ -263,9 +263,8 @@ namespace Play {
     std::vector<Item*> &GetItemToAdd() { return item; }
     std::vector<Particle*>& GetParticleToAdd() { return particle; }
 
-    glm::vec3 GetMarioPos() {
-        return mario.trans;
-    }
+    glm::vec3 GetMarioPos() { return mario.trans; }
+    GLvoid SetMarioCoin(GLuint num) { mario.coin_num += num; }
 }
 
 

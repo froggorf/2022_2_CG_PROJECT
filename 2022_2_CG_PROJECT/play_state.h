@@ -53,6 +53,7 @@ namespace Play {
     std::vector<Item*>& GetItemToAdd();
     std::vector<Particle*>& GetParticleToAdd();
 
+    GLvoid SetMarioCoin(GLuint num);
     glm::vec3 GetMarioPos();
 
 }
