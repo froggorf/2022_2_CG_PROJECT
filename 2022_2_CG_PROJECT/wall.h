@@ -4,12 +4,14 @@
 
 class Wall : public Cube {
 public:
-	Cube boundingBox;
-
-	GLuint VAO, VBO[3];
 	Wall();
 	Wall(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);
+	Wall(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLboolean is2DCollide);
 	~Wall();
+
+	Cube boundingBox;
+	GLuint VAO, VBO[3];
+	GLboolean is2DCollide;
 
 	GLvoid InitBuffer();
 	GLvoid Init();

@@ -46,8 +46,12 @@ void loadStage1(std::vector<Cube*>& vec) {
                 temp = new Block(scale, trans, rotate);
                 vec.push_back(temp);
             }
-            else if (i >= 40 and i < 44) {
+            else if (i >= 40 and i < 42) {
                 temp = new Wall(scale, trans, rotate);
+                vec.push_back(temp);
+            }
+            else if (i >= 42 and i < 44) {
+                temp = new Wall(scale, trans, rotate, true);
                 vec.push_back(temp);
             }
             else {
@@ -56,7 +60,10 @@ void loadStage1(std::vector<Cube*>& vec) {
                 case 10:
                     temp = new MysteryBlock(scale, trans, rotate, 100);
                     break;
-                case 12: case 14: case 37:
+                case 37:
+                    temp = new MysteryBlock(scale, trans, rotate, 5);
+                    break;
+                case 12: case 14:
                     temp = new MysteryBlock(scale, trans, rotate, 1);
                     break;
                 default:
@@ -69,6 +76,7 @@ void loadStage1(std::vector<Cube*>& vec) {
         }
         ifs.close();
         vec.pop_back();
+        vec.erase(vec.begin() + 39);
     }
 }
 

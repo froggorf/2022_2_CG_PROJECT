@@ -39,15 +39,25 @@ GLuint wall_texture = -1;
 
 Wall::Wall() {
 	InitBuffer();
+	Init();
 	this->trans = glm::vec3(0.0, 0.0, 0.0);
 	this->rot = glm::vec3(0.0, 0.0, 0.0);
 	this->scale = glm::vec3(1.0, 1.0, 1.0);
 };
 Wall::Wall(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
 	InitBuffer();
+	Init();
 	this->trans = trans;
 	this->scale = scale;
 	this->rot = rotate;
+};
+Wall::Wall(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate, GLboolean is2DCollide) {
+	InitBuffer();
+	Init();
+	this->trans = trans;
+	this->scale = scale;
+	this->rot = rotate;
+	this->is2DCollide = true;
 };
 Wall::~Wall() {
 	glDeleteVertexArrays(1, &VAO);
@@ -56,7 +66,7 @@ Wall::~Wall() {
 
 
 GLvoid Wall::Init() {
-
+	is2DCollide = false;
 }
 GLvoid Wall::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
