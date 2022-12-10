@@ -1,7 +1,10 @@
 #include "mario_character.h"
-
+GLuint pressFVAO=-1, pressFVBO[2];
+GLuint pressF_texture[2];
+GLfloat pressF_frame;
 
 GLuint mario_max_frame[MARIOSTATEEND];
+GLboolean collide_door;
 
 enum HANDLE_COLLISION {
 	X_DOWN, X_UP, Y_DOWN, Y_UP, Z_DOWN, Z_UP
@@ -22,6 +25,13 @@ GLvoid Mario::Init() {
 	cur_state = IDLE_RIGHT;
 	hp = MarioMaxHp;
 	coin_num = 0;
+	if (pressFVAO == -1) {
+		glGenVertexArrays(1, &pressFVAO);
+		glGenBuffers(2, pressFVBO);
+		LoadTexture(pressF_texture[0], "resource/Hud/pressF_0.png");
+		LoadTexture(pressF_texture[1], "resource/Hud/pressF_1.png");
+		pressF_frame = 0;
+	}
 }
 
 GLvoid Mario::update() {
@@ -118,6 +128,10 @@ GLvoid Mario::draw(GLuint cType) {
 
 
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(mario_vertices) / sizeof(mario_vertices[0]));
+
+	if (collide_door) {
+		DrawPressFHud();
+	}
 }
 
 
@@ -265,6 +279,7 @@ GLvoid Mario::CheckGetItem() {
 }
 
 GLvoid Mario::falling_gravity() {
+	collide_door = false;
 	gravity -= GravityAcceleration;
 	trans.y += gravity;
 	std::vector<Cube*> g_ground = Play::GetGround();
@@ -308,6 +323,7 @@ GLvoid Mario::falling_gravity() {
 				}
 				check_wall = dynamic_cast<Door*>(g_ground[i]);
 				if (check_wall != nullptr) {
+					collide_door = true;
 					continue;
 				}
 					
@@ -1708,4 +1724,39 @@ GLint Mario::GetHp() {
 
 GLvoid Mario::GetCoin(int num) {
 	coin_num += num;
+}
+
+GLvoid DrawPressFHud() {
+	std::cout << "Ãâ·ÂÁß\n";
+	glUseProgram(Gets_program_screen());
+	glDisable(GL_DEPTH_TEST);
+	glBindVertexArray(pressFVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, pressFVBO[1]);
+	glm::vec2 texture_pos[6] = {
+		glm::vec2(0.0f,1.0f),glm::vec2(0.0f,0.0f),glm::vec2(1.0f,0.0f),
+		glm::vec2(0.0f,1.0f),glm::vec2(1.0f,0.0f),glm::vec2(1.0f,1.0f),
+	};
+	glBufferData(GL_ARRAY_BUFFER, sizeof(texture_pos), texture_pos, GL_STATIC_DRAW);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(1);
+	
+	glm::vec3 hud_pos[6] = {
+		glm::vec3(0.06333f,-0.03333f,0.0f),glm::vec3(0.06333f,-0.135f,0.0f), glm::vec3(0.158333f,-0.135f,0.0f),
+		glm::vec3(0.06333f,-0.03333f,0.0f), glm::vec3(0.158333f,-0.135f,0.0f),glm::vec3(0.158333f,-0.03333f,0.0f),
+	};
+	glBindBuffer(GL_ARRAY_BUFFER, pressFVBO[0]);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(hud_pos), hud_pos, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+	int tLocation = glGetUniformLocation(Gets_program_screen(), "outTexture11"); //--- outTexture1 À¯´ÏÆû »ùÇÃ·¯ÀÇ À§Ä¡¸¦ °¡Á®¿È
+	pressF_frame += 0.1;
+	if (pressF_frame > 2)
+		pressF_frame = 0;
+	glActiveTexture(pressF_texture[(int)pressF_frame]);
+	glBindTexture(GL_TEXTURE_2D, pressF_texture[(int)pressF_frame]);
+	glUniform1i(tLocation, 0);
+	glDrawArrays(GL_TRIANGLES, 0, sizeof(hud_pos) / sizeof(hud_pos[0]));
+	
+	glUseProgram(Gets_program_texture());
+	glEnable(GL_DEPTH_TEST);
 }

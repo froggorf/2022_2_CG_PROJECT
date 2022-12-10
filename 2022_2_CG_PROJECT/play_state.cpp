@@ -142,8 +142,8 @@ namespace Play {
             i->draw(cType);
         for (auto p : particle)
             p->draw();
-        mario.draw(cType);
         hud.Draw(mario.GetHp(), mario.GetCoinNum());
+        mario.draw(cType);
     }
 
     GLvoid draw() {

@@ -91,4 +91,6 @@ public:
 	GLvoid StateDo_2D();
 };
 
+GLvoid DrawPressFHud();
+
 #endif
