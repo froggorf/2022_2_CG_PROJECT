@@ -41,6 +41,7 @@ glm::vec3 test_pipe_vertices[] = {
 };
 
 GLuint pipe_texture = -1;
+GLuint bigpipe_texture = -1;
 
 Pipe::Pipe() {
     InitBuffer();
@@ -69,6 +70,7 @@ GLvoid Pipe::InitBuffer() {
     if (pipe_texture == -1) {
         //임시 코드임 나중에 이미지 수정해야함
         LoadTexture(pipe_texture, "resource/Map/pipe.png");
+        LoadTexture(bigpipe_texture, "resource/Map/bigpipe.png");
     }
 }
 
@@ -98,9 +100,16 @@ GLvoid Pipe::draw() {
     glEnableVertexAttribArray(5);
 
     int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 유니폼 샘플러의 위치를 가져옴
-    glActiveTexture(pipe_texture);
-    glBindTexture(GL_TEXTURE_2D, pipe_texture);
-    glUniform1i(tLocation, 0);
+    if (scale.y < 2.0) {
+        glActiveTexture(pipe_texture);
+        glBindTexture(GL_TEXTURE_2D, pipe_texture);
+        glUniform1i(tLocation, 0);
+    }
+    else {
+        glActiveTexture(bigpipe_texture);
+        glBindTexture(GL_TEXTURE_2D, bigpipe_texture);
+        glUniform1i(tLocation, 0);
+    }
 
     glDrawArrays(GL_TRIANGLES, 0, sizeof(test_pipe_vertices) / sizeof(test_pipe_vertices[0]));
 }
