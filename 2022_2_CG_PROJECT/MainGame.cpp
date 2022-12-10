@@ -15,7 +15,7 @@ int main(int argc, char** argv) //--- 윈도우 출력하고 콜백함수 설정
 { //--- 윈도우 생성하기
 	glutInit(&argc, argv); // glut 초기화
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
-	glutInitWindowPosition(300, 200);
+	glutInitWindowPosition(600, 100);
 	glutInitWindowSize(WIDTH, HEIGHT);
 	glutCreateWindow("Example1");
 	glewExperimental = GL_TRUE;
