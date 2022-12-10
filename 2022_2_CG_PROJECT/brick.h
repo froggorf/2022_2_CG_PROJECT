@@ -2,6 +2,7 @@
 #define __BRICK_H__
 #include "cube.h"
 #include "mario_character.h"
+#include "brickParticle.h"
 
 class Brick : public Cube{
 public:

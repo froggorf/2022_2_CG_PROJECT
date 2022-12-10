@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="block.cpp" />
     <ClCompile Include="brick.cpp" />
+    <ClCompile Include="brickParticle.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="changeDimension_state.cpp" />
     <ClCompile Include="check_collision.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="mushroom.cpp" />
     <ClCompile Include="MysteryBlock.cpp" />
     <ClCompile Include="object.cpp" />
+    <ClCompile Include="particle.cpp" />
     <ClCompile Include="pipe.cpp" />
     <ClCompile Include="play_state.cpp" />
     <ClCompile Include="title_state.cpp" />
@@ -178,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="block.h" />
     <ClInclude Include="brick.h" />
+    <ClInclude Include="brickParticle.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="changeDimension_state.h" />
     <ClInclude Include="check_collision.h" />
@@ -199,6 +202,7 @@
     <ClInclude Include="mushroom.h" />
     <ClInclude Include="mysteryBlock.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="particle.h" />
     <ClInclude Include="pipe.h" />
     <ClInclude Include="play_state.h" />
     <ClInclude Include="stb_image.h" />
