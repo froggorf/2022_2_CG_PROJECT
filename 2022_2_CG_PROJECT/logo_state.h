@@ -2,8 +2,9 @@
 #define __LOGO_STATE_H__
 
 #include "stdafx.h"
-
-
+#include "ImageManager.h"
+#include "game_framework.h"
+#include "MainGame.h"
 
 
 namespace Logo {
