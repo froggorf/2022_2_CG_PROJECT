@@ -76,7 +76,7 @@ void loadStage1(std::vector<Cube*>& vec) {
         }
         ifs.close();
         vec.pop_back();
-        vec.erase(vec.begin() + 39);
+        vec.erase(vec.begin() + 38);
     }
 }
 
