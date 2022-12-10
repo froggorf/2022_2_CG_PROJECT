@@ -161,6 +161,9 @@
     <ClCompile Include="select_stage_state.cpp">
       <Filter>FrameWork</Filter>
     </ClCompile>
+    <ClCompile Include="squiglet.cpp">
+      <Filter>Enemy\Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -267,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="select_stage_state.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="Squiglet.h">
+      <Filter>Enemy\Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

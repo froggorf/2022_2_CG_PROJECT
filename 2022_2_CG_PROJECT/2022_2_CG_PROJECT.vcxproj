@@ -180,6 +180,7 @@
     <ClCompile Include="select_stage_state.cpp" />
     <ClCompile Include="title_state.cpp" />
     <ClCompile Include="wall.cpp" />
+    <ClCompile Include="squiglet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="background.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="pipe.h" />
     <ClInclude Include="play_state.h" />
     <ClInclude Include="select_stage_state.h" />
+    <ClInclude Include="Squiglet.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="title_state.h" />
