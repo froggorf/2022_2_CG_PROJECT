@@ -68,6 +68,8 @@ GLvoid Goomba::Init() {
 	back = false;
 	dead = false;
 	dir = 0;
+	isStepOn = false;
+	timer = 0.0;
 }
 GLvoid Goomba::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
@@ -88,33 +90,44 @@ GLvoid Goomba::InitBuffer() {
 }
 
 GLvoid Goomba::update() {
-	if (back) {
-		if (--frame <= 0) back = false;
+	if (isStepOn) {
+		timer += 0.05;
+		if (timer >= 1.0) isCanDelete = true;
 	}
 	else {
-		if (++frame >= 24) back = true;
-	}
+		if (back) {
+			if (--frame <= 0) back = false;
+		}
+		else {
+			if (++frame >= 24) back = true;
+		}
 
-	if (dir > 0) {		// 2D RIght
-		trans.x += 0.02;
-		if (trans.x >= 127) dir = 0;
+		if (dir > 0) {		// 2D RIght
+			trans.x += 0.02;
+			if (trans.x >= 127) dir = 0;
+		}
+		else {				// 2D Left
+			trans.x -= 0.02;
+			if (trans.x <= 0) dir = 1;
+		}
 	}
-	else {				// 2D Left
-		trans.x -= 0.02;
-		if (trans.x <= 0) dir = 1;
-	}
-
 }
 
 GLvoid Goomba::collision_handling(Cube* other) {
+	Cube* marioCast = dynamic_cast<Mario*>(other);
 	std::cout << "Goomba collision handling" << std::endl;
-	if (dir > 0) {
-		trans.x -= 0.02;
-		dir = 0;
+	if (marioCast != nullptr) {
+		isStepOn = true;
 	}
 	else {
-		trans.x += 0.02;
-		dir = 1;
+		if (dir > 0) {
+			trans.x -= 0.02;
+			dir = 0;
+		}
+		else {
+			trans.x += 0.02;
+			dir = 1;
+		}
 	}
 }
 
@@ -146,9 +159,16 @@ GLvoid Goomba::draw() {
 	glEnableVertexAttribArray(5);
 
 	int tLocation = glGetUniformLocation(Gets_program_texture(), "outTexture"); //--- outTexture1 À¯´ÏÆû »ùÇÃ·¯ÀÇ À§Ä¡¸¦ °¡Á®¿È
-	glActiveTexture(goomba_texture[dir][frame / 5]);
-	glBindTexture(GL_TEXTURE_2D, goomba_texture[dir][frame / 5]);
-	glUniform1i(tLocation, 0);
+	if (isStepOn) {
+		glActiveTexture(goomba_dead_texture);
+		glBindTexture(GL_TEXTURE_2D, goomba_dead_texture);
+		glUniform1i(tLocation, 0);
+	}
+	else {
+		glActiveTexture(goomba_texture[dir][frame / 5]);
+		glBindTexture(GL_TEXTURE_2D, goomba_texture[dir][frame / 5]);
+		glUniform1i(tLocation, 0);
+	}
 
 	glDrawArrays(GL_TRIANGLES, 0, sizeof(test_goomba_vertices) / sizeof(test_goomba_vertices[0]));
 }

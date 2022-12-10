@@ -1,5 +1,6 @@
 #ifndef __GOOMBA_H__
 #define __GOOMBA_H__
+#include "mario_character.h"
 #include "enemy.h"
 #include <string>
 
@@ -10,6 +11,8 @@ public:
 	~Goomba();
 
 	GLboolean back;
+	GLboolean isStepOn;
+	GLfloat timer;
 
 	GLvoid Init();
 	GLvoid update();

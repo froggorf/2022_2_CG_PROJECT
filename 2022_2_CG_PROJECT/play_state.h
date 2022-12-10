@@ -16,6 +16,7 @@
 #include "brickParticle.h"
 
 // TODO: 老窜 playstate俊辑 利 积己
+#include "enemy.h"
 #include "goomba.h"
 #include "item.h"
 #include "mushroom.h"
