@@ -158,6 +158,9 @@
     <ClCompile Include="background.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="select_stage_state.cpp">
+      <Filter>FrameWork</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -261,6 +264,9 @@
     </ClInclude>
     <ClInclude Include="background.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="select_stage_state.h">
+      <Filter>FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

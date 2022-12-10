@@ -177,6 +177,7 @@
     <ClCompile Include="pictureWall.cpp" />
     <ClCompile Include="pipe.cpp" />
     <ClCompile Include="play_state.cpp" />
+    <ClCompile Include="select_stage_state.cpp" />
     <ClCompile Include="title_state.cpp" />
     <ClCompile Include="wall.cpp" />
   </ItemGroup>
@@ -211,6 +212,7 @@
     <ClInclude Include="pictureWall.h" />
     <ClInclude Include="pipe.h" />
     <ClInclude Include="play_state.h" />
+    <ClInclude Include="select_stage_state.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="title_state.h" />

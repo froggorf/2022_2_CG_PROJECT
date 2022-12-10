@@ -2,6 +2,7 @@
 #include "logo_state.h"
 #include "title_state.h"
 #include "play_state.h"
+#include "select_stage_state.h"
 //TODO: #include "item_state.h"
 bool running = true;
 GameState state[4];
@@ -117,6 +118,17 @@ GLvoid GameState::setting(int g_state_type) {
 		draw = ChangeDimension::draw;
 		key_down = ChangeDimension::key_down;
 		key_up = ChangeDimension::key_up;
+		break;
+	case GameStateType::SELECTSTAGE:
+		enter = SelectStage::enter;
+		exit = SelectStage::exit;
+		pause = SelectStage::pause;
+		resume = SelectStage::resume;
+		handle_events = SelectStage::handle_events;
+		update = SelectStage::update;
+		draw = SelectStage::draw;
+		key_down = SelectStage::key_down;
+		key_up = SelectStage::key_up;
 		break;
 	//TODO:
 		/*

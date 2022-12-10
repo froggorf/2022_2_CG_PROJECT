@@ -8,6 +8,7 @@ enum GameStateType {
 	TITLE,
 	PLAY,
 	CHANGEDIMENSION,
+	SELECTSTAGE,
 	END,
 	//TODO: ITEM,
 };
