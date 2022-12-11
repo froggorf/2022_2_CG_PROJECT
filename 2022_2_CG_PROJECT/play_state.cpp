@@ -39,7 +39,8 @@ namespace Play {
         isCanExit = 0;
         InitValue();
         InitBuffer();
-        PlaySoundMP3("resource/Sound/stage1.mp3", true);
+        mciSendCommand(openBgm.wDeviceID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+        PlaySoundMP3("resource/Sound/stage1.mp3", true, openBgm);
     }
 
     GLvoid exit() {
@@ -48,6 +49,7 @@ namespace Play {
         enemyVec.clear();
         particle.clear();
         item.clear();
+        mciSendCommand(openBgm.wDeviceID, MCI_STOP, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
 
         //DelBuffer();
         //DelValue();
@@ -55,6 +57,7 @@ namespace Play {
 
     GLvoid pause() {
         std::cout << "pause - play" << std::endl;
+        mciSendCommand(openBgm.wDeviceID, MCI_STOP, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
     }
 
     GLvoid resume() {

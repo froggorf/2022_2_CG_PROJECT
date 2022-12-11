@@ -76,9 +76,6 @@ GLvoid Coin::Init() {
 	isOnGround = true;
 	appearMoveFigure = 0.0;
 	isMovingUp = true;
-	coinSound.lpstrElementName = TEXT(GETCOINSOUND);
-	coinSound.lpstrDeviceType = TEXT("mpegvideo");
-	mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&coinSound);
 }
 GLvoid Coin::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
@@ -88,7 +85,6 @@ GLvoid Coin::InitBuffer() {
 			std::string str = "resource/Item/coin" + std::to_string(i) + ".png";
 			LoadTexture(coin_texture[i], str.c_str());
 		}
-		SetBgm(GETCOINSOUND, sound);
 	}
 }
 
@@ -105,9 +101,6 @@ GLvoid Coin::update() {
 				appearMoveFigure = 0.0;
 				isMovingUp = false;
 				Play::SetMarioCoin(1);
- 				//PlaySoundMP3(coinSound, false);
-				SoundToStart(sound);
-				PlaySoundMP3(GETCOINSOUND, false, sound);
 				isCanDelete = true;
 			}
 		}
@@ -119,8 +112,6 @@ GLvoid Coin::collision_handling(Cube* other) {
 	if (marioCast != nullptr and !isCanDelete) {
 		std::cout << "Coin collision handling" << std::endl;
 		Play::SetMarioCoin(1);
-		SoundToStart(sound);
-		PlaySoundMP3(GETCOINSOUND, false, sound);
 		isCanDelete = true;
 	}
 }

@@ -17,7 +17,6 @@ public:
 	GLfloat appearMoveFigure;
 	GLboolean isOnGround;
 	GLboolean isMovingUp;
-	MCI_OPEN_PARMS coinSound;
 
 	GLvoid Init();
 	virtual GLvoid update();
