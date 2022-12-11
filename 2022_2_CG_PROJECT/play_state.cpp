@@ -83,7 +83,7 @@ namespace Play {
             if (enemyCast != nullptr)// GOOMBA
             {
                 for (auto m : map) {
-                    if (m->trans.y > 0 and m->trans.y < 2.0 and CheckAABB_2D(*enemyVec[i], *m)) {
+                    if (CheckAABB_2D(*enemyVec[i], *m)) {
                         enemyVec[i]->collision_handling(m);
                     }
                 }
@@ -178,7 +178,7 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
-        GLboolean isStage1 = false;
+        GLboolean isStage1 = true;
         background.InitBuffer();
         mario.InitBuffer();
         hud.InitBuffer();
@@ -214,8 +214,8 @@ namespace Play {
             Enemy* temp2 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(69.3, 0.5, -3.0), glm::vec3(0.0, 0.0, 0.0));
             Enemy* temp3 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(72.2, 0.5, -1.5), glm::vec3(0.0, 0.0, 0.0));
             Enemy* temp4 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(146, 0.5, -1.5), glm::vec3(0.0, 0.0, 0.0));
-            Enemy* temp5 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(156.5, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
-            Enemy* temp6 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(174.7, 0.5, -3.20), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp5 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(156.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
+            Enemy* temp6 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(180.0, 0.5, -3.20), glm::vec3(0.0, 0.0, 0.0));
             enemyVec.push_back(temp0);
             enemyVec.push_back(temp1);
             enemyVec.push_back(temp2);

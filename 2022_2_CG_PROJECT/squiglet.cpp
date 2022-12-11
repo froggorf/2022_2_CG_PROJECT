@@ -104,11 +104,9 @@ GLvoid Squiglet::update() {
 
 		if (dir > 0) {		// 2D RIght
 			trans.z += 0.02;
-			//if (trans.z >= 127) dir = 0;
 		}
 		else {				// 2D Left
 			trans.z -= 0.02;
-			//if (trans.z <= 0) dir = 1;
 		}
 	}
 }

@@ -104,22 +104,38 @@ GLvoid Goomba::update() {
 
 		if (dir > 0) {		// 2D RIght
 			trans.x += 0.02;
-			if (trans.x >= 127) dir = 0;
 		}
 		else {				// 2D Left
 			trans.x -= 0.02;
-			if (trans.x <= 0) dir = 1;
 		}
 	}
 }
 
 GLvoid Goomba::collision_handling(Cube* other) {
 	Cube* marioCast = dynamic_cast<Mario*>(other);
-	std::cout << "Goomba collision handling" << std::endl;
+	Cube* doorCast = dynamic_cast<Door*>(other);
+	Wall* wallCast = dynamic_cast<Wall*>(other);
 	if (marioCast != nullptr) {
 		isStepOn = true;
 	}
+	else if (doorCast != nullptr) {
+
+	}
+	else if (wallCast != nullptr ) {
+		if (wallCast->is2DCollide) {
+			std::cout << "Goomba wall collision handling" << std::endl;
+			if (dir > 0) {
+				trans.x -= 0.02;
+				dir = 0;
+			}
+			else {
+				trans.x += 0.02;
+				dir = 1;
+			}
+		}
+	}
 	else {
+		std::cout << "Goomba else collision handling" << std::endl;
 		if (dir > 0) {
 			trans.x -= 0.02;
 			dir = 0;
