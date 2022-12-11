@@ -204,4 +204,6 @@ namespace SelectStage {
 		glDrawArrays(GL_TRIANGLES, 0, sizeof(hand_pos) / sizeof(hand_pos[0]));
 
 	}
+
+	GLuint GetSelectStageNum() { return select_stage_num; }
 }

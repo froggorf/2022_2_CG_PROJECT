@@ -21,6 +21,8 @@ namespace SelectStage {
 	GLvoid DrawMainImage();
 	GLvoid DrawStageImage();
 	GLvoid DrawHand();
+
+	GLuint GetSelectStageNum();
 }
 
 #endif // !__SELECT_STAGE_H__

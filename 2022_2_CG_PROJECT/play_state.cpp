@@ -2,6 +2,7 @@
 #include "fileManager.h"
 
 namespace Play {
+    GLboolean isCanExit;
     //카메라 관련 선언
     Camera camera;
     int cType;                              //카메라 타입(2d뷰 / 3d뷰)
@@ -31,6 +32,7 @@ namespace Play {
 
     //function - 정의
     GLvoid enter() {
+        isCanExit = false;
         InitValue();
         InitBuffer();
     }
@@ -38,6 +40,9 @@ namespace Play {
     GLvoid exit() {
         std::cout << "exit - play" << std::endl;
         map.clear();
+        enemyVec.clear();
+        particle.clear();
+        item.clear();
 
         //DelBuffer();
         //DelValue();
@@ -67,81 +72,84 @@ namespace Play {
     }
 
     GLvoid update() {
-        mario.update();
+        if (!isCanExit) {
+            mario.update();
 
-        for (int i = 0; i < map.size(); i++) {
-            map[i]->update();
-            if (map[i]->isCanDelete) {
-                delete map[i];
-                map.erase(map.begin() + i);
+            for (int i = 0; i < map.size(); i++) {
+                map[i]->update();
+                if (map[i]->isCanDelete) {
+                    delete map[i];
+                    map.erase(map.begin() + i);
+                }
             }
-        }
 
-        for (int i = 0; i < enemyVec.size(); i++) {
-            enemyVec[i]->update();
-            Enemy* enemyCast = dynamic_cast<Goomba*>(enemyVec[i]);
-            if (enemyCast != nullptr)// GOOMBA
-            {
-                for (auto m : map) {
-                    if (CheckAABB_2D(*enemyVec[i], *m)) {
-                        enemyVec[i]->collision_handling(m);
+            for (int i = 0; i < enemyVec.size(); i++) {
+                enemyVec[i]->update();
+                Enemy* enemyCast = dynamic_cast<Goomba*>(enemyVec[i]);
+                if (enemyCast != nullptr)// GOOMBA
+                {
+                    for (auto m : map) {
+                        if (CheckAABB_2D(*enemyVec[i], *m)) {
+                            enemyVec[i]->collision_handling(m);
+                        }
                     }
                 }
+                else {
+                    for (auto m : map) {
+                        if (CheckAABB(*enemyVec[i], *m)) {
+                            enemyVec[i]->collision_handling(m);
+                        }
+                    }
+
+                }
+                if (enemyVec[i]->isCanDelete) {
+                    delete enemyVec[i];
+                    enemyVec.erase(enemyVec.begin() + i);
+                }
             }
-            else {
+            for (int i = 0; i < item.size(); i++) {
+                item[i]->update();
                 for (auto m : map) {
-                    if (CheckAABB(*enemyVec[i], *m)) {
-                        enemyVec[i]->collision_handling(m);
+                    if (CheckAABB_2D(*item[i], *m)) {
+                        item[i]->collision_handling(m);
                     }
                 }
-
-            }
-            if (enemyVec[i]->isCanDelete) {
-                delete enemyVec[i];
-                enemyVec.erase(enemyVec.begin() + i);
-            }
-        }
-        for (int i = 0; i < item.size(); i++) {
-            item[i]->update();
-            for (auto m : map) {
-                if (CheckAABB_2D(*item[i], *m)) {
-                    item[i]->collision_handling(m);
+                if (item[i]->isCanDelete) {
+                    delete item[i];
+                    item.erase(item.begin() + i);
                 }
             }
-            if (item[i]->isCanDelete) {
-                delete item[i];
-                item.erase(item.begin() + i);
+            for (int i = 0; i < particle.size(); i++) {
+                particle[i]->update();
+                if (particle[i]->isCanDelete) {
+                    delete particle[i];
+                    particle.erase(particle.begin() + i);
+                }
+            }
+
+            camera.update(GetMarioPos(), cType);
+            if (GetKeyDown()[press5]) {
+                glm::mat4 rot = glm::mat4(1.0f);
+                rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+                camera.cameraPos = rot * glm::vec4(camera.cameraPos, 1.0f);
+                camera.cameraDirection = rot * glm::vec4(camera.cameraDirection, 1.0f);
+                camera.cameraUp = rot * glm::vec4(camera.cameraUp, 1.0f);
+            }
+            if (GetKeyDown()[press4]) {
+                camera.cameraPos.x -= 0.1;
+            }
+            if (GetKeyDown()[press6]) {
+                camera.cameraPos.x += 0.1;
+            }
+            if (GetKeyDown()[press8]) {
+                camera.cameraPos.y -= 0.1;
+            }
+            if (GetKeyDown()[press5]) {
+                camera.cameraPos.y += 0.1;
             }
         }
-        for (int i = 0; i < particle.size(); i++) {
-            particle[i]->update();
-            if (particle[i]->isCanDelete) {
-                delete particle[i];
-                particle.erase(particle.begin() + i);
-            }
-        }
-
-        camera.update(GetMarioPos(), cType);
-        if (GetKeyDown()[press5]) {
-            glm::mat4 rot = glm::mat4(1.0f);
-            rot = glm::rotate(rot, glm::radians(1.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-            camera.cameraPos = rot * glm::vec4(camera.cameraPos, 1.0f);
-            camera.cameraDirection = rot * glm::vec4(camera.cameraDirection, 1.0f);
-            camera.cameraUp = rot * glm::vec4(camera.cameraUp, 1.0f);
-        }
-        if (GetKeyDown()[press4]) {
-            camera.cameraPos.x -= 0.1;
-        }
-        if (GetKeyDown()[press6]) {
-            camera.cameraPos.x += 0.1;
-        }
-        if (GetKeyDown()[press8]) {
-            camera.cameraPos.y -= 0.1;
-        }
-        if (GetKeyDown()[press5]) {
-            camera.cameraPos.y += 0.1;
-        }
-
+        else
+            pop_state();
     }
 
     GLvoid drawObject() {
@@ -178,7 +186,7 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
-        GLuint stageNum = 1;
+        GLuint stageNum = SelectStage::GetSelectStageNum();
         background.InitBuffer();
         mario.InitBuffer();
         hud.InitBuffer();
@@ -282,6 +290,10 @@ namespace Play {
         //unsigned int viewPosLocation = glGetUniformLocation(Gets_program(), "viewPos");
         //glUniform3f(viewPosLocation, camera.cameraPos.x, camera.cameraPos.y, camera.cameraPos.z);
 
+    }
+
+    GLvoid goSelectState() {
+        isCanExit = true;
     }
 
     Camera getCamera() { return camera; }

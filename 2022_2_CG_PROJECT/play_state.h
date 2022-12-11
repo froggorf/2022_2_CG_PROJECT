@@ -10,6 +10,7 @@
 #include "check_collision.h"
 #include "ground.h"
 #include "changeDimension_state.h"
+#include "select_stage_state.h"
 #include "hud.h"
 #include "background.h"
 
@@ -45,6 +46,7 @@ namespace Play {
     GLvoid InitValue();                        //값 초기화 함수
     GLvoid SetTransformationMatrix();            //model 변환, 카메라 변환, 뷰잉변환, 투영변환등의 디폴트값 넣어주는 함수
 
+    GLvoid goSelectState();
     Camera getCamera();
     GLuint getcType();
 

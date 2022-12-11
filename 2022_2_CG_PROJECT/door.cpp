@@ -81,7 +81,7 @@ GLvoid Door::InitBuffer() {
 
 GLvoid Door::update() {
 	if (isOpen) {
-		if (++frame >= 110) frame = 109;
+		if (++frame >= 110) Play::goSelectState();
 	}
 }
 
