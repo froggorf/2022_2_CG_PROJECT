@@ -1,5 +1,6 @@
 #include "select_stage_state.h"
 
+#define MAXSTAGE 3
 #define HANDMAXFRAME 5
 #define HANDSIZE 0.1
 
@@ -24,6 +25,7 @@ namespace SelectStage {
 	GLint select_stage_num;
 
 	GLvoid enter() {
+		std::cout << "select_stage_enter" << std::endl;
 		InitValue();
 		InitBuffer();
 		glUseProgram(Gets_program_screen());
@@ -43,7 +45,11 @@ namespace SelectStage {
 		
 	}
 	GLvoid resume() {
-		
+		std::cout << "stage_select_resume()" << std::endl;
+		glUseProgram(Gets_program_screen());
+		glDisable(GL_DEPTH_TEST);
+
+		ClearUpdate();
 	}
 	GLvoid handle_events() {
 
@@ -55,6 +61,7 @@ namespace SelectStage {
 		}
 	}
 	GLvoid draw() {
+		std::cout << "stage_select_draw()" << std::endl;
 		DrawMainImage();
 		DrawStageImage();
 		DrawHand();
@@ -205,5 +212,15 @@ namespace SelectStage {
 
 	}
 
-	GLuint GetSelectStageNum() { return select_stage_num; }
+	GLint GetSelectStageNum() { return select_stage_num; }
+	GLint& GetPlayableStageNum() { return playable_stage_num; }
+
+	GLvoid ClearUpdate() {
+		if (select_stage_num == playable_stage_num) {
+			playable_stage_num += 1;
+			if (playable_stage_num > MAXSTAGE) playable_stage_num = MAXSTAGE;
+			select_stage_num += 1;
+			if (select_stage_num > MAXSTAGE) select_stage_num = MAXSTAGE;
+		}
+	}
 }
