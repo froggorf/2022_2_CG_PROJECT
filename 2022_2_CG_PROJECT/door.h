@@ -8,6 +8,7 @@ public:
 	Cube boundingBox;
 	GLuint VAO, VBO[3];
 	GLuint frame;
+	GLboolean isOpen;
 
 	Door();
 	Door(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate);

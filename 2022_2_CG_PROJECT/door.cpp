@@ -44,6 +44,7 @@ GLuint door_texture[11] = { -1, };
 
 Door::Door() {
 	InitBuffer();
+	Init();
 	this->trans = glm::vec3(0.0, 0.0, 0.0);
 	this->rot = glm::vec3(0.0, 0.0, 0.0);
 	this->scale = glm::vec3(1.0, 1.0, 1.0);
@@ -51,10 +52,10 @@ Door::Door() {
 };
 Door::Door(glm::vec3 scale, glm::vec3 trans, glm::vec3 rotate) {
 	InitBuffer();
+	Init();
 	this->trans = trans;
 	this->scale = scale;
 	this->rot = rotate;
-	frame = 0;
 };
 Door::~Door() {
 	glDeleteVertexArrays(1, &VAO);
@@ -63,7 +64,8 @@ Door::~Door() {
 
 
 GLvoid Door::Init() {
-
+	frame = 0;
+	isOpen = false;
 }
 GLvoid Door::InitBuffer() {
 	glGenVertexArrays(1, &VAO);
@@ -78,7 +80,9 @@ GLvoid Door::InitBuffer() {
 }
 
 GLvoid Door::update() {
-	if (++frame > 110) frame = 0;
+	if (isOpen) {
+		if (++frame > 110) frame = 0;
+	}
 }
 
 GLvoid Door::draw() {
