@@ -3,7 +3,7 @@
 namespace ChangeDimension {
 	// 매개변수
 	GLfloat u = 0;
-	GLboolean start = false;		// start ? 2D -> 3D : 3D -> 2D
+	//GLboolean start = false;		// start ? 2D -> 3D : 3D -> 2D
 
 	GLuint wait = 0;
 
@@ -18,7 +18,7 @@ namespace ChangeDimension {
 		changeCamera = Play::getCamera();
 		marioPos = Play::GetMarioPos();
 		u = 0.0;
-		if (start) {
+		if (!changeCType) {
 			changeCamera.cameraPos = glm::vec3(0.0, 1.5, 15.0);
 		}
 		else {
@@ -29,7 +29,6 @@ namespace ChangeDimension {
 
 	GLvoid exit() {
 		std::cout << "exit - changeDimension" << std::endl;
-		start = 1 - start;
 	}
 
 	GLvoid pause() {
@@ -47,7 +46,7 @@ namespace ChangeDimension {
 	GLvoid update() {
 		//wait++;
 		//if (wait % 10 == 0) {
-		if (start) {
+		if (!changeCType) {
 			u -= 3;
 			if (u <= -90) {pop_state(); }
 		}
