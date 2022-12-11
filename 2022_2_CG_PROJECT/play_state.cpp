@@ -57,7 +57,8 @@ namespace Play {
 
     GLvoid pause() {
         std::cout << "pause - play" << std::endl;
-        mciSendCommand(openBgm.wDeviceID, MCI_STOP, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
+        if(mario.hp == 0)
+            mciSendCommand(openBgm.wDeviceID, MCI_PAUSE, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
     }
 
     GLvoid resume() {
@@ -67,6 +68,7 @@ namespace Play {
             pop_state();
             return;
         }
+        mciSendCommand(openBgm.wDeviceID, MCI_PLAY, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
             
         cType = 1 - cType;
         if (cType == D3_VIEW) {
@@ -272,11 +274,11 @@ namespace Play {
            //camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
             camera.cameraPos = glm::vec3(0.0f, 0.0f, 0.0f);
-            camera.cameraDirection = glm::vec3(1.0f, 0.0f, 0.0f);
+            camera.cameraDirection = glm::vec3(0.0f, 0.0f, -1.0f);
             camera.cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 
-            cType = D3_VIEW;
+            cType = D2_VIEW;
         }
 
         {//마리오 관련

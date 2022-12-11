@@ -4,6 +4,7 @@
 #include "ImageManager.h"
 #include "game_framework.h"
 #include "MainGame.h"
+#include "soundManager.h"
 
 namespace SelectStage {
 	GLvoid enter();

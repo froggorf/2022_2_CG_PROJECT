@@ -26,6 +26,7 @@ namespace Title {
 	GLboolean update_check[3];
 	GLfloat hand_frame;
 	int select_number = 0;
+	MCI_OPEN_PARMS openBgm;
 
 	GLvoid enter() {
 		std::cout << "enter - title" << std::endl;
@@ -54,12 +55,15 @@ namespace Title {
 		glEnableVertexAttribArray(1);
 
 		EarlyInitValue();
+		mciSendCommand(openBgm.wDeviceID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		PlaySoundMP3("resource/Sound/title_state.mp3", true, openBgm);
 	}
 
 	GLvoid exit() {
 		std::cout << "exit - title" << std::endl;
 		glUseProgram(Gets_program_texture());
 		glEnable(GL_DEPTH_TEST);
+		mciSendCommand(openBgm.wDeviceID, MCI_STOP, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
 	}
 
 	GLvoid pause() {

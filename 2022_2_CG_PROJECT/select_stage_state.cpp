@@ -20,6 +20,7 @@ namespace SelectStage {
 	glm::vec3 image_pos[SELECTSTAGEEND][6];
 	glm::vec3 hand_pos[6];
 	GLfloat hand_frame;
+	MCI_OPEN_PARMS openBgm;
 	
 	GLint playable_stage_num;
 	GLint select_stage_num;
@@ -36,18 +37,24 @@ namespace SelectStage {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(texture_pos), texture_pos, GL_STATIC_DRAW);
 		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(1);
+
+		mciSendCommand(openBgm.wDeviceID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		PlaySoundMP3("resource/Sound/select_stage.mp3", true, openBgm);
 	}
 	GLvoid exit() {
 		glUseProgram(Gets_program_texture());
 		glEnable(GL_DEPTH_TEST);
 	}
 	GLvoid pause() {
-		
+		mciSendCommand(openBgm.wDeviceID, MCI_STOP, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
+
 	}
 	GLvoid resume() {
 		glUseProgram(Gets_program_screen());
 		glDisable(GL_DEPTH_TEST);
-		
+
+		mciSendCommand(openBgm.wDeviceID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		PlaySoundMP3("resource/Sound/logo.wav", true, openBgm);
 
 		if (check_clear) {
 			if (select_stage_num == playable_stage_num) {
@@ -89,7 +96,8 @@ namespace SelectStage {
 				select_stage_num = playable_stage_num;
 		}
 		else if (key == ' ' || key == 13) {
-			push_state(GameStateType::PLAY);
+			if (select_stage_num <= 2)
+				push_state(GameStateType::PLAY);
 		}
 		
 		

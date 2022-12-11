@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "MainGame.h"
 #include "ImageManager.h"
+#include "soundManager.h"
 
 namespace Title {
 	GLvoid enter();

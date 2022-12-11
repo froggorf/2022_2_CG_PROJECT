@@ -4,6 +4,7 @@ namespace Logo {
 	GLuint logo_image = -1;
 	GLint logo_time = 0;
 	GLuint VAO_logo = -1, VBO_logo[2] = { -1,-1 };
+	MCI_OPEN_PARMS openBgm;
 	
 	GLvoid enter() {
 		//std::cout << "enter - Logo" << std::endl;
@@ -14,11 +15,14 @@ namespace Logo {
 			glGenVertexArrays(1, &VAO_logo);
 			glGenBuffers(2, VBO_logo);
 		}
-			
+
+		mciSendCommand(openBgm.wDeviceID, MCI_SEEK, MCI_SEEK_TO_START, (DWORD)(LPVOID)NULL);
+		PlaySoundMP3("resource/Sound/logo.wav", true, openBgm);
 			
 	}
 	GLvoid exit() {
 		//std::cout << "exit - Logo" << std::endl;
+		mciSendCommand(openBgm.wDeviceID, MCI_STOP, MCI_NOTIFY, (DWORD)(LPVOID)&openBgm);
 
 	}
 	GLvoid pause() {
