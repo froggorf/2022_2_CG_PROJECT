@@ -1051,6 +1051,9 @@ GLvoid Mario::handle_events(int type, unsigned char key) {
 		break;
 	case D2_VIEW:
 		CheckNextState_2D(type, key);
+		if (type == GLUT_KEY_DOWN&&key=='f') {
+			SendMessageToDoor();
+		}
 		break;
 	}
 
@@ -1726,8 +1729,24 @@ GLvoid Mario::GetCoin(int num) {
 	coin_num += num;
 }
 
+GLvoid Mario::SendMessageToDoor() {
+	if (collide_door) {
+		std::cout << "여기까진 들어옴\n";
+		std::vector<Cube*> g_ground = Play::GetGround();
+		for (int i = 0; i < g_ground.size(); ++i) {
+			if (CheckAABB_2D(*this, *g_ground[i])) {
+				Door* check_door = dynamic_cast<Door*>(g_ground[i]);
+				if (check_door != nullptr) {
+					std::cout << i<<"번째 문\n";
+					check_door->collision_handling(this);
+					break;
+				}
+			}
+		}
+	}
+}
+
 GLvoid DrawPressFHud() {
-	std::cout << "출력중\n";
 	glUseProgram(Gets_program_screen());
 	glDisable(GL_DEPTH_TEST);
 	glBindVertexArray(pressFVAO);

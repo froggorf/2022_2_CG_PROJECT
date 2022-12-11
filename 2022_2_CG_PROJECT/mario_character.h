@@ -65,6 +65,8 @@ public:
 
 	GLvoid move(int);
 	GLvoid DoJump();
+
+	GLvoid SendMessageToDoor();
 	
 	GLvoid handle_collision(int, std::vector<Cube*>);
 	GLvoid CheckHittingByEnemy();
