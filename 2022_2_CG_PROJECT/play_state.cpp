@@ -14,10 +14,10 @@ namespace Play {
     // 파티클
     std::vector<Particle*> particle;
 
-    //TODO: 적 생성 코드 다른곳으로옮기는게 이쁠지도
+    // 적
     std::vector<Enemy*> enemyVec;
 
-    // TODO:: 얘도
+    // 아이템
     std::vector<Item*> item;
 
 

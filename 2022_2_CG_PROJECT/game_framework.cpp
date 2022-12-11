@@ -3,7 +3,6 @@
 #include "title_state.h"
 #include "play_state.h"
 #include "select_stage_state.h"
-//TODO: #include "item_state.h"
 bool running = true;
 GameState state[4];
 int now = -1;
@@ -130,19 +129,6 @@ GLvoid GameState::setting(int g_state_type) {
 		key_down = SelectStage::key_down;
 		key_up = SelectStage::key_up;
 		break;
-	//TODO:
-		/*
-		case GameStateType::PLAY:
-		enter = Item::enter;
-		exit = Item::exit;
-		pause = Item::pause;
-		resume = Item::resume;
-		handle_events = Item::handle_events;
-		update = Item::update;
-		draw = Item::draw;
-		break;
-		*/
-
 	}
 }
 

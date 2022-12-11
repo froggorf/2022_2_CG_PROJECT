@@ -10,7 +10,6 @@ enum GameStateType {
 	CHANGEDIMENSION,
 	SELECTSTAGE,
 	END,
-	//TODO: ITEM,
 };
 
 class GameState {
