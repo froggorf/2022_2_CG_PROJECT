@@ -100,6 +100,7 @@ GLvoid Coin::update() {
 				appearMoveFigure = 0.0;
 				isMovingUp = false;
 				Play::SetMarioCoin(1);
+				PlaySound(TEXT(GETCOINSOUND), NULL, SND_ASYNC | SND_ALIAS);
 				isCanDelete = true;
 			}
 		}
@@ -111,6 +112,7 @@ GLvoid Coin::collision_handling(Cube* other) {
 	if (marioCast != nullptr) {
 		std::cout << "Coin collision handling" << std::endl;
 		Play::SetMarioCoin(1);
+		PlaySound(TEXT(GETCOINSOUND), NULL, SND_ASYNC | SND_ALIAS);
 		isCanDelete = true;
 	}
 }

@@ -5,6 +5,7 @@
 
 namespace Play {
     GLint isCanExit;
+    MCI_OPEN_PARMS openBgm;     // 무한 루프
 
     //카메라 관련 선언
     Camera camera;
@@ -38,7 +39,11 @@ namespace Play {
         isCanExit = 0;
         InitValue();
         InitBuffer();
-        PlaySound(TEXT("resource/Sound/stage1.wav"), NULL, SND_ASYNC | SND_ALIAS | SND_LOOP);
+        openBgm.lpstrElementName = TEXT("resource/Sound/stage1.mp3");
+        openBgm.lpstrDeviceType = TEXT("mpegvideo");
+        mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE, (DWORD)(LPVOID)&openBgm);
+        mciSendCommand(openBgm.wDeviceID, MCI_PLAY, MCI_DGV_PLAY_REPEAT, (DWORD)(LPVOID)&openBgm);
+        //PlaySound(TEXT("resource/Sound/stage1.wav"), NULL, SND_ASYNC | SND_ALIAS | SND_LOOP);
     }
 
     GLvoid exit() {

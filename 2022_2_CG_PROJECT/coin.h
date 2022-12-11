@@ -4,6 +4,8 @@
 #include "mario_character.h"
 #include "check_collision.h"
 
+#define GETCOINSOUND "resource/Sound/getCoin.wav"
+
 class Coin : public Item {
 public:
 	Coin();

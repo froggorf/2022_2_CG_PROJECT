@@ -12,6 +12,7 @@
 #include <Windows.h>
 #pragma comment(lib, "winmm")
 #include <mmsystem.h>
+#include <Digitalv.h>
 
 #include <gl/glew.h> 
 #include<gl/freeglut.h>
