@@ -1,6 +1,7 @@
 #ifndef __DOOR_H__
 #define __DOOR_H__
 #include "cube.h"
+#include "mario_character.h"
 #include <string>
 
 class Door : public Cube {
@@ -18,6 +19,7 @@ public:
 	GLvoid update();
 	virtual GLvoid InitBuffer();
 	virtual GLvoid draw();
+	GLvoid collision_handling(Cube* other);
 };
 
 #endif

@@ -178,11 +178,11 @@ namespace Play {
     }
 
     GLvoid InitBuffer() {
-        GLboolean isStage1 = true;
+        GLuint stageNum = 1;
         background.InitBuffer();
         mario.InitBuffer();
         hud.InitBuffer();
-        if (isStage1) {
+        if (stageNum == 1) {
             loadStage1(map);            
             {
                 for (int i = 0; i < 6; ++i) {
@@ -207,7 +207,7 @@ namespace Play {
             }
             
         }
-        else {
+        else if(stageNum == 2){
             loadStage2(map);
             Enemy* temp0 = new Goomba(glm::vec3(1.0, 1.0, 1.0), glm::vec3(18.0, 0.5, 0.0), glm::vec3(0.0, 0.0, 0.0));
             Enemy* temp1 = new Squiglet(glm::vec3(1.0, 1.0, 1.0), glm::vec3(65.5, 0.5, 4.6), glm::vec3(0.0, 0.0, 0.0));
@@ -223,6 +223,9 @@ namespace Play {
             enemyVec.push_back(temp4);
             enemyVec.push_back(temp5);
             enemyVec.push_back(temp6);
+        }
+        else {
+
         }
     }
 

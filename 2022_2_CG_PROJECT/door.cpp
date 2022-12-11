@@ -81,7 +81,14 @@ GLvoid Door::InitBuffer() {
 
 GLvoid Door::update() {
 	if (isOpen) {
-		if (++frame > 110) frame = 0;
+		if (++frame >= 110) frame = 109;
+	}
+}
+
+GLvoid Door::collision_handling(Cube* other) {
+	Cube* marioCast = dynamic_cast<Mario*>(other);
+	if (marioCast != nullptr) {
+		isOpen = true;
 	}
 }
 
