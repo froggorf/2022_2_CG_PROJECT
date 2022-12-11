@@ -1,4 +1,6 @@
 #include "mario_character.h"
+//무적시간 적용하기
+
 GLuint pressFVAO=-1, pressFVBO[2];
 GLuint pressF_texture[2];
 GLfloat pressF_frame;
@@ -356,22 +358,42 @@ GLvoid Mario::falling_gravity() {
 			}
 		}
 	}
-	if (Play::getcType() == D2_VIEW) {
-		CheckKillingEnemy();
-	}
+	
+	CheckKillingEnemy();
+
 }
 
 GLvoid Mario::CheckKillingEnemy() {
+	//TODO: (과제전 범위) 무적시간 적용시 여기서 넣으면 됨
 	if (cur_state == HURT_RIGHT) return;
 	std::vector<Enemy*> enemies = Play::GetEnemy();
-	for (int i = 0; i < enemies.size(); ++i) {
-		if (CheckAABB_2D(*this, *enemies[i])) {
-			enemies[i]->collision_handling(this);
-			gravity = GravityAcceleration * JumpPower;
-			flag_jump = false;
-			trans.y = enemies[i]->trans.y + 0.5 * enemies[i]->scale.y + 0.5 * scale.y + FLOAT_ERROR_FIGURE;
+	if (Play::getcType() == D2_VIEW) {
+		for (int i = 0; i < enemies.size(); ++i) {
+			if (CheckAABB_2D(*this, *enemies[i])) {
+				Goomba* pGoomba = dynamic_cast<Goomba*>(enemies[i]);
+				if (pGoomba != nullptr) {
+					enemies[i]->collision_handling(this);
+					gravity = GravityAcceleration * JumpPower;
+					flag_jump = false;
+					trans.y = enemies[i]->trans.y + 0.5 * enemies[i]->scale.y + 0.5 * scale.y + FLOAT_ERROR_FIGURE;
+				}
+			}
 		}
 	}
+	else {
+		for (int i = 0; i < enemies.size(); ++i) {
+			if (CheckAABB(*this, *enemies[i])) {
+				Squiglet* pSquiglet = dynamic_cast<Squiglet*>(enemies[i]);
+				if (pSquiglet != nullptr) {
+					enemies[i]->collision_handling(this);
+					gravity = GravityAcceleration * JumpPower;
+					flag_jump = false;
+					trans.y = enemies[i]->trans.y + 0.5 * enemies[i]->scale.y + 0.5 * scale.y + FLOAT_ERROR_FIGURE;
+				}
+			}
+		}
+	}
+	
 }
 
 
@@ -434,10 +456,26 @@ GLvoid Mario::CheckHittingByEnemy() {
 	if (Play::getcType() == D2_VIEW) {
 		for (int i = 0; i < enemies.size(); ++i) {
 			if (CheckAABB_2D(*this, *enemies[i])) {
-				hp -= 1;
-				StateExit_2D();
-				MarioChangeState(HURT_RIGHT);
-				StateEnter_2D();
+				Goomba* pGoomba = dynamic_cast<Goomba*>(enemies[i]);
+				if (pGoomba != nullptr) {
+					hp -= 1;
+					StateExit_2D();
+					MarioChangeState(HURT_RIGHT);
+					StateEnter_2D();
+				}
+			}
+		}
+	}
+	else {
+		for (int i = 0; i < enemies.size(); ++i) {
+			if (CheckAABB(*this, *enemies[i])) {
+				Squiglet* pSquiglet = dynamic_cast<Squiglet*>(enemies[i]);
+				if (pSquiglet != nullptr) {
+					hp -= 1;
+					StateExit_3D();
+					MarioChangeState(HURT_RIGHT);
+					StateEnter_3D();
+				}
 			}
 		}
 	}
@@ -725,6 +763,15 @@ GLvoid Mario::StateEnter_3D(int type, unsigned char key) {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
+		if (face == RIGHT) {
+			dir[Z] = -1;
+		}
+		else {
+			dir[Z] = 1;
+		}
+		dir[X] = 0;
+		hurt_time = HURT_TIME;
+		gravity = GravityAcceleration * 15;
 		break;
 	}
 	//std::cout << "dir: [" << dir[X] << ", " << dir[Y] << ", " << dir[Z] << "]" << std::endl;
@@ -885,7 +932,7 @@ GLvoid Mario::StateExit_3D(int type, unsigned char key) {
 			StateEnter_3D(GLUT_KEY_DOWN, 's');
 		}
 		else {
-			MarioChangeState(IDLE_RIGHT_UP);
+			MarioChangeState(IDLE_RIGHT);
 		}
 		break;
 	case JUMP_RIGHT_UP:
@@ -908,6 +955,26 @@ GLvoid Mario::StateExit_3D(int type, unsigned char key) {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
+		if (GetKeyDown()[pressW]) {
+			MarioChangeState(WALKING_RIGHT_UP);
+			StateEnter_3D(GLUT_KEY_DOWN, 'w');
+			break;
+		}
+		else if ((GetKeyDown()[pressD] && !GetKeyDown()[pressA])) {
+			MarioChangeState(WALKING_RIGHT);
+			StateEnter_3D(GLUT_KEY_DOWN, 'd');
+		}
+		else if ((GetKeyDown()[pressA] && !GetKeyDown()[pressD])) {
+			MarioChangeState(WALKING_RIGHT);
+			StateEnter_3D(GLUT_KEY_DOWN, 'a');
+		}
+		else if (GetKeyDown()[pressS]) {
+			MarioChangeState(WALKING_RIGHT);
+			StateEnter_3D(GLUT_KEY_DOWN, 's');
+		}
+		else {
+			MarioChangeState(IDLE_RIGHT);
+		}
 		break;
 	}
 }
@@ -1009,9 +1076,9 @@ GLvoid Mario::StateDo_3D() {
 
 		if (hurt_time <= 0) {
 			hurt_time = 0;
-			StateExit_2D();
+			StateExit_3D();
 			MarioChangeState(IDLE_RIGHT);
-			StateEnter_2D();
+			StateEnter_3D();
 		}
 		break;
 	}
