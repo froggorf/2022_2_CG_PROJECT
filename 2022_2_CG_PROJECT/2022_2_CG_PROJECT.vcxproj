@@ -179,6 +179,7 @@
     <ClCompile Include="pipe.cpp" />
     <ClCompile Include="play_state.cpp" />
     <ClCompile Include="select_stage_state.cpp" />
+    <ClCompile Include="soundManager.cpp" />
     <ClCompile Include="title_state.cpp" />
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="squiglet.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="pipe.h" />
     <ClInclude Include="play_state.h" />
     <ClInclude Include="select_stage_state.h" />
+    <ClInclude Include="soundManager.h" />
     <ClInclude Include="Squiglet.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stdafx.h" />

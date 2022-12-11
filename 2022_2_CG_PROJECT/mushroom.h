@@ -5,6 +5,8 @@
 #include "mario_character.h"
 #include "check_collision.h"
 
+#define GETMUSHROOMSOUND "resource/Sound/get_health.wav"
+
 class Mushroom : public Item {
 public:
 	Mushroom();

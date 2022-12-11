@@ -109,7 +109,7 @@ GLvoid Coin::update() {
 
 GLvoid Coin::collision_handling(Cube* other) {
 	Cube* marioCast = dynamic_cast<Mario*>(other);
-	if (marioCast != nullptr) {
+	if (marioCast != nullptr and !isCanDelete) {
 		std::cout << "Coin collision handling" << std::endl;
 		Play::SetMarioCoin(1);
 		PlaySound(TEXT(GETCOINSOUND), NULL, SND_ASYNC | SND_ALIAS);

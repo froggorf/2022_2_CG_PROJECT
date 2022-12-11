@@ -119,6 +119,7 @@ GLvoid Mushroom::collision_handling(Cube* other) {
 		}
 		else if (marioCast != nullptr) {
 			isCanDelete = true;
+			PlaySound(TEXT(GETMUSHROOMSOUND), NULL, SND_ASYNC | SND_ALIAS);
 		}
 		else if (wallCast != nullptr) { }
 		else {

@@ -5,6 +5,8 @@
 #include "play_state.h"
 #include "camera.h"
 
+#define FLIPSOUND "resource/Sound/flip.wav"
+
 namespace ChangeDimension {
 	GLvoid enter();
 	GLvoid exit();

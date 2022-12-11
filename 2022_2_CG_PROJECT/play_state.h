@@ -16,9 +16,9 @@
 
 #include "particle.h"
 #include "brickParticle.h"
-
 #include "pictureWall.h"
 
+#include "soundManager.h"
 
 #include "enemy.h"
 #include "goomba.h"

@@ -13,6 +13,7 @@ namespace ChangeDimension {
 
 	GLvoid enter() {
 		std::cout << "enter - changeDimension" << std::endl;
+		PlaySound(TEXT(FLIPSOUND), NULL, SND_ASYNC | SND_ALIAS);
 		changeCType = 1 - Play::getcType();
 		changeCamera = Play::getCamera();
 		marioPos = Play::GetMarioPos();
@@ -46,11 +47,11 @@ namespace ChangeDimension {
 		//wait++;
 		//if (wait % 10 == 0) {
 		if (!changeCType) {
-			u -= 3;
+			u -= 2;
 			if (u <= -90) {pop_state(); }
 		}
 		else {
-			u += 3;
+			u += 2;
 			if (u >= 90) {pop_state(); }
 		}
 		//}
