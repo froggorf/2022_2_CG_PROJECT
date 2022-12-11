@@ -159,6 +159,7 @@
     <ClCompile Include="door.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="fileManager.cpp" />
+    <ClCompile Include="gameover_state.cpp" />
     <ClCompile Include="game_framework.cpp" />
     <ClCompile Include="game_world.cpp" />
     <ClCompile Include="goomba.cpp" />
@@ -195,6 +196,7 @@
     <ClInclude Include="door.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="fileManager.h" />
+    <ClInclude Include="gameover_state.h" />
     <ClInclude Include="game_framework.h" />
     <ClInclude Include="game_world.h" />
     <ClInclude Include="goomba.h" />

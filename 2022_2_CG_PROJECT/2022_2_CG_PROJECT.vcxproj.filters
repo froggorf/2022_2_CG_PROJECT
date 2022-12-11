@@ -164,6 +164,9 @@
     <ClCompile Include="squiglet.cpp">
       <Filter>Enemy\Source</Filter>
     </ClCompile>
+    <ClCompile Include="gameover_state.cpp">
+      <Filter>FrameWork</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -273,6 +276,9 @@
     </ClInclude>
     <ClInclude Include="Squiglet.h">
       <Filter>Enemy\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="gameover_state.h">
+      <Filter>FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
