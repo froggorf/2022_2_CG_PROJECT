@@ -38,6 +38,7 @@ namespace Play {
         isCanExit = 0;
         InitValue();
         InitBuffer();
+        PlaySound(TEXT("resource/Sound/stage1.wav"), NULL, SND_ASYNC | SND_ALIAS | SND_LOOP);
     }
 
     GLvoid exit() {

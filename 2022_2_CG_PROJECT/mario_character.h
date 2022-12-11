@@ -27,6 +27,8 @@
 #define JumpPower 30
 #define MarioMaxHp 10
 
+#define MARIOJUMPSOUND "resource/Sound/marioJump.wav"
+
 enum MarioState {
 	IDLE_RIGHT=0,IDLE_LEFT,
 	IDLE_RIGHT_UP,IDLE_LEFT_UP,

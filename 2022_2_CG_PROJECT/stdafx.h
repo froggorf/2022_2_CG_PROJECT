@@ -8,6 +8,11 @@
 #include <vector>
 #include <fstream>
 #include <string>
+
+#include <Windows.h>
+#pragma comment(lib, "winmm")
+#include <mmsystem.h>
+
 #include <gl/glew.h> 
 #include<gl/freeglut.h>
 #include <gl/freeglut_ext.h>
