@@ -231,6 +231,14 @@ namespace Play {
             enemyVec.push_back(temp4);
             enemyVec.push_back(temp5);
             enemyVec.push_back(temp6);
+            {
+                GLfloat i = 0;
+                while (4.1667 * i < 127) {
+                    Cube* backWall = new PictureWall(glm::vec3(4.1667, 10, 1.0), glm::vec3(i * 4.1667 + (4.1667 / 2), 5, -6.5), glm::vec3(0.0, 0.0, 0.0), i);
+                    map.push_back(backWall);
+                    i += 1.0;
+                }
+            }
         }
         else {
 
