@@ -11,7 +11,7 @@ enum HANDLE_COLLISION {
 };
 
 GLvoid Mario::Init() {
-	trans = glm::vec3(5.0f, 0.0f, 0.0f);
+	trans = glm::vec3(5.0f, 1.0f, 0.0f);
 	rot = glm::vec3(0.0f, 0.0f, 0.0f);
 	scale = glm::vec3(1.0f, 1.0f, 1.0f);
 	color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -330,12 +330,10 @@ GLvoid Mario::falling_gravity() {
 				if (gravity > 0) {	//위로 점프중일때
 					Cube* check_brick = dynamic_cast<Brick*>(g_ground[i]);
 					if (check_brick != nullptr) {
-						std::cout << "벽돌 충돌" << std::endl;
 						g_ground[i]->collision_handling(this);
 					}
 					Cube* check_mysteryBox = dynamic_cast<MysteryBlock*>(g_ground[i]);
 					if (check_mysteryBox != nullptr) {
-						std::cout << "미스테리박스 충돌" << std::endl;
 						g_ground[i]->collision_handling(this);
 					}
 
@@ -608,6 +606,10 @@ GLvoid Mario::StateEnter_3D(int type, unsigned char key) {
 				if (dir[X] < -1) dir[X] = -1;
 				break;
 			case ' ':
+				if (gravity < -GravityAcceleration * 3) {
+					can_jump = false;
+					break;
+				}
 				if (can_jump) {
 					gravity = GravityAcceleration * 3;
 					can_jump = false;
@@ -675,6 +677,10 @@ GLvoid Mario::StateEnter_3D(int type, unsigned char key) {
 				if (dir[X] < -1) dir[X] = -1;
 				break;
 			case ' ':
+				if (gravity < -GravityAcceleration * 3) {
+					can_jump = false;
+					break;
+				}
 				if (can_jump) {
 					gravity = GravityAcceleration * 3;
 					can_jump = false;
@@ -793,6 +799,10 @@ GLvoid Mario::StateEnter_2D(int type, unsigned char key) {
 				if (dir[X] > 1) dir[X] = 1;
 				break;
 			case ' ':
+				if (gravity < -GravityAcceleration * 3) {
+					can_jump = false;
+					break;
+				}
 				if (can_jump) {
 					gravity = GravityAcceleration * 3;
 					can_jump = false;
@@ -941,6 +951,21 @@ GLvoid Mario::StateExit_2D(int type, unsigned char key) {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
+		//점프 끝나고서 누르고 있는 키에대한 처리 진행하기
+		if ((!GetKeyDown()[pressA] && GetKeyDown()[pressD])) {
+			MarioChangeState(WALKING_RIGHT);
+			StateEnter_2D(GLUT_KEY_DOWN, 'd');
+			break;
+		}
+		else if (GetKeyDown()[pressA] && !GetKeyDown()[pressD]) {
+			MarioChangeState(WALKING_RIGHT);
+			StateEnter_2D(GLUT_KEY_DOWN, 'a');
+			break;
+		}
+		else {
+			MarioChangeState(IDLE_RIGHT);
+			StateEnter_2D();
+		}
 		break;
 	}
 }
@@ -964,7 +989,6 @@ GLvoid Mario::StateDo_3D() {
 	case JUMP_LEFT:
 		if (flag_jump) {
 			gravity += GravityAcceleration * 3;
-			std::cout << gravity / GravityAcceleration << std::endl;
 			if (gravity >= GravityAcceleration * 25) {
 				flag_jump = false;
 			}
@@ -974,7 +998,6 @@ GLvoid Mario::StateDo_3D() {
 	case JUMP_LEFT_UP:
 		if (flag_jump) {
 			gravity += GravityAcceleration * 3;
-			std::cout << gravity / GravityAcceleration << std::endl;
 			if (gravity >= GravityAcceleration * 25) {
 				flag_jump = false;
 			}
@@ -982,7 +1005,6 @@ GLvoid Mario::StateDo_3D() {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
-		std::cout << hurt_time;
 		hurt_time -= 16;
 
 		if (hurt_time <= 0) {
@@ -1013,7 +1035,6 @@ GLvoid Mario::StateDo_2D() {
 	case JUMP_LEFT:
 		if (flag_jump) {
 			gravity += GravityAcceleration * 3;
-			std::cout << gravity / GravityAcceleration << std::endl;
 			if (gravity >= GravityAcceleration * 25) {
 				flag_jump = false;
 			}
@@ -1023,7 +1044,6 @@ GLvoid Mario::StateDo_2D() {
 	case JUMP_LEFT_UP:
 		if (flag_jump) {
 			gravity += GravityAcceleration * 3;
-			std::cout << gravity / GravityAcceleration << std::endl;
 			if (gravity >= GravityAcceleration * 25) {
 				flag_jump = false;
 			}
@@ -1031,7 +1051,6 @@ GLvoid Mario::StateDo_2D() {
 		break;
 	case HURT_RIGHT:
 	case HURT_LEFT:
-		std::cout << hurt_time;
 		hurt_time -= 16;
 		
 		if (hurt_time <= 0) {
@@ -1731,13 +1750,11 @@ GLvoid Mario::GetCoin(int num) {
 
 GLvoid Mario::SendMessageToDoor() {
 	if (collide_door) {
-		std::cout << "여기까진 들어옴\n";
 		std::vector<Cube*> g_ground = Play::GetGround();
 		for (int i = 0; i < g_ground.size(); ++i) {
 			if (CheckAABB_2D(*this, *g_ground[i])) {
 				Door* check_door = dynamic_cast<Door*>(g_ground[i]);
 				if (check_door != nullptr) {
-					std::cout << i<<"번째 문\n";
 					check_door->collision_handling(this);
 					break;
 				}
