@@ -22,7 +22,9 @@ namespace SelectStage {
 	GLvoid DrawStageImage();
 	GLvoid DrawHand();
 
-	GLuint GetSelectStageNum();
+	GLint GetSelectStageNum();
+	GLint& GetPlayableStageNum();
+	GLvoid ClearUpdate();
 }
 
 #endif // !__SELECT_STAGE_H__
