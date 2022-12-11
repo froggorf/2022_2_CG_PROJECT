@@ -4,7 +4,7 @@
 #include "mario_character.h"
 #include "check_collision.h"
 
-#define GETCOINSOUND "resource/Sound/getCoin.wav"
+#define GETCOINSOUND "resource/Sound/getCoin.mp3"
 
 class Coin : public Item {
 public:
@@ -17,6 +17,7 @@ public:
 	GLfloat appearMoveFigure;
 	GLboolean isOnGround;
 	GLboolean isMovingUp;
+	MCI_OPEN_PARMS coinSound;
 
 	GLvoid Init();
 	virtual GLvoid update();
