@@ -71,6 +71,8 @@ GLvoid Mario::update() {
 	if (hp <= 0) {
 		Play::GoGameOver();
 	}
+
+	CheckStateError();
 }
 
 glm::vec3 mario_vertices[6]{
@@ -1879,4 +1881,24 @@ GLvoid DrawPressFHud() {
 	
 	glUseProgram(Gets_program_texture());
 	glEnable(GL_DEPTH_TEST);
+}
+
+GLvoid Mario::CheckStateError() {
+	switch (cur_state) {
+	case WALKING_RIGHT:
+	case WALKING_LEFT:
+	case WALKING_RIGHT_UP:
+	case WALKING_LEFT_UP:
+		if (!GetKeyDown()[pressA] && !GetKeyDown()[pressS] && !GetKeyDown()[pressD] && !GetKeyDown()[pressW]) {
+			
+			cur_state = IDLE_RIGHT;
+			if (Play::getcType() == D2_VIEW) {
+				StateEnter_2D();
+			}
+			else {
+				StateEnter_3D();
+			}
+		}
+
+	}
 }

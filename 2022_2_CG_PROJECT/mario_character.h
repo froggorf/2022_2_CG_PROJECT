@@ -94,6 +94,8 @@ public:
 	GLvoid StateEnter_2D(int type = -1, unsigned char key = -1);
 	GLvoid StateExit_2D(int type = -1, unsigned char key = -1);
 	GLvoid StateDo_2D();
+
+	GLvoid CheckStateError();
 };
 
 GLvoid DrawPressFHud();
