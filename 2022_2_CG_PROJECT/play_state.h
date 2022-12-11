@@ -26,6 +26,11 @@
 #include "item.h"
 #include "mushroom.h"
 
+enum PlayExitCode {
+    GAMEOVERCODE = -1,
+    CLEARCODE = 1,
+};
+
 namespace Play {
     //define - ¼±¾ð
 

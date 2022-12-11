@@ -1,8 +1,11 @@
 #include "play_state.h"
 #include "fileManager.h"
 
+
+
 namespace Play {
-    GLboolean isCanExit;
+    GLint isCanExit;
+
     //카메라 관련 선언
     Camera camera;
     int cType;                              //카메라 타입(2d뷰 / 3d뷰)
@@ -32,7 +35,7 @@ namespace Play {
 
     //function - 정의
     GLvoid enter() {
-        isCanExit = false;
+        isCanExit = 0;
         InitValue();
         InitBuffer();
     }
@@ -301,7 +304,7 @@ namespace Play {
     }
 
     GLvoid goSelectState() {
-        isCanExit = true;
+        isCanExit = CLEARCODE;
     }
 
     Camera getCamera() { return camera; }
