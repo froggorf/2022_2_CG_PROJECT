@@ -66,6 +66,8 @@ GLvoid Mario::update() {
 		StateDo_2D();
 	else
 		StateDo_3D();
+
+	
 }
 
 glm::vec3 mario_vertices[6]{
@@ -284,6 +286,7 @@ GLvoid Mario::falling_gravity() {
 	collide_door = false;
 	gravity -= GravityAcceleration;
 	trans.y += gravity;
+	CheckFallingCliff();
 	std::vector<Cube*> g_ground = Play::GetGround();
 	//중력에 대한 충돌체크 처리
 	if (Play::getcType() == D3_VIEW) {
@@ -459,6 +462,7 @@ GLvoid Mario::CheckHittingByEnemy() {
 				Goomba* pGoomba = dynamic_cast<Goomba*>(enemies[i]);
 				if (pGoomba != nullptr) {
 					hp -= 1;
+					if (hp < 0) hp = 0;
 					StateExit_2D();
 					MarioChangeState(HURT_RIGHT);
 					StateEnter_2D();
@@ -472,6 +476,7 @@ GLvoid Mario::CheckHittingByEnemy() {
 				Squiglet* pSquiglet = dynamic_cast<Squiglet*>(enemies[i]);
 				if (pSquiglet != nullptr) {
 					hp -= 1;
+					if (hp < 0) hp = 0;
 					StateExit_3D();
 					MarioChangeState(HURT_RIGHT);
 					StateEnter_3D();
@@ -1827,6 +1832,14 @@ GLvoid Mario::SendMessageToDoor() {
 				}
 			}
 		}
+	}
+}
+
+GLvoid Mario::CheckFallingCliff() {
+	if (trans.y < -10) {
+		hp -= 3;
+		if (hp < 0) hp = 0;
+		trans = glm::vec3(5.0f, 1.0f, 0.0f);
 	}
 }
 

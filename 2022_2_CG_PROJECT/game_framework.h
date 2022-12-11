@@ -9,6 +9,7 @@ enum GameStateType {
 	PLAY,
 	CHANGEDIMENSION,
 	SELECTSTAGE,
+	GAMEOVER,
 	END,
 };
 

@@ -3,6 +3,7 @@
 #include "title_state.h"
 #include "play_state.h"
 #include "select_stage_state.h"
+#include "gameover_state.h"
 bool running = true;
 GameState state[4];
 int now = -1;
@@ -128,6 +129,17 @@ GLvoid GameState::setting(int g_state_type) {
 		draw = SelectStage::draw;
 		key_down = SelectStage::key_down;
 		key_up = SelectStage::key_up;
+		break;
+	case GameStateType::GAMEOVER:
+		enter = GameOver::enter;
+		exit = GameOver::exit;
+		pause = GameOver::pause;
+		resume = GameOver::resume;
+		handle_events = GameOver::handle_events;
+		update = GameOver::update;
+		draw = GameOver::draw;
+		key_down = GameOver::key_down;
+		key_up = GameOver::key_up;
 		break;
 	}
 }

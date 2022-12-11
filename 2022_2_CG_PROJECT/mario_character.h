@@ -62,6 +62,7 @@ public:
 
 	GLvoid falling_gravity();
 	GLvoid CheckKillingEnemy();
+	GLvoid CheckFallingCliff();
 
 	GLvoid move(int);
 	GLvoid DoJump();
