@@ -25,7 +25,6 @@ namespace SelectStage {
 	GLint select_stage_num;
 
 	GLvoid enter() {
-		std::cout << "select_stage_enter" << std::endl;
 		InitValue();
 		InitBuffer();
 		glUseProgram(Gets_program_screen());
@@ -45,7 +44,6 @@ namespace SelectStage {
 		
 	}
 	GLvoid resume() {
-		std::cout << "stage_select_resume()" << std::endl;
 		glUseProgram(Gets_program_screen());
 		glDisable(GL_DEPTH_TEST);
 
@@ -61,7 +59,6 @@ namespace SelectStage {
 		}
 	}
 	GLvoid draw() {
-		std::cout << "stage_select_draw()" << std::endl;
 		DrawMainImage();
 		DrawStageImage();
 		DrawHand();
