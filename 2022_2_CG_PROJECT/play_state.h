@@ -52,6 +52,7 @@ namespace Play {
     GLvoid SetTransformationMatrix();            //model 변환, 카메라 변환, 뷰잉변환, 투영변환등의 디폴트값 넣어주는 함수
 
     GLvoid goSelectState();
+    GLvoid GoGameOver();
     Camera getCamera();
     GLuint getcType();
 
@@ -63,6 +64,8 @@ namespace Play {
 
     GLvoid SetMarioCoin(GLuint num);
     glm::vec3 GetMarioPos();
+
+ 
 
 }
 

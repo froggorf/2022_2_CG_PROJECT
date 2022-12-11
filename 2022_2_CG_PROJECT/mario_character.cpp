@@ -40,6 +40,7 @@ GLvoid Mario::update() {
 	{
 		//PLEASEDELETELATER_PRINTCURSTATEFUNCTION();
 	}
+	
 
 	frame += 0.2;
 	if (frame >= mario_max_frame[cur_state]) {
@@ -67,7 +68,9 @@ GLvoid Mario::update() {
 	else
 		StateDo_3D();
 
-	
+	if (hp <= 0) {
+		Play::GoGameOver();
+	}
 }
 
 glm::vec3 mario_vertices[6]{
@@ -1136,6 +1139,7 @@ GLvoid Mario::StateDo_2D() {
 }
 
 GLvoid Mario::handle_events(int type, unsigned char key) {
+	if (key == '-' && type == GLUT_KEY_DOWN) hp -= 1;
 	switch (Play::getcType()) {
 	case D3_VIEW:
 		CheckNextState_3D(type, key);

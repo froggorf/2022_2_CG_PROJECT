@@ -57,6 +57,12 @@ namespace Play {
 
     GLvoid resume() {
         std::cout << "resume - play" << std::endl;
+        if (isCanExit == GAMEOVERCODE) {
+            SelectStage::ClearUpdate(false);
+            pop_state();
+            return;
+        }
+            
         cType = 1 - cType;
         if (cType == D3_VIEW) {
             camera.cameraPos = GetMarioPos();
@@ -151,8 +157,13 @@ namespace Play {
                 camera.cameraPos.y += 0.1;
             }
         }
-        else
+        else if (isCanExit == CLEARCODE) {
+            SelectStage::ClearUpdate(true);
             pop_state();
+        }
+        else
+            push_state(GAMEOVER);
+            
     }
 
     GLvoid drawObject() {
@@ -305,6 +316,9 @@ namespace Play {
 
     GLvoid goSelectState() {
         isCanExit = CLEARCODE;
+    }
+    GLvoid GoGameOver() {
+        isCanExit = GAMEOVERCODE;
     }
 
     Camera getCamera() { return camera; }

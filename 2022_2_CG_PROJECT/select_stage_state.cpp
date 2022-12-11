@@ -23,6 +23,7 @@ namespace SelectStage {
 	
 	GLint playable_stage_num;
 	GLint select_stage_num;
+	GLboolean check_clear;
 
 	GLvoid enter() {
 		InitValue();
@@ -46,8 +47,22 @@ namespace SelectStage {
 	GLvoid resume() {
 		glUseProgram(Gets_program_screen());
 		glDisable(GL_DEPTH_TEST);
+		std::cout << playable_stage_num << ", " << select_stage_num << std::endl;
+		if (!check_clear) {
+			playable_stage_num -= 1;
+			select_stage_num -= 1;
+		}
+		
 
-		ClearUpdate();
+
+		if (select_stage_num == playable_stage_num) {
+			playable_stage_num += 1;
+			if (playable_stage_num > MAXSTAGE) playable_stage_num = MAXSTAGE;
+			select_stage_num += 1;
+			if (select_stage_num > MAXSTAGE) select_stage_num = MAXSTAGE;
+		}
+		std::cout << playable_stage_num << ", " << select_stage_num << std::endl;
+		
 	}
 	GLvoid handle_events() {
 
@@ -87,6 +102,7 @@ namespace SelectStage {
 	}
 
 	GLvoid InitValue() {
+		check_clear = false;
 		playable_stage_num = 1;
 		select_stage_num = 1;
 		hand_frame = 0;
@@ -139,6 +155,7 @@ namespace SelectStage {
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
 		int tLocation = glGetUniformLocation(Gets_program_screen(), "outTexture11"); //--- outTexture1 À¯´ÏÆû »ùÇÃ·¯ÀÇ À§Ä¡¸¦ °¡Á®¿È
+		
 		glActiveTexture(texture[SELECTSTAGEMAIN]);
 		glBindTexture(GL_TEXTURE_2D, texture[SELECTSTAGEMAIN]);
 		glUniform1i(tLocation, 0);
@@ -209,15 +226,10 @@ namespace SelectStage {
 
 	}
 
-	GLint GetSelectStageNum() { return select_stage_num; }
+	GLint& GetSelectStageNum() { return select_stage_num; }
 	GLint& GetPlayableStageNum() { return playable_stage_num; }
 
-	GLvoid ClearUpdate() {
-		if (select_stage_num == playable_stage_num) {
-			playable_stage_num += 1;
-			if (playable_stage_num > MAXSTAGE) playable_stage_num = MAXSTAGE;
-			select_stage_num += 1;
-			if (select_stage_num > MAXSTAGE) select_stage_num = MAXSTAGE;
-		}
+	GLvoid ClearUpdate(GLboolean is_clear) {
+		check_clear = is_clear;
 	}
 }
