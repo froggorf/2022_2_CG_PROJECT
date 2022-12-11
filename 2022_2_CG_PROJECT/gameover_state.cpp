@@ -13,8 +13,8 @@ namespace GameOver {
 			LoadTexture(gameover_image, "resource/Gameover/gameover.png");
 	}
 	GLvoid exit() {
-		glDeleteVertexArrays(1, &VAO);
-		glDeleteBuffers(3, VBO);
+		//glDeleteVertexArrays(1, &VAO);
+		//glDeleteBuffers(3, VBO);
 		//std::cout << "exit - Logo" << std::endl;
 
 	}

@@ -47,21 +47,18 @@ namespace SelectStage {
 	GLvoid resume() {
 		glUseProgram(Gets_program_screen());
 		glDisable(GL_DEPTH_TEST);
-		std::cout << playable_stage_num << ", " << select_stage_num << std::endl;
-		if (!check_clear) {
-			playable_stage_num -= 1;
-			select_stage_num -= 1;
-		}
 		
 
-
-		if (select_stage_num == playable_stage_num) {
-			playable_stage_num += 1;
-			if (playable_stage_num > MAXSTAGE) playable_stage_num = MAXSTAGE;
-			select_stage_num += 1;
-			if (select_stage_num > MAXSTAGE) select_stage_num = MAXSTAGE;
+		if (check_clear) {
+			if (select_stage_num == playable_stage_num) {
+				playable_stage_num += 1;
+				if (playable_stage_num > MAXSTAGE) playable_stage_num = MAXSTAGE;
+				select_stage_num += 1;
+				if (select_stage_num > MAXSTAGE) select_stage_num = MAXSTAGE;
+			}
 		}
-		std::cout << playable_stage_num << ", " << select_stage_num << std::endl;
+		
+		
 		
 	}
 	GLvoid handle_events() {
